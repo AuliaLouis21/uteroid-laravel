@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('uploads', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('filename');
+            $table->string('disk')->default('public');
+            $table->foreignId('uploadable_id')->nullable();
+            $table->string('uploadable_type')->nullable();
             $table->timestamps();
         });
     }

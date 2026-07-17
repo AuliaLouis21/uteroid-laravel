@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\News;
-use App\Http\Requests\Admin\StoreNewsRequest;
-use App\Http\Requests\Admin\UpdateNewsRequest;
+use App\Http\Requests\NewsRequest;
 use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
@@ -22,7 +21,7 @@ class NewsController extends Controller
         return view('admin.news.create');
     }
 
-    public function store(StoreNewsRequest $request)
+    public function store(NewsRequest $request)
     {
         $data = $request->validated();
 
@@ -46,7 +45,7 @@ class NewsController extends Controller
         return view('admin.news.edit', compact('news'));
     }
 
-    public function update(UpdateNewsRequest $request, News $news)
+    public function update(NewsRequest $request, News $news)
     {
         $data = $request->validated();
 

@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('album_photos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('album_id');
+            $table->string('filename');
+            $table->string('caption')->nullable();
             $table->timestamps();
         });
     }

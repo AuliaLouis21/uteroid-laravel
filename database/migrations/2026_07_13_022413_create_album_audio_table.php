@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('album_audio', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('album_id');
+            $table->string('title');
+            $table->string('slug')->unique();
+            $table->string('filename');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

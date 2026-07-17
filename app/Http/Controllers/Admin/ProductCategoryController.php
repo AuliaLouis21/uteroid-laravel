@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ProductCategory;
-use App\Http\Requests\Admin\StoreProductCategoryRequest;
-use App\Http\Requests\Admin\UpdateProductCategoryRequest;
+use App\Http\Requests\ProductCategoryRequest;
 use Illuminate\Support\Str;
 
 class ProductCategoryController extends Controller
@@ -22,7 +21,7 @@ class ProductCategoryController extends Controller
         return view('admin.product-categories.create');
     }
 
-    public function store(StoreProductCategoryRequest $request)
+    public function store(ProductCategoryRequest $request)
     {
         ProductCategory::create($request->validated());
 
@@ -40,7 +39,7 @@ class ProductCategoryController extends Controller
         return view('admin.product-categories.edit', compact('productCategory'));
     }
 
-    public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)
+    public function update(ProductCategoryRequest $request, ProductCategory $productCategory)
     {
         $productCategory->update($request->validated());
 

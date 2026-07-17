@@ -5,8 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\ProductCategory;
-use App\Http\Requests\Admin\StoreProductRequest;
-use App\Http\Requests\Admin\UpdateProductRequest;
+use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -25,7 +24,7 @@ class ProductController extends Controller
         return view('admin.products.create', compact('categories'));
     }
 
-    public function store(StoreProductRequest $request)
+    public function store(ProductRequest $request)
     {
         $data = $request->validated();
 
@@ -59,7 +58,7 @@ class ProductController extends Controller
         return view('admin.products.edit', compact('product', 'categories'));
     }
 
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
         $data = $request->validated();
 
