@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ProductImage;
 use App\Models\Product;
-use App\Http\Requests\ProductImageRequest;
+use App\Http\Requests\Admin\StoreProductImageRequest;
+use App\Http\Requests\Admin\UpdateProductImageRequest;
 use Illuminate\Support\Facades\Storage;
 
 class ProductImageController extends Controller
@@ -24,7 +25,7 @@ class ProductImageController extends Controller
         return view('admin.product-images.create', compact('products'));
     }
 
-    public function store(ProductImageRequest $request)
+    public function store(StoreProductImageRequest $request)
     {
         $data = $request->validated();
 
@@ -52,7 +53,7 @@ class ProductImageController extends Controller
         return view('admin.product-images.edit', compact('productImage', 'products'));
     }
 
-    public function update(ProductImageRequest $request, ProductImage $productImage)
+    public function update(UpdateProductImageRequest $request, ProductImage $productImage)
     {
         $data = $request->validated();
 

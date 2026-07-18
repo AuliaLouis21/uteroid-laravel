@@ -9,9 +9,10 @@ class Testimonial extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email', 'company', 'content', 'status'];
+    protected $fillable = ['name', 'email', 'company', 'content', 'rating', 'status'];
 
     protected $casts = [
+        'rating' => 'integer',
         'status' => 'string',
     ];
 }

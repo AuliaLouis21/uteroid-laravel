@@ -31,11 +31,11 @@
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                     @foreach($album->photos as $photo)
                         <button
-                            @click="open = true; src = '{{ asset('storage/' . $photo->path) }}'; alt = '{{ addslashes($photo->caption ?? $album->name) }}'"
+                            @click="open = true; src = '{{ asset('storage/' . $photo->filename) }}'; alt = '{{ addslashes($photo->caption ?? $album->name) }}'"
                             class="group aspect-square rounded-lg overflow-hidden bg-gray-100 border border-gray-200 hover:shadow-lg transition focus:outline-none focus:ring-2 focus:ring-brand"
                         >
                             <img
-                                src="{{ asset('storage/' . $photo->path) }}"
+                                src="{{ asset('storage/' . $photo->filename) }}"
                                 alt="{{ $photo->caption ?? $album->name }}"
                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                                 loading="lazy"

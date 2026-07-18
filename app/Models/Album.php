@@ -9,7 +9,12 @@ class Album extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'description'];
+    protected $fillable = ['name', 'slug', 'description', 'category_id'];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 
     public function photos()
     {
