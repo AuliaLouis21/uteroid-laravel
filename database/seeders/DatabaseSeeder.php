@@ -20,6 +20,10 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             NewsSeeder::class,
             SettingSeeder::class,
+            GalleryCategorySeeder::class,
+            GallerySeeder::class,
+            AlbumSeeder::class,
+            PageSeeder::class,
         ]);
     }
 }

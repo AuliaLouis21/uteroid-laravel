@@ -37,12 +37,18 @@
                         <a class="nav-link {{ request()->routeIs('admin.news.*') ? 'active' : '' }}" href="{{ route('admin.news.index') }}">News</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('admin.galleries.*') ? 'active' : '' }}" href="{{ route('admin.galleries.index') }}">Galleries</a>
+                        <a class="nav-link {{ request()->routeIs('admin.albums.*') ? 'active' : '' }}" href="{{ route('admin.albums.index') }}">Albums (Galeri)</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}" href="{{ route('admin.categories.index') }}">Categories</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}" href="{{ route('admin.testimonials.index') }}">Testimonials</a>
+                    </li>
                 </ul>
+                <div class="mt-auto" style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 20px;">
+                    <a class="nav-link" href="{{ route('home') }}">&#8592; Beranda</a>
+                </div>
             </nav>
 
             <main class="col-md-10 content">

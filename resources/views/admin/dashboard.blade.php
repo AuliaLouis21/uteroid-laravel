@@ -60,13 +60,13 @@
             </a>
         </div>
         <div class="col-md-4 col-lg">
-            <a href="{{ route('admin.galleries.index') }}" class="text-decoration-none">
+            <a href="{{ route('admin.albums.index') }}" class="text-decoration-none">
                 <div class="card text-bg-secondary">
                     <div class="card-body d-flex align-items-center">
                         <div class="me-3" style="font-size:2rem;">&#127748;</div>
                         <div>
-                            <h6 class="card-title mb-0">Galleries</h6>
-                            <h2 class="mb-0">{{ $stats['galleries'] }}</h2>
+                            <h6 class="card-title mb-0">Albums</h6>
+                            <h2 class="mb-0">{{ $stats['albums'] }}</h2>
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
             <a href="{{ route('admin.products.create') }}" class="btn btn-primary me-2">+ Add Product</a>
             <a href="{{ route('admin.product-categories.create') }}" class="btn btn-success me-2">+ Add Category</a>
             <a href="{{ route('admin.news.create') }}" class="btn btn-warning me-2">+ Add News</a>
-            <a href="{{ route('admin.galleries.create') }}" class="btn btn-secondary">+ Add Gallery</a>
+            <a href="{{ route('admin.albums.create') }}" class="btn btn-secondary">+ Add Album</a>
         </div>
     </div>
 
@@ -127,16 +127,16 @@
         </div>
         <div class="col-md-4 mb-4">
             <div class="card h-100">
-                <div class="card-header">Recent Galleries</div>
+                <div class="card-header">Recent Albums</div>
                 <div class="card-body">
-                    @if($recentGalleries->isEmpty())
-                        <p class="text-muted mb-0">No galleries yet.</p>
+                    @if($recentAlbums->isEmpty())
+                        <p class="text-muted mb-0">No albums yet.</p>
                     @else
                         <ul class="list-group list-group-flush">
-                            @foreach($recentGalleries as $gallery)
+                            @foreach($recentAlbums as $album)
                                 <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                    <span>{{ $gallery->title }}</span>
-                                    <small class="text-muted">{{ $gallery->created_at->diffForHumans() }}</small>
+                                    <span>{{ $album->name }}</span>
+                                    <small class="text-muted">{{ $album->created_at->diffForHumans() }}</small>
                                 </li>
                             @endforeach
                         </ul>

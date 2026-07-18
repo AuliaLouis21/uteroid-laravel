@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Gallery;
 use App\Models\Category;
-use App\Http\Requests\GalleryRequest;
+use App\Http\Requests\Admin\StoreGalleryRequest;
+use App\Http\Requests\Admin\UpdateGalleryRequest;
 use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
@@ -24,7 +25,7 @@ class GalleryController extends Controller
         return view('admin.galleries.create', compact('categories'));
     }
 
-    public function store(GalleryRequest $request)
+    public function store(StoreGalleryRequest $request)
     {
         $data = $request->validated();
 
@@ -52,7 +53,7 @@ class GalleryController extends Controller
         return view('admin.galleries.edit', compact('gallery', 'categories'));
     }
 
-    public function update(GalleryRequest $request, Gallery $gallery)
+    public function update(UpdateGalleryRequest $request, Gallery $gallery)
     {
         $data = $request->validated();
 

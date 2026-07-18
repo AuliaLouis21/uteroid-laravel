@@ -15,8 +15,9 @@ use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\NewsController;
-use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
+use App\Http\Controllers\Admin\AlbumController;
 use Illuminate\Support\Facades\Route;
 
 // =============================================
@@ -89,6 +90,9 @@ Route::prefix('admin')
         Route::resource('products', AdminProductController::class);
         Route::resource('product-images', ProductImageController::class);
         Route::resource('news', NewsController::class);
-        Route::resource('galleries', AdminGalleryController::class);
         Route::resource('categories', CategoryController::class);
+        Route::resource('testimonials', AdminTestimonialController::class)->only(['index', 'show', 'update', 'destroy']);
+        Route::resource('albums', AlbumController::class);
+        Route::post('albums/{album}/photos', [AlbumController::class, 'addPhoto'])->name('albums.photos.store');
+        Route::delete('albums/{album}/photos/{photo}', [AlbumController::class, 'deletePhoto'])->name('albums.photos.delete');
     });
