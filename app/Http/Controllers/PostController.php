@@ -11,8 +11,8 @@ class PostController extends Controller
     {
         $query = News::query();
 
-        if ($request->filled('search')) {
-            $query->where('title', 'like', '%' . $request->search . '%');
+        if ($request->filled('src')) {
+            $query->where('title', 'like', '%' . $request->src . '%');
         }
 
         $posts = $query->latest()->paginate(9);

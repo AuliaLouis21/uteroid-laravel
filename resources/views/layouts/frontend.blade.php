@@ -1,155 +1,171 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="id">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', config('app.name', 'Utero Group'))</title>
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Description" content="advertising malang,perusahaan advertising,utero advertising,printing,art,concept,malang">
+    <meta name="Robots" content="Index, Follow">
+    <title>@yield('title', 'Utero Advertising | Idea And Concept Factory')</title>
+    <link rel="icon" type="image/x-icon" href="/images/utero.ico">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
-<body class="font-sans antialiased bg-white text-gray-900">
+<body class="m-0 p-0">
+    <div id="header">
+        <div class="site-wrapper" style="height:100%;">&nbsp;</div>
+    </div>
 
-    {{-- Navbar --}}
-    <nav class="bg-black shadow sticky top-0 z-50" x-data="{ open: false, menuOpen: false }">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <a href="{{ route('home') }}" class="flex items-center space-x-2">
-                        <div class="w-8 h-8 bg-brand rounded-lg flex items-center justify-center">
-                            <span class="text-white font-bold text-sm">U</span>
-                        </div>
-                        <span class="text-xl font-bold text-white">Utero Group</span>
-                    </a>
+    <div class="nav-bar">
+        <div id="menubar" class="site-wrapper">
+            <ul>
+                <li><a href="{{ route('home') }}" title="Home" style="border-left:none;" {{ request()->routeIs('home') ? 'class=active' : '' }}>HOME</a></li>
+                <li><a href="{{ route('products.index') }}" title="Product" {{ request()->routeIs('products.*') ? 'class=active' : '' }}>PRICE</a></li>
+                @foreach($staticPages as $sp)
+                    <li><a href="{{ route('pages.show', $sp->slug) }}" title="{{ $sp->title }}" {{ request()->routeIs('pages.show') && request('slug') == $sp->slug ? 'class=active' : '' }}>{{ strtoupper($sp->title) }}</a></li>
+                @endforeach
+                <li><a href="{{ route('gallery.index') }}" title="Gallery" style="border-right:none;" {{ request()->routeIs('gallery.*') ? 'class=active' : '' }}>GALLERY</a></li>
+                <li><a href="{{ route('posts.index') }}" title="News" {{ request()->routeIs('posts.*') ? 'class=active' : '' }}>NEWS</a></li>
+                <li><a href="{{ route('testimonials.index') }}" title="Testimonial" {{ request()->routeIs('testimonials.*') ? 'class=active' : '' }}>TESTIMONIAL</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="body" class="overflow-hidden">
+        @php
+            $latestPosts = \App\Models\News::latest()->take(10)->get();
+        @endphp
+        <div class="news-ticker">
+            <ul id="newsnya" style="display:none;">
+                @foreach($latestPosts as $post)
+                    <li>{{ $post->published_at ? $post->published_at->format('F jS, Y') : $post->created_at->format('F jS, Y') }} : <a href="{{ route('posts.show', $post->slug) }}" title="{{ $post->title }}">{{ ucwords($post->title) }}</a></li>
+                @endforeach
+            </ul>
+        </div>
+
+        @unless(isset($noSidebar) && $noSidebar)
+            <div class="site-wrapper">
+                @yield('sidebar-left')
+
+                @yield('content')
+
+                @yield('sidebar-right')
+            </div>
+        @else
+            @yield('content')
+        @endunless
+    </div>
+
+    <div class="footer-area">
+        <div class="site-wrapper" style="border-bottom:1px solid #111;">
+            <div class="footer-col1">
+                <div class="footer-label">Who We Are?</div>
+                <div class="footer-text">
+                    Suatu perusahaan yang bergerak dalam bidang jasa dan produk periklanan,
+                    idea dan concept yang konsisten dalam membantu para kliennya untuk
+                    mewujudkan nilai-nilai penjualan yang maksimal melalui concept-concept
+                    ide baik dalam grafis maupun photografi yang diolah dengan
+                    perangkat computer dan peralatan canggih
+                    <a href="{{ route('pages.show', 'tentang-kami') }}" title="About Us">read more &rarr;</a>
                 </div>
-
-                {{-- Desktop Menu --}}
-                <div class="hidden md:flex items-center space-x-1">
-                    <a href="{{ route('home') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('home') ? 'text-brand bg-brand-light' : 'text-gray-300 hover:text-white' }}">Beranda</a>
-                    <a href="{{ route('products.index') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('products.*') ? 'text-brand bg-brand-light' : 'text-gray-300 hover:text-white' }}">Produk</a>
-                    <a href="{{ route('posts.index') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('posts.*') ? 'text-brand bg-brand-light' : 'text-gray-300 hover:text-white' }}">Berita</a>
-                    <a href="{{ route('gallery.index') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('gallery.*') ? 'text-brand bg-brand-light' : 'text-gray-300 hover:text-white' }}">Galeri</a>
-                    <a href="{{ route('testimonials.index') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('testimonials.*') ? 'text-brand bg-brand-light' : 'text-gray-300 hover:text-white' }}">Testimoni</a>
-                    <a href="{{ route('contact.index') }}" class="px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('contact.*') ? 'text-brand bg-brand-light' : 'text-gray-300 hover:text-white' }}">Kontak</a>
-                    <a href="{{ route('order.create') }}" class="px-4 py-2 rounded-md text-sm font-medium text-white bg-brand hover:bg-brand-dark ml-2">Pesan Sekarang</a>
-
-                    @auth
-                        <div class="ml-3 relative" x-data="{ open: false }">
-                            <button @click="open = !open" class="flex items-center text-sm font-medium text-gray-300 hover:text-white focus:outline-none">
-                                {{ Auth::user()->name }}
-                                <svg class="ml-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                            </button>
-                            <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
-                                <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
-                                </form>
-                            </div>
-                        </div>
-                    @else
-                        <a href="{{ route('login') }}" class="ml-2 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white">Login</a>
-                    @endauth
+                <a href="http://www.facebook.com/uteroadvertisingindonesia" target="_blank" title="Find us on Facebook">
+                    <img src="/images/new-fb.png" height="45" width="300" alt="Find us on Facebook" style="border:none;padding-bottom:15px;">
+                </a>
+                <a href="https://x.com/uteroindonesia" target="_blank" title="Follow us on Twitter">
+                    <img src="/images/new-twitter.png" height="45" width="300" alt="Follow us on Twitter" style="border:none;padding-bottom:15px;">
+                </a>
+                <a href="http://instagram.com/uteroindonesia" target="_blank" title="Find us on Instagram">
+                    <img src="/images/new-instagram.png" height="45" width="300" alt="Find us on Instagram" style="border:none;padding-bottom:15px;">
+                </a>
+                <a href="https://www.youtube.com/channel/UCkdJC5Tw0bk0xK9sUR80xnA" target="_blank" title="Find us on Youtube">
+                    <img src="/images/new-youtube.png" height="45" width="300" alt="Find us on Youtube" style="border:none;padding-bottom:15px;">
+                </a>
+                <a href="https://www.youtube.com/channel/UC--Vge6YlX1y65HqjqYP8uQ" target="_blank" title="Find us on Youtube">
+                    <img src="/images/new-youtube2.png" height="45" width="300" alt="Find us on Youtube" style="border:none;padding-bottom:15px;">
+                </a>
+            </div>
+            <div class="footer-col3">
+                <div class="footer-text">
+                    <center>
+                        <div class="footer-label">Contact Us</div>
+                        PT. UTERO KREATIF INDONESIA
+                    </center><br>
+                    <div class="footer-label"><center>RUMAH MERAH OXYZ</center></div>
+                    <center>
+                        Jalan Bantaran 1 No. 25<br>
+                        Tulusrejo, Kec. Lowokwaru<br>
+                        Malang - Jawa Timur<br>
+                        Indonesia<br>65141<br><br>
+                        <b>No. Telpon</b><br>0341 408408<br><br>
+                        <b>WhatsApp</b><br>
+                        081 999 900 900 (wahyu)<br>
+                        081 7388 616 (utero)<br><br>
+                        <b>Email</b><br>marketingutero@gmail.com<br><br>
+                    </center>
                 </div>
-
-                {{-- Mobile menu button --}}
-                <div class="md:hidden flex items-center">
-                    <button @click="menuOpen = !menuOpen" class="text-gray-300 hover:text-white focus:outline-none">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-                    </button>
+            </div>
+            <div class="footer-col2">
+                <div class="footer-text">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126438.2886993069!2d112.6317828409092!3d-7.9786290600267975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd629c5e8a20281%3A0x3ff201ddaa440c96!2sPT%20UTERO%20KREATIF%20INDONESIA!5e0!3m2!1sen!2sid!4v1696298771980!5m2!1sen!2sid" width="250" height="270" frameborder="0" style="border:0" allowfullscreen></iframe>
                 </div>
+                <br>
+                <div class="footer-label">Testimonial &raquo;
+                    <a href="{{ route('testimonials.index') }}">Read More &rarr;</a>
+                </div>
+                @php
+                    $randomTestimonial = \App\Models\Testimonial::where('status', 'approved')->inRandomOrder()->first();
+                @endphp
+                @if($randomTestimonial)
+                <div class="footer-text">
+                    <div class="testimonial-text" style="text-align:justify;">{{ ucfirst($randomTestimonial->content) }}</div>
+                    <div class="testimonial-info">From : {{ $randomTestimonial->name }} &rarr;<br> {{ $randomTestimonial->created_at->format('F jS, Y') }}</div>
+                </div>
+                @endif
             </div>
         </div>
 
-        {{-- Mobile Menu --}}
-        <div x-show="menuOpen" x-transition class="md:hidden border-t border-gray-800">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="{{ route('home') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('home') ? 'text-brand bg-brand-light' : 'text-gray-300' }}">Beranda</a>
-                <a href="{{ route('products.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('products.*') ? 'text-brand bg-brand-light' : 'text-gray-300' }}">Produk</a>
-                <a href="{{ route('posts.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('posts.*') ? 'text-brand bg-brand-light' : 'text-gray-300' }}">Berita</a>
-                <a href="{{ route('gallery.index') }}" class="block px-3 py-2 rounded-md text-base font-medium {{ request()->routeIs('gallery.*') ? 'text-brand bg-brand-light' : 'text-gray-300' }}">Galeri</a>
-                <a href="{{ route('testimonials.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300">Testimoni</a>
-                <a href="{{ route('contact.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300">Kontak</a>
-                <a href="{{ route('order.create') }}" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-brand text-center">Pesan Sekarang</a>
+        <div class="site-wrapper">
+            <div class="footer-copyright flex justify-between items-center">
+                <span>&copy; 2009-{{ date('Y') }} uterogroup.com, All Right Reserved</span>
             </div>
         </div>
-    </nav>
+    </div>
 
-    {{-- Flash Messages --}}
-    @if (session('success'))
-        <div class="max-w-7xl mx-auto mt-4 px-4 sm:px-6 lg:px-8">
-            <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg" x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)">
-                {{ session('success') }}
-                <button @click="show = false" class="float-right">&times;</button>
-            </div>
+    <a href="https://wa.me/6281999900900?text=%F0%9F%94%B4%F0%9F%94%B4%F0%9F%94%B4%20%2ASalam%20Merah%2A%20%F0%9F%94%B4%F0%9F%94%B4%F0%9F%94%B4%0ASaya%20dapat%20informasi%20dari%20uterogroup.com%0AMau%20konsultasi%20dong%21%0ANama%20%3A%20%0AAlamat%20%3A%0ANo.%20Telp%20%3A%0AEmail%20%3A%0AKebutuhan%20%3A" class="whatsapp-btn" target="_blank">
+        <i class="fa fa-whatsapp icon"></i>
+    </a>
+
+    @if(session('success'))
+        <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition
+             class="fixed top-4 right-4 z-50 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow-lg">
+            {{ session('success') }}
         </div>
     @endif
 
-    @if (session('error'))
-        <div class="max-w-7xl mx-auto mt-4 px-4 sm:px-6 lg:px-8">
-            <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-                {{ session('error') }}
-            </div>
+    @if(session('error'))
+        <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition
+             class="fixed top-4 right-4 z-50 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg">
+            {{ session('error') }}
         </div>
     @endif
 
-    {{-- Main Content --}}
-    <main>
-        @yield('content')
-    </main>
-
-    {{-- Footer --}}
-    <footer class="bg-black text-white mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <div class="w-8 h-8 bg-brand rounded-lg flex items-center justify-center">
-                            <span class="text-white font-bold text-sm">U</span>
-                        </div>
-                        <span class="text-xl font-bold text-white">Utero Group</span>
-                    </div>
-                    <p class="text-gray-400 text-sm">Penyedia solusi packaging dan printing berkualitas tinggi untuk kebutuhan bisnis Anda.</p>
-                </div>
-                <div>
-                    <h3 class="font-semibold mb-3 text-white">Navigasi</h3>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="{{ route('home') }}" class="hover:text-white">Beranda</a></li>
-                        <li><a href="{{ route('products.index') }}" class="hover:text-white">Produk</a></li>
-                        <li><a href="{{ route('posts.index') }}" class="hover:text-white">Berita</a></li>
-                        <li><a href="{{ route('gallery.index') }}" class="hover:text-white">Galeri</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold mb-3 text-white">Layanan</h3>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="{{ route('order.create') }}" class="hover:text-white">Pesan Produk</a></li>
-                        <li><a href="{{ route('testimonials.index') }}" class="hover:text-white">Testimoni</a></li>
-                        <li><a href="{{ route('contact.index') }}" class="hover:text-white">Hubungi Kami</a></li>
-                        <li><a href="{{ route('download.index') }}" class="hover:text-white">Download</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-semibold mb-3 text-white">Kontak</h3>
-                    <ul class="space-y-2 text-sm text-gray-400">
-                        <li class="flex items-start space-x-2">
-                            <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                            <span>Malang, Indonesia</span>
-                        </li>
-                        <li class="flex items-start space-x-2">
-                            <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                            <span>info@uterogroup.com</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-500">
-                &copy; {{ date('Y') }} Utero Group. All rights reserved.
-            </div>
-        </div>
-    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var ticker = document.getElementById('newsnya');
+            if (ticker) {
+                ticker.style.display = 'block';
+                ticker.style.overflow = 'hidden';
+                ticker.style.whiteSpace = 'nowrap';
+                ticker.style.animation = 'ticker 30s linear infinite';
+            }
+        });
+    </script>
+    <style>
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+    </style>
 
     @stack('scripts')
 </body>

@@ -10,16 +10,22 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::with('category');
+        $query = Product::with(['category', 'images']);
 
-        if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+        if ($request->filled('src')) {
+            $query->where('name', 'like', '%' . $request->src . '%');
         }
 
-        $products = $query->latest()->paginate(12);
-        $categories = ProductCategory::withCount('products')->get();
+        if ($request->filled('cat')) {
+            $category = ProductCategory::where('slug', $request->cat)->first();
+            if ($category) {
+                $query->where('product_category_id', $category->id);
+            }
+        }
 
-        return view('products.index', compact('products', 'categories'));
+        $products = $query->latest()->paginate(12)->withQueryString();
+
+        return view('products.index', compact('products'));
     }
 
     public function show(string $slug)
@@ -28,7 +34,8 @@ class ProductController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        $relatedProducts = Product::where('product_category_id', $product->product_category_id)
+        $relatedProducts = Product::with('images')
+            ->where('product_category_id', $product->product_category_id)
             ->where('id', '!=', $product->id)
             ->take(4)
             ->get();
@@ -36,15 +43,19 @@ class ProductController extends Controller
         return view('products.show', compact('product', 'relatedProducts'));
     }
 
-    public function category(string $slug)
+    public function category(Request $request, string $slug)
     {
         $category = ProductCategory::where('slug', $slug)->firstOrFail();
-        $products = Product::where('product_category_id', $category->id)
-            ->latest()
-            ->paginate(12);
 
-        $categories = ProductCategory::withCount('products')->get();
+        $query = Product::with(['category', 'images'])
+            ->where('product_category_id', $category->id);
 
-        return view('products.category', compact('category', 'products', 'categories'));
+        if ($request->filled('src')) {
+            $query->where('name', 'like', '%' . $request->src . '%');
+        }
+
+        $products = $query->latest()->paginate(12)->withQueryString();
+
+        return view('products.category', compact('category', 'products'));
     }
 }

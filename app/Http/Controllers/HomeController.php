@@ -3,26 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\News;
-use App\Models\Gallery;
+use App\Models\Advertisement;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $promoProducts = Product::where('is_promo', true)
+        $promoProducts = Product::with(['category', 'images'])
+            ->where('is_promo', true)
             ->latest()
-            ->take(6)
             ->get();
 
-        $latestNews = News::latest()
-            ->take(3)
+        $latestProducts = Product::with(['category', 'images'])
+            ->latest()
+            ->take(12)
             ->get();
 
-        $latestGalleries = Gallery::latest()
-            ->take(6)
-            ->get();
+        $categories = ProductCategory::withCount('products')->orderBy('name')->get();
 
-        return view('home.index', compact('promoProducts', 'latestNews', 'latestGalleries'));
+        $latestNews = News::latest()->take(5)->get();
+
+        $advertisements = Advertisement::latest()->take(10)->get();
+
+        return view('home.index', compact('promoProducts', 'latestProducts', 'categories', 'latestNews', 'advertisements'));
     }
 }

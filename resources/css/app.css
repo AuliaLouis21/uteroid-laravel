@@ -1,3 +1,240 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+        @apply m-0 p-0 text-utero-body;
+        font: normal 12px/100% 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    a { @apply text-utero-link; }
+    a:hover { @apply text-utero-linkhover no-underline; }
+}
+
+@layer components {
+    .site-wrapper {
+        @apply mx-auto overflow-hidden;
+        width: 860px;
+    }
+    #header {
+        background: url('/images/banner-web.jpg') center center no-repeat #7B0100;
+        background-size: contain;
+        @apply w-full overflow-hidden;
+        height: 400px;
+    }
+    .nav-bar {
+        background: url('/images/item.png') center repeat-y #2A2A2A;
+        @apply w-full overflow-hidden;
+    }
+    .nav-bar ul { @apply m-0 p-0 float-left w-full; }
+    .nav-bar ul li { @apply inline; }
+    .nav-bar ul li a {
+        @apply float-left no-underline;
+        color: gray;
+        font: normal 12px/100% 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        padding: 8px 6px;
+        border-right: 1px solid #111;
+        border-left: 1px solid #333;
+    }
+    .nav-bar ul li a:hover { @apply text-white; }
+    .nav-bar ul li a.active {
+        @apply text-black;
+        background-color: #EBF5FE;
+        border-top: 1px solid #000;
+        border-right: 1px solid #111;
+        border-left: 1px solid #333;
+    }
+    .news-ticker {
+        @apply block overflow-hidden;
+        border-bottom: 1px solid #CCC;
+        padding: 8px;
+        font: 11px/100% Verdana, Geneva, sans-serif;
+        width: 844px;
+        margin: 0 auto 8px auto;
+        background-color: #EBF5FE;
+    }
+    .sidebar-left {
+        @apply float-left overflow-hidden;
+        width: 236px;
+        margin-right: 8px;
+        margin-left: 4px;
+    }
+    .sidebar-left-scroll {
+        @apply float-left overflow-x-hidden relative;
+        width: 236px;
+        height: 864px;
+    }
+    .sidebar-left .label-title {
+        background: url('/images/label.png') no-repeat;
+        @apply text-white font-bold capitalize;
+        font-size: 14px;
+        padding: 6px;
+        letter-spacing: -1px;
+        border: 1px solid #333;
+    }
+    .category-list { @apply list-none m-0 p-0; }
+    .category-list li a {
+        @apply block no-underline text-utero-body;
+        border-bottom: 1px solid #CCC;
+        font: normal 11px/100% 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        text-transform: uppercase;
+        padding: 6px 8px 6px 16px;
+        background: url('/images/arrow1.gif') 8px center no-repeat;
+        width: 212px;
+    }
+    .category-list li a:hover {
+        @apply text-brand;
+        padding-left: 20px;
+        background-color: #EFEFEF;
+    }
+    .main-content {
+        @apply float-left overflow-hidden;
+        width: 400px;
+        margin-right: 8px;
+    }
+    .sidebar-right {
+        @apply float-left overflow-hidden;
+        width: 200px;
+        height: 890px;
+        overflow-x: hidden;
+        margin-right: 4px;
+    }
+    .sidebar-right-news {
+        @apply block overflow-hidden;
+        padding: 6px;
+        background-color: #222;
+        border-bottom: 1px solid #111;
+        border-top: 1px solid #333;
+        color: #CCC;
+        font: normal 11px/100% 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        line-height: 13px;
+    }
+    .sidebar-right-news a {
+        @apply block text-red-600 no-underline mb-1 font-bold;
+        font-size: 11px;
+    }
+    .sidebar-right-news a:hover { @apply text-gray-400 underline; }
+    .sidebar-right-ads img {
+        @apply border-none p-0 m-0;
+        border-bottom: 2px solid #CCC;
+    }
+    .sidebar-right-ads img:hover { border-bottom-color: #F00; }
+    .sidebar-right-ads a { @apply block mb-1; }
+
+    .promo-slider { border: 2px solid #333; @apply mb-2 bg-gray-600 overflow-hidden relative; width: 396px; height: 200px; }
+    .promo-slide { @apply relative w-full h-full; }
+    .promo-slide-image { @apply w-full h-full object-cover; }
+    .promo-slide-meta {
+        @apply absolute bottom-0 left-0 right-0 text-white p-2 z-10;
+        background: rgba(0,0,0,0.7);
+    }
+    .promo-slide-title a { @apply text-blue-400 no-underline uppercase font-bold; font-size: 12px; letter-spacing: -1px; }
+    .promo-slide-title a:hover { @apply text-gray-400; }
+    .promo-slide-spec { @apply text-gray-300; font: normal 11px/100% Verdana, Geneva, sans-serif; }
+
+    .product-grid-item {
+        @apply float-left mb-2 border border-gray-300;
+        width: 126px;
+    }
+    .product-grid-item:hover { @apply border-brand; }
+    .product-grid-item img { @apply border-none p-0 m-0 w-full; }
+    .product-grid-item .prodtitle a {
+        @apply text-white bg-black no-underline block;
+        font: normal 10px/100% Verdana, Geneva, sans-serif;
+        letter-spacing: -1px;
+        padding: 2px 1px;
+        line-height: 11px;
+    }
+    .product-grid-item .prodtitle a:hover { @apply text-gray-300; }
+    .product-grid-item .prodprice {
+        @apply text-red-500 bg-black block uppercase;
+        font: normal 10px/100% Verdana, Geneva, sans-serif;
+        letter-spacing: -1px;
+        padding: 1px;
+    }
+
+    .product-table { @apply w-full mb-2 border border-gray-400; }
+    .product-table .thead { background: url('/images/bg-footer.png') 0px -19px repeat-x; @apply text-center text-xs; }
+    .product-table .row-even { background-color: #F4FAFF; }
+    .product-table .row-odd { background-color: #EBF5FE; }
+    .product-table td { @apply p-1; }
+    .product-table .row-name a { @apply text-utero-body no-underline; font: normal 11px/100% Verdana, Geneva, sans-serif; text-decoration: underline; }
+    .product-table .row-name a:hover { @apply text-gray-500 no-underline; }
+    .product-table .row-price { @apply text-right; font-size: 10px; }
+    .product-table .row-center { @apply text-center; }
+
+    .gallery-section { @apply overflow-hidden mb-4; padding: 0 8px 8px 8px; }
+    .gallery-section h1 { @apply m-0 mb-4 p-0 font-bold text-3xl tracking-tighter; letter-spacing: -3px; }
+    .gallery-section h1 .accent { @apply text-brand; }
+    .gallery-item { @apply float-left mb-4; width: 264px; margin-right: 26px; }
+    .gallery-item:nth-child(3n) { margin-right: 0; }
+    .gallery-item .img { height: 132px; @apply border border-gray-300 block bg-gray-200 overflow-hidden; }
+    .gallery-item .img img { @apply w-full h-full object-cover m-0 p-0 border-none; }
+    .gallery-item .desc { @apply block py-1; font: normal 16px/100% 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: -1px; }
+    .gallery-item .desc a { @apply text-utero-body no-underline; }
+    .gallery-item .desc a:hover { @apply text-brand; }
+
+    .video-item { @apply float-left mb-4; width: 120px; }
+    .video-item .img { @apply w-full border border-gray-300 block bg-gray-200; }
+    .video-item .img img { @apply m-0 p-0 border-none w-full; }
+    .video-item .desc { @apply block py-1; font: normal 12px/100% 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: -1px; }
+    .video-item .desc a { @apply text-utero-body no-underline; }
+    .video-item .desc a:hover { @apply text-brand; }
+
+    .audio-item { @apply float-left mb-4; width: 264px; margin-right: 26px; }
+    .audio-item:nth-child(3n) { margin-right: 0; }
+    .audio-item .descmp3 { @apply block py-1; font: normal 12px/100% 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: -1px; }
+
+    .section-divider { @apply block clear-both text-right; border-top: 2px solid #333; margin-bottom: 8px; font: normal 11px/100% Verdana, Geneva, sans-serif; letter-spacing: -1px; }
+    .section-divider a { @apply text-green-700 no-underline ml-1; }
+    .section-divider a:hover { @apply text-utero-body; }
+
+    .footer-area {
+        background: url('/images/item.png') center repeat-y #2A2A2A;
+        @apply w-full overflow-hidden;
+    }
+    .footer-col1 { @apply float-left overflow-hidden text-white; width: 300px; padding: 0 8px; margin: 28px 0 8px 0; }
+    .footer-col2 { @apply float-left overflow-hidden text-white; width: 256px; padding: 0 8px; margin: 28px 0 8px 14px; }
+    .footer-col3 { @apply float-left overflow-hidden text-white; width: 224px; padding: 0 8px; margin: 28px 0 8px 18px; }
+    .footer-label { @apply text-white font-bold capitalize block mb-2; font-size: 18px; letter-spacing: -1px; }
+    .footer-label a { @apply text-gray-500; }
+    .footer-label a:hover { @apply text-utero-link no-underline; }
+    .footer-text { @apply text-white block clear-both text-justify mb-5; font: normal 12px/14px 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+    .footer-copyright { @apply text-white; padding: 8px; border-top: 1px solid #333; }
+
+    .testimonial-text { @apply block text-left; font: normal 12px/14px 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+    .testimonial-info { @apply block text-right text-gray-400 mt-2; font-style: italic; font-size: 14px; letter-spacing: -1px; }
+
+    .whatsapp-btn {
+        @apply fixed z-50 text-center text-white rounded-full shadow-lg no-underline;
+        width: 60px; height: 60px; bottom: 25px; right: 50%; margin-right: -30px;
+        background-color: #ba131a; font-size: 35px; line-height: 60px;
+    }
+    .whatsapp-btn .icon { margin-top: 12px; }
+
+    .form-style span { @apply block text-left overflow-hidden; padding: 6px 6px 6px 100px; border-bottom: 1px solid #CCC; }
+    .form-style label { @apply float-left w-24; margin-left: -100px; }
+    .form-style input[type="text"], .form-style input[type="email"], .form-style input[type="tel"] {
+        @apply border border-gray-500 w-52;
+        background: url('/images/cntback.png') 0px -2px repeat-x #FFF;
+    }
+    .form-style textarea {
+        @apply border border-gray-500;
+        width: 280px; height: 100px;
+        background: url('/images/cntback.png') 0px -2px repeat-x #FFF;
+    }
+    .form-style input[type="submit"] {
+        @apply text-gray-700 border border-gray-700 bg-gray-300 cursor-pointer;
+        padding: 2px 0;
+        background: url('/images/bg-footer.png') 0px -23px repeat-x;
+        font: normal 12px/100% 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .form-style input[type="submit"]:hover { @apply border-utero-link text-utero-link; }
+
+    .detail-section { @apply overflow-hidden mb-2; padding: 0 8px 8px 8px; }
+    .detail-section h1 { @apply m-0 mb-4 p-0 font-bold text-3xl tracking-tighter; letter-spacing: -3px; }
+}
+
+@layer utilities {
+    .clear-fix::after { content: ""; @apply table clear-both; }
+}

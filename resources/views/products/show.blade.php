@@ -1,121 +1,89 @@
 @extends('layouts.frontend')
 
-@section('title', $product->name . ' - Utero Group')
+@section('title', $product->name . ' | Utero Advertising')
+
+@section('sidebar-left')
+<div class="sidebar-left">
+    <div class="label-title">Product Category</div>
+    <div class="sidebar-left-scroll">
+        <ul class="category-list">
+            @foreach($categories as $cat)
+                <li><a href="{{ route('products.category', $cat->slug) }}" title="category: {{ $cat->name }}">{{ $cat->name }}</a></li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+@endsection
 
 @section('content')
+<div class="main-content">
+    <div class="detail-section">
+        <h1 style="border-bottom:1px solid #999; padding-bottom:4px; margin-bottom:8px;">
+            {{ $product->name }}
+        </h1>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-
-    {{-- Breadcrumb --}}
-    <nav class="flex items-center space-x-2 text-sm text-gray-500 mb-8">
-        <a href="{{ route('home') }}" class="hover:text-brand">Beranda</a>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <a href="{{ route('products.index') }}" class="hover:text-brand">Produk</a>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <span class="text-gray-900 font-medium">{{ $product->name }}</span>
-    </nav>
-
-    <div class="flex flex-col lg:flex-row gap-12">
-
-        {{-- Product Image --}}
-        <div class="lg:w-1/2">
-            <div class="bg-gray-200 rounded-xl aspect-square flex items-center justify-center">
-                @if($product->image)
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover rounded-xl">
-                @else
-                    <svg class="w-24 h-24 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+        <div class="flex gap-4 mb-4">
+            <div class="flex-shrink-0">
+                @if($product->images->count())
+                    <img src="{{ asset('storage/' . $product->images->first()->path) }}" alt="{{ $product->name }}" style="max-width:200px; border:1px solid #CCC;">
                 @endif
             </div>
-            @if($product->images->count())
-            <div class="grid grid-cols-4 gap-3 mt-4">
-                @foreach($product->images->take(4) as $img)
-                <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden">
-                    <img src="{{ asset('storage/' . $img->image) }}" alt="" class="w-full h-full object-cover">
+            <div>
+                <table style="width:100%; border-collapse:collapse;">
+                    <tr style="border-bottom:1px solid #CCC;">
+                        <td style="padding:4px; background:#EFEFEF; width:100px;">Kategori</td>
+                        <td style="padding:4px;">{{ $product->category->name ?? '-' }}</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #CCC;">
+                        <td style="padding:4px; background:#EFEFEF;">Harga</td>
+                        <td style="padding:4px; color:#F00; font-weight:bold;">Rp. {{ number_format($product->price, 0, ',', '.') }},-</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #CCC;">
+                        <td style="padding:4px; background:#EFEFEF;">Ukuran</td>
+                        <td style="padding:4px;">{{ $product->size ?? '-' }}</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #CCC;">
+                        <td style="padding:4px; background:#EFEFEF;">Min. Order</td>
+                        <td style="padding:4px;">{{ $product->min_order ?? 1 }}</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid #CCC;">
+                        <td style="padding:4px; background:#EFEFEF;">Ketebalan</td>
+                        <td style="padding:4px;">{{ $product->thickness ?? '-' }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        @if($product->description)
+            <div class="isidesc">{!! $product->description !!}</div>
+        @endif
+
+        @if($product->images->count() > 1)
+            <div class="mt-4">
+                <strong>Gambar Lainnya:</strong>
+                <div class="flex gap-2 mt-2">
+                    @foreach($product->images->skip(1) as $img)
+                        <img src="{{ asset('storage/' . $img->path) }}" alt="{{ $product->name }}" style="width:80px; height:80px; object-fit:cover; border:1px solid #CCC;">
+                    @endforeach
                 </div>
+            </div>
+        @endif
+    </div>
+
+    @if($relatedProducts->count())
+        <div class="detail-section mt-4" style="border-top:1px solid #999; padding-top:8px;">
+            <strong>Produk Terkait:</strong>
+            <div class="flex gap-2 mt-2">
+                @foreach($relatedProducts as $related)
+                    <a href="{{ route('products.show', $related->slug) }}" class="block" style="width:120px;">
+                        @if($related->images->count())
+                            <img src="{{ asset('storage/' . $related->images->first()->path) }}" alt="{{ $related->name }}" style="width:120px; height:90px; object-fit:cover; border:1px solid #CCC;">
+                        @endif
+                        <span class="block text-xs mt-1">{{ strtoupper($related->name) }}</span>
+                    </a>
                 @endforeach
             </div>
-            @endif
         </div>
-
-        {{-- Product Info --}}
-        <div class="lg:w-1/2">
-            @if($product->category)
-            <span class="inline-block bg-brand-light text-brand text-xs font-medium px-3 py-1 rounded-full mb-3">{{ $product->category->name }}</span>
-            @endif
-
-            <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ $product->name }}</h1>
-
-            <div class="text-2xl font-bold text-brand mb-6">Rp {{ number_format($product->unit_price, 0, ',', '.') }}</div>
-
-            <div class="space-y-4 mb-8">
-                <div class="grid grid-cols-2 gap-4">
-                    @if($product->type)
-                    <div class="bg-gray-50 rounded-lg p-4">
-                        <span class="text-sm text-gray-500">Tipe</span>
-                        <p class="font-medium text-gray-900">{{ $product->type->name }}</p>
-                    </div>
-                    @endif
-
-                    @if($product->size)
-                    <div class="bg-gray-50 rounded-lg p-4">
-                        <span class="text-sm text-gray-500">Ukuran</span>
-                        <p class="font-medium text-gray-900">{{ $product->size }}</p>
-                    </div>
-                    @endif
-
-                    @if($product->thickness)
-                    <div class="bg-gray-50 rounded-lg p-4">
-                        <span class="text-sm text-gray-500">Ketebalan</span>
-                        <p class="font-medium text-gray-900">{{ $product->thickness }}</p>
-                    </div>
-                    @endif
-
-                    @if($product->min_order)
-                    <div class="bg-gray-50 rounded-lg p-4">
-                        <span class="text-sm text-gray-500">Minimal Order</span>
-                        <p class="font-medium text-gray-900">{{ number_format($product->min_order) }} pcs</p>
-                    </div>
-                    @endif
-                </div>
-            </div>
-
-            @if($product->description)
-            <div class="mb-8">
-                <h2 class="font-semibold text-gray-900 mb-2">Deskripsi</h2>
-                <div class="text-gray-600 leading-relaxed prose max-w-none">{!! $product->description !!}</div>
-            </div>
-            @endif
-
-            <a href="{{ route('order.create') }}" class="inline-block w-full sm:w-auto text-center bg-brand text-white font-semibold px-8 py-3 rounded-lg hover:bg-brand-dark transition">
-                Pesan Produk Ini
-            </a>
-        </div>
-    </div>
-
-    {{-- Related Products --}}
-    @if($relatedProducts->count())
-    <div class="mt-16">
-        <h2 class="text-2xl font-bold text-gray-900 mb-8">Produk Terkait</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            @foreach($relatedProducts as $related)
-            <a href="{{ route('products.show', $related->slug) }}" class="bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden group">
-                <div class="aspect-video bg-gray-200 flex items-center justify-center">
-                    @if($related->image)
-                        <img src="{{ asset('storage/' . $related->image) }}" alt="{{ $related->name }}" class="w-full h-full object-cover">
-                    @else
-                        <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-                    @endif
-                </div>
-                <div class="p-4">
-                    <h3 class="font-semibold text-gray-900 group-hover:text-brand transition line-clamp-2">{{ $related->name }}</h3>
-                    <p class="text-brand font-bold mt-1 text-sm">Rp {{ number_format($related->unit_price, 0, ',', '.') }}</p>
-                </div>
-            </a>
-            @endforeach
-        </div>
-    </div>
     @endif
-
 </div>
-
 @endsection

@@ -1,168 +1,119 @@
 @extends('layouts.frontend')
 
-@section('title', 'Pesan Produk')
+@section('title', 'Pesan Produk | Utero Advertising')
+
+@section('sidebar-left')
+<div class="sidebar-left">
+    <div class="label-title">Product Category</div>
+    <div class="sidebar-left-scroll">
+        <ul class="category-list">
+            @foreach($categories as $cat)
+                <li><a href="{{ route('products.category', $cat->slug) }}" title="category: {{ $cat->name }}">{{ $cat->name }}</a></li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+@endsection
 
 @section('content')
-<section class="py-16 bg-gray-50">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="main-content" x-data="orderForm()">
+    <div class="detail-section">
+        <h1 style="border-bottom:1px solid #999; padding-bottom:4px; margin-bottom:8px;">
+            Formulir Pemesanan
+        </h1>
+    </div>
 
-        <div class="text-center mb-12">
-            <h1 class="text-3xl font-bold text-gray-900">Pesan Produk</h1>
-            <p class="mt-2 text-gray-600">Isi form berikut untuk melakukan pemesanan</p>
+    <form method="POST" action="{{ route('order.store') }}">
+        @csrf
+        <div class="detail-section">
+            <div style="background:#222; border:2px solid #222; color:#FFF; padding:12px 4px; text-align:center; font:bold 14px/100% 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                Data Pemesan
+            </div>
+            <div style="display:flex; flex-wrap:wrap; border-bottom:1px solid #111; border-top:1px solid #333;">
+                <div style="width:130px; padding:8px 4px 6px 4px; color:#FFF; background:#222;">Nama Lengkap</div>
+                <div style="padding:6px 0 2px 0; flex:1;">
+                    <input type="text" name="customer_name" value="{{ old('customer_name') }}" style="width:236px;" required>
+                    @error('customer_name') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
+                </div>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; border-bottom:1px solid #111; border-top:1px solid #333;">
+                <div style="width:130px; padding:8px 4px 6px 4px; color:#FFF; background:#222;">Email</div>
+                <div style="padding:6px 0 2px 0; flex:1;">
+                    <input type="email" name="email" value="{{ old('email') }}" style="width:236px;" required>
+                </div>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; border-bottom:1px solid #111; border-top:1px solid #333;">
+                <div style="width:130px; padding:8px 4px 6px 4px; color:#FFF; background:#222;">Telepon</div>
+                <div style="padding:6px 0 2px 0; flex:1;">
+                    <input type="tel" name="phone" value="{{ old('phone') }}" style="width:236px;" required>
+                </div>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; border-bottom:1px solid #111; border-top:1px solid #333;">
+                <div style="width:130px; padding:8px 4px 6px 4px; color:#FFF; background:#222;">Kota</div>
+                <div style="padding:6px 0 2px 0; flex:1;">
+                    <input type="text" name="city" value="{{ old('city') }}" style="width:236px;">
+                </div>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; border-bottom:1px solid #111; border-top:1px solid #333;">
+                <div style="width:130px; padding:8px 4px 6px 4px; color:#FFF; background:#222;">Alamat</div>
+                <div style="padding:6px 0 2px 0; flex:1;">
+                    <textarea name="address" style="width:236px; height:60px;">{{ old('address') }}</textarea>
+                </div>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; border-bottom:1px solid #111; border-top:1px solid #333;">
+                <div style="width:130px; padding:8px 4px 6px 4px; color:#FFF; background:#222;">Pesan</div>
+                <div style="padding:6px 0 2px 0; flex:1;">
+                    <textarea name="notes" style="width:236px; height:60px;">{{ old('notes') }}</textarea>
+                </div>
+            </div>
         </div>
 
-        <form action="{{ route('order.store') }}" method="POST" x-data="orderForm()">
-            @csrf
-
-            <div class="bg-white rounded-lg shadow-md p-8 mb-8">
-                <h2 class="text-xl font-bold text-gray-900 mb-6">Informasi Pelanggan</h2>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-                        <input type="text" name="name" id="name" value="{{ old('name') }}"
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-brand focus:ring-brand @error('name') border-red-500 @enderror"
-                            required>
-                        @error('name')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input type="email" name="email" id="email" value="{{ old('email') }}"
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-brand focus:ring-brand @error('email') border-red-500 @enderror"
-                            required>
-                        @error('email')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Telepon</label>
-                        <input type="text" name="phone" id="phone" value="{{ old('phone') }}"
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-brand focus:ring-brand @error('phone') border-red-500 @enderror"
-                            required>
-                        @error('phone')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label for="city" class="block text-sm font-medium text-gray-700 mb-1">Kota</label>
-                        <input type="text" name="city" id="city" value="{{ old('city') }}"
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-brand focus:ring-brand @error('city') border-red-500 @enderror"
-                            required>
-                        @error('city')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label for="postal_code" class="block text-sm font-medium text-gray-700 mb-1">Kode Pos</label>
-                        <input type="text" name="postal_code" id="postal_code" value="{{ old('postal_code') }}"
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-brand focus:ring-brand @error('postal_code') border-red-500 @enderror"
-                            required>
-                        @error('postal_code')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div class="md:col-span-2">
-                        <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap</label>
-                        <textarea name="address" id="address" rows="3"
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-brand focus:ring-brand @error('address') border-red-500 @enderror"
-                            required>{{ old('address') }}</textarea>
-                        @error('address')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div class="md:col-span-2">
-                        <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Pesan <span class="text-gray-400">(opsional)</span></label>
-                        <textarea name="message" id="message" rows="3"
-                            class="w-full rounded-md border-gray-300 shadow-sm focus:border-brand focus:ring-brand @error('message') border-red-500 @enderror">{{ old('message') }}</textarea>
-                        @error('message')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
+        <div class="detail-section mt-2">
+            <div style="background:#222; border:2px solid #222; color:#FFF; padding:12px 4px; text-align:center; font:bold 14px/100% 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                Produk yang Dipesan
             </div>
 
-            <div class="bg-white rounded-lg shadow-md p-8">
-                <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-xl font-bold text-gray-900">Item Pesanan</h2>
-                    <button type="button" @click="addItem()"
-                        class="bg-green-600 hover:bg-green-700 text-white text-sm font-semibold py-2 px-4 rounded-md transition">
-                        + Tambah Item
-                    </button>
+            <template x-for="(item, index) in items" :key="index">
+                <div style="display:flex; flex-wrap:wrap; border-bottom:1px solid #111; border-top:1px solid #333; padding:4px;">
+                    <select :name="'items[' + index + '][product_id]'" style="flex:1; margin-right:8px;" required>
+                        <option value="">Pilih Produk</option>
+                        @foreach($products as $product)
+                            <option value="{{ $product->id }}">{{ $product->name }} - Rp. {{ number_format($product->price) }}</option>
+                        @endforeach
+                    </select>
+                    <input type="number" :name="'items[' + index + '][quantity]'" x-model="item.quantity" min="1" value="1" style="width:60px;" required>
+                    <button type="button" @click="removeItem(index)" x-show="items.length > 1" class="ml-2 text-red-500 text-xs">Hapus</button>
                 </div>
+            </template>
 
-                <template x-for="(item, index) in items" :key="index">
-                    <div class="flex flex-col sm:flex-row gap-4 mb-4 p-4 bg-gray-50 rounded-md">
-                        <div class="flex-1">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Produk</label>
-                            <select :name="'items['+index+'][product_id]'"
-                                x-model="item.product_id"
-                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-brand focus:ring-brand"
-                                required>
-                                <option value="">-- Pilih Produk --</option>
-                                @foreach($products as $product)
-                                    <option value="{{ $product->id }}">{{ $product->name }} - Rp {{ number_format($product->price, 0, ',', '.') }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="w-full sm:w-32">
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah</label>
-                            <input type="number" :name="'items['+index+'][quantity]'"
-                                x-model="item.quantity" min="1" value="1"
-                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-brand focus:ring-brand"
-                                required>
-                        </div>
-                        <div class="flex items-end">
-                            <button type="button" @click="removeItem(index)"
-                                class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md transition text-sm font-semibold"
-                                :disabled="items.length === 1"
-                                :class="{ 'opacity-50 cursor-not-allowed': items.length === 1 }">
-                                Hapus
-                            </button>
-                        </div>
-                    </div>
-                </template>
-
-                @error('items')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-
-                <div class="flex justify-end mt-6">
-                    <button type="submit"
-                        class="bg-brand hover:bg-brand-dark text-white font-semibold py-3 px-8 rounded-md transition text-lg">
-                        Kirim Pesanan
-                    </button>
-                </div>
+            <div style="margin-top:8px;">
+                <button type="button" @click="addItem()" style="background:#09F; color:#FFF; border:none; padding:4px 8px; cursor:pointer; font-size:12px;">
+                    + Tambah Produk
+                </button>
             </div>
-        </form>
+        </div>
 
-    </div>
-</section>
-@endsection
+        <div style="margin-top:8px; text-align:right;">
+            <button type="submit" style="background:url(/images/bg-footer.png) 0px -23px repeat-x #CCC; border:1px solid #333; padding:4px 16px; cursor:pointer; font:normal 12px/100% 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+                Kirim Pesanan
+            </button>
+        </div>
+    </form>
+</div>
 
 @push('scripts')
 <script>
-    function orderForm() {
-        return {
-            items: [
-                { product_id: '', quantity: 1 }
-            ],
-            addItem() {
-                this.items.push({ product_id: '', quantity: 1 });
-            },
-            removeItem(index) {
-                if (this.items.length > 1) {
-                    this.items.splice(index, 1);
-                }
-            }
+function orderForm() {
+    return {
+        items: [{ product_id: '', quantity: 1 }],
+        addItem() {
+            this.items.push({ product_id: '', quantity: 1 });
+        },
+        removeItem(index) {
+            this.items.splice(index, 1);
         }
     }
+}
 </script>
 @endpush
+@endsection

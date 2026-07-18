@@ -12,14 +12,25 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
             },
             colors: {
                 brand: {
-                    DEFAULT: '#CE181E',
-                    dark: '#A81318',
-                    light: '#FEE8E9',
+                    DEFAULT: '#DF282A',
+                    dark: '#ba131a',
+                    light: '#EBF5FE',
                 },
+                utero: {
+                    dark: '#2A2A2A',
+                    body: '#333',
+                    link: '#06F',
+                    linkhover: '#555',
+                    border: '#CCC',
+                    tablehead: '#09F',
+                },
+            },
+            width: {
+                'site': '860px',
             },
         },
     },
