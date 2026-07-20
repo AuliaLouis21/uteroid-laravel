@@ -18,6 +18,8 @@ use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
 use App\Http\Controllers\Admin\AlbumController;
+use App\Http\Controllers\Admin\AlbumVideoController;
+use App\Http\Controllers\Admin\AlbumAudioController;
 use Illuminate\Support\Facades\Route;
 
 // =============================================
@@ -95,4 +97,6 @@ Route::prefix('admin')
         Route::resource('albums', AlbumController::class);
         Route::post('albums/{album}/photos', [AlbumController::class, 'addPhoto'])->name('albums.photos.store');
         Route::delete('albums/{album}/photos/{photo}', [AlbumController::class, 'deletePhoto'])->name('albums.photos.delete');
+        Route::resource('videos', AlbumVideoController::class);
+        Route::resource('audio', AlbumAudioController::class);
     });
