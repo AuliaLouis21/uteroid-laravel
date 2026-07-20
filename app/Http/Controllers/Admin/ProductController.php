@@ -39,7 +39,14 @@ class ProductController extends Controller
             $data['image'] = $request->file('image')->store('products', 'public');
         }
 
-        Product::create($data);
+        $product = Product::create($data);
+
+        if ($request->hasFile('image')) {
+            $product->images()->create([
+                'filename' => $data['image'],
+                'is_thumbnail' => true,
+            ]);
+        }
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Product created successfully.');
@@ -76,6 +83,12 @@ class ProductController extends Controller
             if ($oldImage && \Storage::disk('public')->exists($oldImage)) {
                 \Storage::disk('public')->delete($oldImage);
             }
+
+            $product->images()->where('is_thumbnail', true)->delete();
+            $product->images()->create([
+                'filename' => $data['image'],
+                'is_thumbnail' => true,
+            ]);
         }
 
         $product->update($data);
