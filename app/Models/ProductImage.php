@@ -11,9 +11,16 @@ class ProductImage extends Model
 
     protected $fillable = ['product_id', 'filename', 'is_thumbnail'];
 
+    protected $appends = ['path'];
+
     protected $casts = [
         'is_thumbnail' => 'boolean',
     ];
+
+    public function getPathAttribute(): string
+    {
+        return $this->filename;
+    }
 
     public function product()
     {
