@@ -38,8 +38,8 @@
             @endif
             <div class="video-item" style="margin-left:{{ $index % 6 == 0 ? '0px' : '24px' }};">
                 <div class="img">
-                    @if($video->url)
-                        <img src="https://img.youtube.com/vi/{{ \Illuminate\Support\Str::afterLast($video->url, 'v=') }}/1.jpg" alt="{{ $video->title }}">
+                    @if($video->youtube_id)
+                        <img src="https://img.youtube.com/vi/{{ $video->youtube_id }}/1.jpg" alt="{{ $video->title }}">
                     @else
                         <div class="bg-gray-200 h-20 flex items-center justify-center text-gray-400"><i class="fa fa-play"></i></div>
                     @endif

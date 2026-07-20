@@ -45,11 +45,8 @@
     <div class="card">
         <div class="card-header">Preview</div>
         <div class="card-body text-center">
-            @if($video->url)
-                @php
-                    $videoId = \Illuminate\Support\Str::afterLast($video->url, 'v=');
-                @endphp
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $videoId }}" frameborder="0" allowfullscreen></iframe>
+            @if($video->youtube_id)
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $video->youtube_id }}" frameborder="0" allowfullscreen></iframe>
             @else
                 <p class="text-muted">No URL available.</p>
             @endif

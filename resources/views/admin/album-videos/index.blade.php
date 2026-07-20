@@ -25,9 +25,9 @@
                         <tr>
                             <td>{{ $video->id }}</td>
                             <td>
-                                @if($video->url)
+                                @if($video->youtube_id)
                                     <a href="{{ $video->url }}" target="_blank">
-                                        <img src="https://img.youtube.com/vi/{{ \Illuminate\Support\Str::afterLast($video->url, 'v=') }}/1.jpg" alt="{{ $video->title }}" width="80" height="60" style="object-fit:cover; border-radius:4px;">
+                                        <img src="https://img.youtube.com/vi/{{ $video->youtube_id }}/1.jpg" alt="{{ $video->title }}" width="80" height="60" style="object-fit:cover; border-radius:4px;">
                                     </a>
                                 @else
                                     <span class="text-muted">No URL</span>
