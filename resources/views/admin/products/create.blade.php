@@ -68,6 +68,12 @@
                     @enderror
                 </div>
 
+                <div class="mb-3 form-check">
+                    <input type="hidden" name="is_promo" value="0">
+                    <input type="checkbox" name="is_promo" id="is_promo" value="1" class="form-check-input" {{ old('is_promo') ? 'checked' : '' }}>
+                    <label for="is_promo" class="form-check-label">Tampilkan di Slider Promo</label>
+                </div>
+
                 <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">Cancel</a>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>

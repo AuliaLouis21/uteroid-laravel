@@ -29,9 +29,7 @@
                          x-transition:leave-start="opacity-100"
                          x-transition:leave-end="opacity-0"
                          class="promo-slide absolute inset-0">
-                        <template x-if="product.images && product.images.length">
-                            <div class="w-full h-full bg-cover bg-center" :style="'background-image:url(' + '/storage/' + product.images[0].path + ')'"></div>
-                        </template>
+                        <div class="w-full h-full bg-cover bg-center" :style="imgStyle(product)"></div>
                         <div class="promo-slide-meta">
                             <span class="promo-slide-title">
                                 <a :href="'/produk/' + product.slug" :title="product.name" x-text="product.name + ' →'"></a>
@@ -104,6 +102,10 @@ function slider() {
             setInterval(() => {
                 this.current = (this.current + 1) % this.products.length;
             }, 4000);
+        },
+        imgStyle(product) {
+            var src = product.image || (product.images && product.images[0] ? product.images[0].path : null);
+            return src ? 'background-image:url(' + '/storage/' + src + ')' : 'background-color:#444';
         },
         formatPrice(val) {
             return new Intl.NumberFormat('id-ID').format(val);
