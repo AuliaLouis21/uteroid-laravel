@@ -18,7 +18,6 @@ class TestimonialRequest extends FormRequest
             'email' => ['required', 'email', 'max:255'],
             'company' => ['nullable', 'string', 'max:255'],
             'content' => ['required', 'string'],
-            'rating' => ['required', 'integer', 'between:1,5'],
         ];
     }
 }

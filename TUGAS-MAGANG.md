@@ -278,7 +278,8 @@ resources/views/
 
 ### Tugas 6.1 — Persiapan Production
 - [ ] Set APP_DEBUG=false dan APP_ENV=production
-- [ ] Jalankan php artisan config:cache, oute:cache, iew:cache
+- [ ] Jalankan php artisan config:cache, 
+oute:cache, iew:cache
 - [ ] Setup SSL/HTTPS
 - [ ] Konfigurasi .env production
 - [ ] Setup backup otomatis database
