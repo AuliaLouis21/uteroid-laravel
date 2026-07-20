@@ -42,15 +42,11 @@
             })->values();
         @endphp
         <div class="news-ticker"
-             x-data="ticker()"
-             x-init="init()"
-             @@mouseenter="pause = true"
-             @@mouseleave="pause = false">
+             x-data="{ current: 0, items: @json($tickerItems) }"
+             x-init="setInterval(() => current = (current + 1) % items.length, 4000)">
             <ul>
                 <template x-for="(item, i) in items" :key="i">
-                    <li x-show="current === i" x-transition:enter="transition ease-in duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
-                        <span x-html="item"></span>
-                    </li>
+                    <li x-show="current === i" x-transition x-html="item"></li>
                 </template>
             </ul>
         </div>
@@ -160,28 +156,6 @@
             {{ session('error') }}
         </div>
     @endif
-
-    <script>
-        function ticker() {
-            return {
-                items: @json($tickerItems),
-                current: 0,
-                pause: false,
-                timer: null,
-                init() {
-                    this.start();
-                },
-                start() {
-                    if (this.timer) clearInterval(this.timer);
-                    this.timer = setInterval(() => {
-                        if (!this.pause) {
-                            this.current = (this.current + 1) % this.items.length;
-                        }
-                    }, 4000);
-                }
-            }
-        }
-    </script>
 
     @stack('scripts')
 </body>
