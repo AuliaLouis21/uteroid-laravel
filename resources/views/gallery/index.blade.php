@@ -33,15 +33,15 @@
     <div class="gallery-section">
         <h1><span class="accent">video</span>gallery <span style="font-size:40px;">&raquo;</span></h1>
         @forelse($videos as $index => $video)
-            @if($index > 0 && $index % 6 == 0)
+            @if($index > 0 && $index % 3 == 0)
                 </div><div class="gallery-section">
             @endif
-            <div class="video-item" style="margin-left:{{ $index % 6 == 0 ? '0px' : '24px' }};">
+            <div class="video-item" style="{{ ($index + 1) % 3 == 0 ? 'margin-right:0px;' : '' }}">
                 <div class="img">
                     @if($video->youtube_id)
                         <img src="https://img.youtube.com/vi/{{ $video->youtube_id }}/1.jpg" alt="{{ $video->title }}">
                     @else
-                        <div class="bg-gray-200 h-20 flex items-center justify-center text-gray-400"><i class="fa fa-play"></i></div>
+                        <div class="h-full flex items-center justify-center text-gray-400"><i class="fa fa-play"></i></div>
                     @endif
                 </div>
                 <div class="desc">

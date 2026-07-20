@@ -174,9 +174,10 @@
     .gallery-item .desc a { @apply text-utero-body no-underline; }
     .gallery-item .desc a:hover { @apply text-brand; }
 
-    .video-item { @apply float-left mb-4; width: 120px; }
-    .video-item .img { @apply w-full border border-gray-300 block bg-gray-200; }
-    .video-item .img img { @apply m-0 p-0 border-none w-full; }
+    .video-item { @apply float-left mb-4; width: 264px; margin-right: 26px; }
+    .video-item:nth-child(3n) { margin-right: 0; }
+    .video-item .img { height: 150px; @apply border border-gray-300 block bg-gray-200 overflow-hidden; }
+    .video-item .img img { @apply w-full h-full object-cover m-0 p-0 border-none; }
     .video-item .desc { @apply block py-1; font: normal 12px/100% 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: -1px; }
     .video-item .desc a { @apply text-utero-body no-underline; }
     .video-item .desc a:hover { @apply text-brand; }
