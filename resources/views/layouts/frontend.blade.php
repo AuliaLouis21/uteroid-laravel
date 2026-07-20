@@ -34,6 +34,12 @@
     <div id="body" class="overflow-hidden">
         @php
             $tickerPosts = \App\Models\News::latest()->take(10)->get();
+            $tickerItems = $tickerPosts->map(function($p) {
+                $date = $p->published_at ? $p->published_at->format('F jS, Y') : $p->created_at->format('F jS, Y');
+                $url = route('posts.show', $p->slug);
+                $title = e(ucwords($p->title));
+                return "$date : <a href=\"$url\" title=\"$title\">$title</a>";
+            })->values();
         @endphp
         <div class="news-ticker"
              x-data="ticker()"
@@ -158,12 +164,7 @@
     <script>
         function ticker() {
             return {
-                items: @json($tickerPosts->map(function($p) {
-                    $date = $p->published_at ? $p->published_at->format('F jS, Y') : $p->created_at->format('F jS, Y');
-                    $url = route('posts.show', $p->slug);
-                    $title = e(ucwords($p->title));
-                    return "$date : <a href=\"$url\" title=\"$title\">$title</a>";
-                })->values()),
+                items: @json($tickerItems),
                 current: 0,
                 pause: false,
                 timer: null,
