@@ -19,11 +19,18 @@
 <div class="main-content">
     <div id="boxpromo" class="promo-slider">
         @if($promoProducts->count())
-            <div x-data="slider()" x-init="init()">
+            <div x-data="slider()" x-init="init()" class="relative w-full h-full">
                 <template x-for="(product, index) in products" :key="product.id">
-                    <div x-show="current === index" x-transition class="promo-slide">
+                    <div x-show="current === index"
+                         x-transition:enter="transition ease-in-out duration-500"
+                         x-transition:enter-start="opacity-0"
+                         x-transition:enter-end="opacity-100"
+                         x-transition:leave="transition ease-in-out duration-500"
+                         x-transition:leave-start="opacity-100"
+                         x-transition:leave-end="opacity-0"
+                         class="promo-slide absolute inset-0">
                         <template x-if="product.images && product.images.length">
-                            <img :src="'/storage/' + product.images[0].path" :alt="product.name" class="promo-slide-image">
+                            <div class="w-full h-full bg-cover bg-center" :style="'background-image:url(' + '/storage/' + product.images[0].path + ')'"></div>
                         </template>
                         <div class="promo-slide-meta">
                             <span class="promo-slide-title">
@@ -35,6 +42,15 @@
                         </div>
                     </div>
                 </template>
+
+                <div class="promo-slider-arrow prev" @@click="prev()">&#8249;</div>
+                <div class="promo-slider-arrow next" @@click="next()">&#8250;</div>
+
+                <div class="promo-slider-dots">
+                    <template x-for="(product, index) in products" :key="index">
+                        <span :class="{ active: current === index }" @@click="current = index"></span>
+                    </template>
+                </div>
             </div>
         @else
             <div class="promo-slide flex items-center justify-center text-gray-400">
@@ -92,10 +108,23 @@ function slider() {
     return {
         products: @json($promoProducts),
         current: 0,
+        timer: null,
         init() {
-            setInterval(() => {
+            this.start();
+        },
+        start() {
+            if (this.timer) clearInterval(this.timer);
+            this.timer = setInterval(() => {
                 this.current = (this.current + 1) % this.products.length;
-            }, 4000);
+            }, 5000);
+        },
+        prev() {
+            this.current = (this.current - 1 + this.products.length) % this.products.length;
+            this.start();
+        },
+        next() {
+            this.current = (this.current + 1) % this.products.length;
+            this.start();
         },
         formatPrice(val) {
             return new Intl.NumberFormat('id-ID').format(val);

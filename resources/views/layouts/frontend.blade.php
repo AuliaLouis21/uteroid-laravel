@@ -33,13 +33,19 @@
 
     <div id="body" class="overflow-hidden">
         @php
-            $latestPosts = \App\Models\News::latest()->take(10)->get();
+            $tickerPosts = \App\Models\News::latest()->take(10)->get();
         @endphp
-        <div class="news-ticker">
-            <ul id="newsnya" style="display:none;">
-                @foreach($latestPosts as $post)
-                    <li>{{ $post->published_at ? $post->published_at->format('F jS, Y') : $post->created_at->format('F jS, Y') }} : <a href="{{ route('posts.show', $post->slug) }}" title="{{ $post->title }}">{{ ucwords($post->title) }}</a></li>
-                @endforeach
+        <div class="news-ticker"
+             x-data="ticker()"
+             x-init="init()"
+             @@mouseenter="pause = true"
+             @@mouseleave="pause = false">
+            <ul>
+                <template x-for="(item, i) in items" :key="i">
+                    <li x-show="current === i" x-transition:enter="transition ease-in duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
+                        <span x-html="item"></span>
+                    </li>
+                </template>
             </ul>
         </div>
 
@@ -150,22 +156,31 @@
     @endif
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var ticker = document.getElementById('newsnya');
-            if (ticker) {
-                ticker.style.display = 'block';
-                ticker.style.overflow = 'hidden';
-                ticker.style.whiteSpace = 'nowrap';
-                ticker.style.animation = 'ticker 30s linear infinite';
+        function ticker() {
+            return {
+                items: @json($tickerPosts->map(function($p) {
+                    $date = $p->published_at ? $p->published_at->format('F jS, Y') : $p->created_at->format('F jS, Y');
+                    $url = route('posts.show', $p->slug);
+                    $title = e(ucwords($p->title));
+                    return "$date : <a href=\"$url\" title=\"$title\">$title</a>";
+                })->values()),
+                current: 0,
+                pause: false,
+                timer: null,
+                init() {
+                    this.start();
+                },
+                start() {
+                    if (this.timer) clearInterval(this.timer);
+                    this.timer = setInterval(() => {
+                        if (!this.pause) {
+                            this.current = (this.current + 1) % this.items.length;
+                        }
+                    }, 4000);
+                }
             }
-        });
-    </script>
-    <style>
-        @keyframes ticker {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
         }
-    </style>
+    </script>
 
     @stack('scripts')
 </body>

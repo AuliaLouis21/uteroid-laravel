@@ -45,14 +45,19 @@
         border-left: 1px solid #333;
     }
     .news-ticker {
-        @apply block overflow-hidden;
+        @apply block overflow-hidden relative;
         border-bottom: 1px solid #CCC;
         padding: 8px;
         font: 11px/100% Verdana, Geneva, sans-serif;
         width: 844px;
+        height: 18px;
         margin: 0 auto 8px auto;
         background-color: #EBF5FE;
     }
+    .news-ticker ul { @apply list-none m-0 p-0; }
+    .news-ticker li { @apply block; }
+    .news-ticker a { color: #09F; }
+    .news-ticker a:hover { color: #333; }
     .sidebar-left {
         @apply float-left overflow-hidden;
         width: 236px;
@@ -131,6 +136,23 @@
     .promo-slide-title a { @apply text-blue-400 no-underline uppercase font-bold; font-size: 12px; letter-spacing: -1px; }
     .promo-slide-title a:hover { @apply text-gray-400; }
     .promo-slide-spec { @apply text-gray-300; font: normal 11px/100% Verdana, Geneva, sans-serif; }
+    .promo-slider-arrow {
+        @apply absolute top-1/2 -translate-y-1/2 z-20 text-white text-lg cursor-pointer select-none;
+        @apply bg-black/40 hover:bg-black/70 rounded-full w-8 h-8 flex items-center justify-center;
+        transition: background 0.2s;
+    }
+    .promo-slider-arrow.prev { @apply left-1; }
+    .promo-slider-arrow.next { @apply right-1; }
+    .promo-slider-dots {
+        @apply absolute bottom-9 left-0 right-0 z-20 flex justify-center gap-1.5;
+    }
+    .promo-slider-dots span {
+        @apply block rounded-full cursor-pointer;
+        width: 10px; height: 10px;
+        background: rgba(255,255,255,0.4);
+        transition: background 0.2s;
+    }
+    .promo-slider-dots span.active { background: rgba(255,255,255,0.9); }
 
     .product-grid-item {
         @apply float-left mb-2 border border-gray-300;
