@@ -17,10 +17,10 @@
         width: 860px;
     }
     #header {
-        background: url('/images/banner-web.jpg') center center no-repeat #7B0100;
-        background-size: contain;
+        background: url('/images/more-wide-banner.png') center center no-repeat #7B0100;
+        background-size: cover;
         @apply w-full overflow-hidden;
-        height: 400px;
+        height: 704px;
     }
     .nav-bar {
         background: url('/images/item.png') center repeat-y #2A2A2A;
