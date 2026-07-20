@@ -136,23 +136,7 @@
     .promo-slide-title a { @apply text-blue-400 no-underline uppercase font-bold; font-size: 12px; letter-spacing: -1px; }
     .promo-slide-title a:hover { @apply text-gray-400; }
     .promo-slide-spec { @apply text-gray-300; font: normal 11px/100% Verdana, Geneva, sans-serif; }
-    .promo-slider-arrow {
-        @apply absolute top-1/2 -translate-y-1/2 z-20 text-white text-lg cursor-pointer select-none;
-        @apply bg-black/40 hover:bg-black/70 rounded-full w-8 h-8 flex items-center justify-center;
-        transition: background 0.2s;
-    }
-    .promo-slider-arrow.prev { @apply left-1; }
-    .promo-slider-arrow.next { @apply right-1; }
-    .promo-slider-dots {
-        @apply absolute bottom-9 left-0 right-0 z-20 flex justify-center gap-1.5;
-    }
-    .promo-slider-dots span {
-        @apply block rounded-full cursor-pointer;
-        width: 10px; height: 10px;
-        background: rgba(255,255,255,0.4);
-        transition: background 0.2s;
-    }
-    .promo-slider-dots span.active { background: rgba(255,255,255,0.9); }
+
 
     .product-grid-item {
         @apply float-left mb-2 border border-gray-300;

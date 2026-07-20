@@ -43,14 +43,6 @@
                     </div>
                 </template>
 
-                <div class="promo-slider-arrow prev" @@click="prev()">&#8249;</div>
-                <div class="promo-slider-arrow next" @@click="next()">&#8250;</div>
-
-                <div class="promo-slider-dots">
-                    <template x-for="(product, index) in products" :key="index">
-                        <span :class="{ active: current === index }" @@click="current = index"></span>
-                    </template>
-                </div>
             </div>
         @else
             <div class="promo-slide flex items-center justify-center text-gray-400">
@@ -108,23 +100,10 @@ function slider() {
     return {
         products: @json($promoProducts),
         current: 0,
-        timer: null,
         init() {
-            this.start();
-        },
-        start() {
-            if (this.timer) clearInterval(this.timer);
-            this.timer = setInterval(() => {
+            setInterval(() => {
                 this.current = (this.current + 1) % this.products.length;
-            }, 5000);
-        },
-        prev() {
-            this.current = (this.current - 1 + this.products.length) % this.products.length;
-            this.start();
-        },
-        next() {
-            this.current = (this.current + 1) % this.products.length;
-            this.start();
+            }, 4000);
         },
         formatPrice(val) {
             return new Intl.NumberFormat('id-ID').format(val);
