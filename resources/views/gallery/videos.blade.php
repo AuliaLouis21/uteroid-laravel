@@ -3,25 +3,34 @@
 @section('title', 'Video Gallery | Utero Advertising')
 
 @section('content')
-<div style="padding:0 8px 8px 8px; overflow:hidden; width:100%; margin:0;">
-    <div class="gallery-section">
-        <h1><span class="accent">video</span>gallery <span style="font-size:40px;">&raquo;</span></h1>
-    @forelse($videos as $video)
-        <div class="video-item">
-            <div class="img">
-                @if($video->youtube_id)
-                    <img src="https://img.youtube.com/vi/{{ $video->youtube_id }}/1.jpg" alt="{{ $video->title }}">
-                @else
-                    <div style="display:flex; align-items:center; justify-content:center; color:#999; height:100%;"><i class="fa fa-play"></i></div>
-                @endif
-            </div>
-            <div class="desc">
-                <a href="{{ $video->url }}" title="{{ $video->title }}" target="_blank">{{ $video->title }}</a>
-            </div>
+<div class="py-6">
+    <div class="content-card">
+        <a href="{{ route('gallery.index') }}" class="text-sm text-brand no-underline hover:text-gold mb-4 inline-block">
+            <i class="fas fa-arrow-left mr-1"></i>Kembali ke Gallery
+        </a>
+        <div class="page-title"><span class="accent">Video</span> Gallery</div>
+        <div class="page-title-bar"></div>
+
+        <div class="gallery-grid">
+            @forelse($videos as $video)
+                <div class="video-item">
+                    <div class="img">
+                        @if($video->youtube_id)
+                            <img src="https://img.youtube.com/vi/{{ $video->youtube_id }}/1.jpg" alt="{{ $video->title }}">
+                        @else
+                            <div class="flex items-center justify-center text-gray-400 h-full">
+                                <i class="fas fa-play-circle text-3xl"></i>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="desc">
+                        <a href="{{ $video->url }}" title="{{ $video->title }}" target="_blank">{{ $video->title }}</a>
+                    </div>
+                </div>
+            @empty
+                <p class="text-gray-400 text-center py-8"><i class="fas fa-video text-2xl mb-2 block"></i>Belum ada video tersedia.</p>
+            @endforelse
         </div>
-    @empty
-        <p style="color:#999;">Belum ada video tersedia.</p>
-    @endforelse
     </div>
 </div>
 @endsection

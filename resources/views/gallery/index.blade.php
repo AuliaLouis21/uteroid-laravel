@@ -5,73 +5,83 @@
 @section('meta_keywords', 'galeri utero, portfolio advertising, foto produk, video advertising malang')
 
 @section('content')
-<div style="padding:0 8px 8px 8px; overflow:hidden; width:100%; margin:0;">
-    <div class="gallery-section">
-        <h1><span class="accent">image</span>gallery <span style="font-size:40px;">&raquo;</span></h1>
-    @forelse($albums as $album)
-        <div class="gallery-item">
-            <div class="img">
-                @if($album->photos->count())
-                    <img src="{{ asset('storage/' . $album->photos->first()->filename) }}" alt="{{ $album->name }}" loading="lazy">
-                @else
-                    <div style="display:flex; align-items:center; justify-content:center; color:#999; height:100%;">No Image</div>
-                @endif
-            </div>
-            <div class="desc">
-                <a href="{{ route('gallery.photos', $album->slug) }}" title="Lihat Album : {{ $album->name }}">{{ $album->name }}</a><b>&rarr;</b> {{ $album->created_at->format('F jS, Y') }}
-            </div>
+<div class="py-6">
+    {{-- Photo Gallery --}}
+    <div class="content-card">
+        <div class="page-title"><span class="accent">Image</span> Gallery</div>
+        <div class="page-title-bar"></div>
+
+        <div class="gallery-grid">
+            @forelse($albums as $album)
+                <div class="gallery-item">
+                    <div class="img">
+                        @if($album->photos->count())
+                            <img src="{{ asset('storage/' . $album->photos->first()->filename) }}" alt="{{ $album->name }}" loading="lazy">
+                        @else
+                            <div class="flex items-center justify-center text-gray-400 h-full">
+                                <i class="fas fa-images text-3xl"></i>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="desc">
+                        <a href="{{ route('gallery.photos', $album->slug) }}" title="Lihat Album : {{ $album->name }}">{{ $album->name }}</a>
+                        <span class="text-xs text-gray-400 block mt-1">{{ $album->created_at->format('M d, Y') }}</span>
+                    </div>
+                </div>
+            @empty
+                <p class="text-gray-400 text-center py-8"><i class="fas fa-images text-2xl mb-2 block"></i>Belum ada galeri foto.</p>
+            @endforelse
         </div>
-    @empty
-        <p style="color:#999;">Belum ada galeri foto.</p>
-    @endforelse
-        @if($albums->count())
-            <span class="section-divider"><a href="{{ route('gallery.index') }}">View All Images &rarr;</a></span>
-        @endif
     </div>
 
-    <div class="gallery-section">
-        <h1><span class="accent">video</span>gallery <span style="font-size:40px;">&raquo;</span></h1>
-    @forelse($videos as $video)
-        <div class="video-item">
-            <div class="img">
-                @if($video->youtube_id)
-                    <img src="https://img.youtube.com/vi/{{ $video->youtube_id }}/1.jpg" alt="{{ $video->title }}" loading="lazy">
-                @else
-                    <div style="display:flex; align-items:center; justify-content:center; color:#999; height:100%;"><i class="fa fa-play"></i></div>
-                @endif
-            </div>
-            <div class="desc">
-                <a href="{{ $video->url }}" title="{{ $video->title }}" target="_blank">{{ $video->title }}</a>
-            </div>
+    {{-- Video Gallery --}}
+    <div class="content-card mt-4">
+        <div class="page-title"><span class="accent">Video</span> Gallery</div>
+        <div class="page-title-bar"></div>
+
+        <div class="gallery-grid">
+            @forelse($videos as $video)
+                <div class="video-item">
+                    <div class="img">
+                        @if($video->youtube_id)
+                            <img src="https://img.youtube.com/vi/{{ $video->youtube_id }}/1.jpg" alt="{{ $video->title }}" loading="lazy">
+                        @else
+                            <div class="flex items-center justify-center text-gray-400 h-full">
+                                <i class="fas fa-play-circle text-3xl"></i>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="desc">
+                        <a href="{{ $video->url }}" title="{{ $video->title }}" target="_blank">{{ $video->title }}</a>
+                    </div>
+                </div>
+            @empty
+                <p class="text-gray-400 text-center py-8"><i class="fas fa-video text-2xl mb-2 block"></i>Belum ada video.</p>
+            @endforelse
         </div>
-    @empty
-        <p style="color:#999;">Belum ada video.</p>
-    @endforelse
-        @if($videos->count())
-            <span class="section-divider"><a href="{{ route('gallery.index') }}">View All Videos &rarr;</a></span>
-        @endif
     </div>
 
-    <div class="gallery-section">
-        <h1><span class="accent">audio</span>gallery <span style="font-size:40px;">&raquo;</span></h1>
-    @forelse($audios as $audio)
-        <div class="audio-item">
-            <div>
-                <audio controls style="width:100%;">
-                    <source src="{{ asset('storage/' . $audio->filename) }}" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
-            </div>
-            <div class="descmp3">
-                {{ $audio->title }}<b>&rarr;</b> {{ $audio->created_at->format('F jS, Y') }}
-            </div>
+    {{-- Audio Gallery --}}
+    <div class="content-card mt-4">
+        <div class="page-title"><span class="accent">Audio</span> Gallery</div>
+        <div class="page-title-bar"></div>
+
+        <div class="space-y-3">
+            @forelse($audios as $audio)
+                <div class="audio-item">
+                    <audio controls class="w-full">
+                        <source src="{{ asset('storage/' . $audio->filename) }}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div class="descmp3">
+                        <span class="font-medium">{{ $audio->title }}</span>
+                        <span class="text-gray-400 text-xs ml-2">{{ $audio->created_at->format('M d, Y') }}</span>
+                    </div>
+                </div>
+            @empty
+                <p class="text-gray-400 text-center py-8"><i class="fas fa-headphones text-2xl mb-2 block"></i>Belum ada audio.</p>
+            @endforelse
         </div>
-    @empty
-        <p style="color:#999;">Belum ada audio.</p>
-    @endforelse
-        @if($audios->count())
-            <span class="section-divider"><a href="{{ route('gallery.index') }}">View All Audio &rarr;</a></span>
-        @endif
     </div>
 </div>
 @endsection

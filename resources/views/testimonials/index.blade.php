@@ -6,66 +6,90 @@
 
 @section('sidebar-left')
 <div class="sidebar-left">
-    <div class="label-title">Product Category</div>
-    <div class="sidebar-left-scroll">
-        <ul class="category-list">
-            @foreach($categories as $cat)
-                <li><a href="{{ route('products.category', $cat->slug) }}" title="category: {{ $cat->name }}">{{ $cat->name }}</a></li>
-            @endforeach
-        </ul>
+    <div class="sidebar-card">
+        <div class="card-header">
+            <i class="fas fa-th-large"></i>Product Category
+        </div>
+        <div class="category-list-scroll">
+            <ul class="category-list">
+                @foreach($categories as $cat)
+                    <li>
+                        <a href="{{ route('products.category', $cat->slug) }}" title="category: {{ $cat->name }}">
+                            <i class="fas fa-chevron-right"></i>{{ $cat->name }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
     </div>
 </div>
 @endsection
 
 @section('content')
 <div class="main-content">
-    <div class="detail-section">
-        <h1 style="border-bottom:1px solid #999; padding-bottom:4px; margin-bottom:8px;">
-            Testimonial
-        </h1>
-    </div>
+    <div class="content-card">
+        <div class="page-title"><i class="fas fa-quote-right mr-2"></i>Testimonial</div>
+        <div class="page-title-bar"></div>
 
-    @forelse($testimonials as $testimonial)
-        <div style="display:block; clear:both; padding:6px 2px; border-bottom:1px solid #EFEFEF; border-top:1px solid #FFF;">
-            <div class="testimonial-text" style="text-align:justify;">{{ ucfirst($testimonial->content) }}</div>
-            <div class="testimonial-info">From : {{ $testimonial->name }} &rarr;<br> {{ $testimonial->created_at->format('F jS, Y') }}</div>
+        <div class="space-y-4">
+            @forelse($testimonials as $testimonial)
+                <div class="testimonial-card">
+                    <div class="testimonial-text">"{{ ucfirst($testimonial->content) }}"</div>
+                    <div class="testimonial-info">
+                        <i class="fas fa-user-circle mr-1"></i>{{ $testimonial->name }}
+                        @if($testimonial->company)
+                            <span class="text-gray-300 mx-1">|</span>{{ $testimonial->company }}
+                        @endif
+                        <br>
+                        <i class="far fa-clock mr-1"></i>{{ $testimonial->created_at->format('M d, Y') }}
+                    </div>
+                </div>
+            @empty
+                <div class="text-center py-12 text-gray-400">
+                    <i class="fas fa-quote-right text-3xl mb-3 block"></i>
+                    Belum ada testimonial.
+                </div>
+            @endforelse
         </div>
-    @empty
-        <p class="text-gray-500 text-center py-4">Belum ada testimonial.</p>
-    @endforelse
 
-    <div class="text-right mt-4">
-        {{ $testimonials->links() }}
+        <div class="flex justify-end mt-6">
+            {{ $testimonials->links() }}
+        </div>
     </div>
 
-    <div class="detail-section mt-8" style="border-top:2px solid #333; padding-top:8px;">
-        <h2 style="font:bold 14px/100% 'Helvetica Neue', Helvetica, Arial, sans-serif; margin-bottom:8px;">Kirim Testimonial</h2>
-        <form method="POST" action="{{ route('testimonials.store') }}" class="form-style">
+    {{-- Submit Testimonial --}}
+    <div class="content-card mt-4">
+        <div class="page-title text-lg"><i class="fas fa-pen mr-2"></i>Kirim Testimonial</div>
+        <div class="page-title-bar"></div>
+
+        <form method="POST" action="{{ route('testimonials.store') }}" class="form-horizontal">
             @csrf
-            <span>
+            <div class="form-group">
                 <label for="name">Nama</label>
-                <input type="text" name="name" id="name" value="{{ old('name') }}" required>
-                @error('name') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-            </span>
-            <span>
+                <input type="text" name="name" id="name" value="{{ old('name') }}" placeholder="Masukkan nama" required>
+                @error('name') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+            </div>
+            <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" value="{{ old('email') }}" required>
-                @error('email') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-            </span>
-            <span>
+                <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="Masukkan email" required>
+                @error('email') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+            </div>
+            <div class="form-group">
                 <label for="company">Perusahaan</label>
-                <input type="text" name="company" id="company" value="{{ old('company') }}">
-            </span>
-            <span>
+                <input type="text" name="company" id="company" value="{{ old('company') }}" placeholder="Nama perusahaan (opsional)">
+            </div>
+            <div class="form-group">
                 <label for="content">Testimonial</label>
-                <textarea name="content" id="content" required>{{ old('content') }}</textarea>
-                @error('content') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-            </span>
-            <span>
+                <textarea name="content" id="content" rows="4" placeholder="Tulis testimonial Anda..." required>{{ old('content') }}</textarea>
+                @error('content') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+            </div>
+            <div class="form-group">
                 <label>&nbsp;</label>
                 <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response-testimonial">
-                <input type="submit" value="Kirim">
-            </span>
+                <button type="submit" class="form-submit">
+                    <i class="fas fa-paper-plane"></i>Kirim Testimonial
+                </button>
+            </div>
         </form>
     </div>
 </div>
@@ -74,7 +98,7 @@
 @php $recaptchaSiteKey = config('recaptcha.site_key'); @endphp
 @if($recaptchaSiteKey)
 <script>
-document.querySelector('.form-style').addEventListener('submit', function(e) {
+document.querySelector('form[action="{{ route('testimonials.store') }}"]').addEventListener('submit', function(e) {
     e.preventDefault();
     var form = this;
     grecaptcha.ready(function() {

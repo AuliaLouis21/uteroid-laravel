@@ -11,15 +11,15 @@
                 @csrf
                 @method('PUT')
 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
-                        <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $product->name) }}" required>
-                        @error('name')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                    <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $product->name) }}" required autofocus>
+                    @error('name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
 
+                <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="slug" class="form-label">Slug <span class="text-danger">*</span></label>
                         <input type="text" name="slug" id="slug" class="form-control @error('slug') is-invalid @enderror" value="{{ old('slug', $product->slug) }}" required>
@@ -27,9 +27,7 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                </div>
 
-                <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="category_id" class="form-label">Category</label>
                         <select name="category_id" id="category_id" class="form-select @error('category_id') is-invalid @enderror">
@@ -42,13 +40,24 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                </div>
 
+                <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="price" class="form-label">Price</label>
                         <input type="number" name="price" id="price" class="form-control @error('price') is-invalid @enderror" value="{{ old('price', $product->unit_price) }}" min="0" step="0.01">
                         @error('price')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="min_order" class="form-label">Minimum Order</label>
+                        <input type="number" name="min_order" id="min_order" class="form-control @error('min_order') is-invalid @enderror" value="{{ old('min_order', $product->min_order ?? 1) }}" min="1">
+                        @error('min_order')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <small class="text-muted">Jumlah minimum yang harus dipesan.</small>
                     </div>
                 </div>
 

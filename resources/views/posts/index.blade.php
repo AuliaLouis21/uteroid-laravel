@@ -6,52 +6,62 @@
 
 @section('sidebar-left')
 <div class="sidebar-left">
-    <div class="label-title">Product Category</div>
-    <div class="sidebar-left-scroll">
-        <ul class="category-list">
-            @foreach($categories as $cat)
-                <li><a href="{{ route('products.category', $cat->slug) }}" title="category: {{ $cat->name }}">{{ $cat->name }}</a></li>
-            @endforeach
-        </ul>
+    <div class="sidebar-card">
+        <div class="card-header">
+            <i class="fas fa-th-large"></i>Product Category
+        </div>
+        <div class="category-list-scroll">
+            <ul class="category-list">
+                @foreach($categories as $cat)
+                    <li>
+                        <a href="{{ route('products.category', $cat->slug) }}" title="category: {{ $cat->name }}">
+                            <i class="fas fa-chevron-right"></i>{{ $cat->name }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
     </div>
 </div>
 @endsection
 
 @section('content')
 <div class="main-content">
-    <div class="detail-section">
-        <h1 style="border-bottom:1px solid #999; padding-bottom:4px; margin-bottom:8px;">
-            Berita Terkini
-        </h1>
-    </div>
+    <div class="content-card">
+        <div class="page-title"><i class="fas fa-newspaper mr-2"></i>Berita Terkini</div>
+        <div class="page-title-bar"></div>
 
-    @if(request('src'))
-        <div class="mb-2 p-2 bg-gray-100 text-sm">
-            Pencarian: "<strong>{{ request('src') }}</strong>"
-            <a href="{{ route('posts.index') }}" class="text-utero-link ml-2">Reset</a>
-        </div>
-    @endif
+        @if(request('src'))
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4 text-sm">
+                <i class="fas fa-search mr-1"></i>Pencarian: "<strong>{{ request('src') }}</strong>"
+                <a href="{{ route('posts.index') }}" class="text-brand ml-2 font-medium">Reset</a>
+            </div>
+        @endif
 
-    @forelse($posts as $post)
-        <div style="display:block; clear:both; padding:6px 2px; border-bottom:1px solid #EFEFEF; border-top:1px solid #FFF;">
-            <div>
-                <a href="{{ route('posts.show', $post->slug) }}" style="font:bold 16px/100% 'Helvetica Neue', Helvetica, Arial, sans-serif; color:#333; letter-spacing:-1px; text-decoration:none;">
-                    {{ $post->title }}
+        <div class="space-y-4">
+            @forelse($posts as $post)
+                <a href="{{ route('posts.show', $post->slug) }}" class="block no-underline group">
+                    <div class="bg-white border border-gray-100 rounded-card p-5 hover:shadow-card transition-all duration-200 hover:border-brand/20">
+                        <h3 class="text-base font-semibold mb-1 group-hover:text-brand transition-colors" style="color: #1A1A2E;">
+                            {{ $post->title }}
+                        </h3>
+                        <span class="text-xs text-gray-400">
+                            <i class="far fa-clock mr-1"></i>{{ $post->published_at ? $post->published_at->format('M d, Y') : $post->created_at->format('M d, Y') }}
+                        </span>
+                        <p class="text-sm text-gray-500 mt-2 line-clamp-2">{{ strip_tags(substr($post->content, 0, 200)) }}...</p>
+                    </div>
                 </a>
-            </div>
-            <span style="display:block; font:normal 11px/100% Verdana, Geneva, sans-serif; letter-spacing:-1px; color:#CCC;">
-                {{ $post->published_at ? $post->published_at->format('F jS, Y') : $post->created_at->format('F jS, Y') }}
-            </span>
-            <div style="font:normal 12px/100% 'Helvetica Neue', Helvetica, Arial, sans-serif; margin-top:4px;">
-                {{ strip_tags(substr($post->content, 0, 200)) }} ...
-            </div>
+            @empty
+                <div class="text-center py-12 text-gray-400">
+                    <i class="fas fa-newspaper text-3xl mb-3 block"></i>
+                    Belum ada berita.
+                </div>
+            @endforelse
         </div>
-    @empty
-        <p class="text-gray-500 text-center py-8">Belum ada berita.</p>
-    @endforelse
 
-    <div class="text-right mt-4">
-        {{ $posts->withQueryString()->links() }}
+        <div class="flex justify-end mt-6">
+            {{ $posts->withQueryString()->links() }}
+        </div>
     </div>
 </div>
 @endsection

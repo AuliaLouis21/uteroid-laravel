@@ -6,12 +6,35 @@
 
 @section('sidebar-left')
 <div class="sidebar-left">
-    <div class="label-title">Product Category</div>
-    <div class="sidebar-left-scroll">
+    <div class="sidebar-card">
+        <div class="card-header">
+            <i class="fas fa-th-large"></i>Product Category
+        </div>
+        <div class="category-list-scroll">
+            <ul class="category-list">
+                @foreach($categories as $cat)
+                    <li>
+                        <a href="{{ route('products.category', $cat->slug) }}" title="category: {{ $cat->name }}">
+                            <i class="fas fa-chevron-right"></i>
+                            {{ $cat->name }}
+                            <span class="ml-auto text-xs text-gray-400">({{ $cat->products_count ?? 0 }})</span>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+
+    {{-- Quick Links --}}
+    <div class="sidebar-card mt-4">
+        <div class="card-header">
+            <i class="fas fa-bolt"></i>Quick Links
+        </div>
         <ul class="category-list">
-            @foreach($categories as $cat)
-                <li><a href="{{ route('products.category', $cat->slug) }}" title="category: {{ $cat->name }}">{{ $cat->name }}</a></li>
-            @endforeach
+            <li><a href="{{ route('products.index') }}"><i class="fas fa-shopping-cart"></i>Price List</a></li>
+            <li><a href="{{ route('download.index') }}"><i class="fas fa-download"></i>Download</a></li>
+            <li><a href="{{ route('order.create') }}"><i class="fas fa-paper-plane"></i>Pesan Sekarang</a></li>
+            <li><a href="{{ route('contact.index') }}"><i class="fas fa-envelope"></i>Hubungi Kami</a></li>
         </ul>
     </div>
 </div>
@@ -19,7 +42,8 @@
 
 @section('content')
 <div class="main-content">
-    <div id="boxpromo" class="promo-slider">
+    {{-- Promo Slider --}}
+    <div class="promo-slider mb-4">
         @if($promoProducts->count())
             <div x-data="slider()" x-init="init()" class="relative w-full h-full">
                 <template x-for="(product, index) in products" :key="product.id">
@@ -37,12 +61,11 @@
                                 <a :href="'/produk/' + product.slug" :title="product.name" x-text="product.name + ' →'"></a>
                             </span>
                             <span class="promo-slide-spec">
-                                Ukuran: <span x-text="product.size || '-'"></span> | Harga Satuan: <b x-text="'Rp. ' + formatPrice(product.price) + ',-'"></b>
+                                Ukuran: <span x-text="product.size || '-'"></span> | Harga: <b x-text="'Rp. ' + formatPrice(product.price) + ',-'"></b>
                             </span>
                         </div>
                     </div>
                 </template>
-
             </div>
         @else
             <div class="promo-slide flex items-center justify-center text-gray-400">
@@ -51,41 +74,66 @@
         @endif
     </div>
 
-    <div class="label-title" style="margin-bottom:8px;">produk terbaru</div>
-    @foreach($latestProducts as $product)
-        <div class="product-grid-item">
-            <a href="{{ route('products.show', $product->slug) }}" title="{{ $product->name }}">
-                @if($product->images->count())
-                    <img src="{{ asset('storage/' . $product->images->first()->path) }}" alt="{{ $product->name }}" loading="lazy">
-                @else
-                    <div class="bg-gray-200 h-24 flex items-center justify-center text-gray-400 text-xs">No Image</div>
-                @endif
-            </a>
-            <span class="prodtitle"><a href="{{ route('products.show', $product->slug) }}" title="{{ $product->name }}">{{ strtoupper($product->name) }}</a></span>
-            <span class="prodprice">Rp. {{ number_format($product->price, 0, ',', '.') }},-</span>
+    {{-- Latest Products --}}
+    <div class="content-card">
+        <div class="section-label"><i class="fas fa-box-open mr-2 text-brand"></i>Produk Terbaru</div>
+        <div class="product-grid">
+            @foreach($latestProducts as $product)
+                <div class="product-grid-item">
+                    <a href="{{ route('products.show', $product->slug) }}" title="{{ $product->name }}">
+                        @if($product->images->count())
+                            <img src="{{ asset('storage/' . $product->images->first()->path) }}" alt="{{ $product->name }}" loading="lazy">
+                        @else
+                            <div class="bg-gray-100 h-44 flex items-center justify-center text-gray-400 text-sm">
+                                <i class="fas fa-image mr-2"></i>No Image
+                            </div>
+                        @endif
+                    </a>
+                    <div class="prodtitle">
+                        <a href="{{ route('products.show', $product->slug) }}" title="{{ $product->name }}">{{ strtoupper($product->name) }}</a>
+                    </div>
+                    <div class="prodprice">Rp. {{ number_format($product->price, 0, ',', '.') }},-</div>
+                </div>
+            @endforeach
         </div>
-    @endforeach
-    <span class="section-divider"><a href="{{ route('products.index') }}" title="All Product">...See All Product &raquo;</a></span>
+        <div class="section-divider mt-4">
+            <a href="{{ route('products.index') }}" title="All Product">Lihat Semua Produk &raquo;</a>
+        </div>
+    </div>
 </div>
 @endsection
 
 @section('sidebar-right')
 <div class="sidebar-right">
-    @foreach($latestNews as $news)
-        <div class="sidebar-right-news">
-            <a target="_blank" href="{{ route('posts.show', $news->slug) }}">{{ ucwords($news->title) }}</a>
-            {{ strip_tags(substr($news->content, 0, 150)) }} ...
+    {{-- Latest News --}}
+    <div class="news-card">
+        <div class="card-header">
+            <i class="fas fa-newspaper"></i>Berita Terbaru
         </div>
-    @endforeach
-    @foreach($advertisements as $ad)
-        <div class="sidebar-right-ads">
-            <a href="{{ $ad->link ?? '#' }}" title="{{ $ad->title }}" target="_blank">
-                @if($ad->image)
-                    <img src="{{ asset('storage/' . $ad->image) }}" alt="{{ $ad->title }}">
-                @endif
+        @foreach($latestNews as $news)
+            <a href="{{ route('posts.show', $news->slug) }}" class="news-item" target="_blank">
+                <span class="news-title">{{ ucwords($news->title) }}</span>
+                <span class="news-excerpt">{{ strip_tags(substr($news->content, 0, 100)) }}...</span>
+                <span class="news-date"><i class="far fa-clock mr-1"></i>{{ $news->published_at ? $news->published_at->format('M d, Y') : $news->created_at->format('M d, Y') }}</span>
             </a>
+        @endforeach
+    </div>
+
+    {{-- Advertisements --}}
+    @if($advertisements->count())
+        <div class="news-card">
+            <div class="card-header">
+                <i class="fas fa-bullhorn"></i>Promosi
+            </div>
+            @foreach($advertisements as $ad)
+                <a href="{{ $ad->link ?? '#' }}" title="{{ $ad->title }}" target="_blank" class="ad-item block">
+                    @if($ad->image)
+                        <img src="{{ asset('storage/' . $ad->image) }}" alt="{{ $ad->title }}" loading="lazy">
+                    @endif
+                </a>
+            @endforeach
         </div>
-    @endforeach
+    @endif
 </div>
 @endsection
 
@@ -102,7 +150,7 @@ function slider() {
         },
         imgStyle(product) {
             var src = product.image || (product.images && product.images[0] ? product.images[0].path : null);
-            return src ? 'background-image:url(' + '/storage/' + src + ')' : 'background-color:#444';
+            return src ? 'background-image:url(' + '/storage/' + src + ')' : 'background-color:#1A1A2E';
         },
         formatPrice(val) {
             return new Intl.NumberFormat('id-ID').format(val);

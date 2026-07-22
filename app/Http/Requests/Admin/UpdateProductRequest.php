@@ -20,6 +20,7 @@ class UpdateProductRequest extends FormRequest
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'description' => ['nullable', 'string'],
             'price' => ['nullable', 'numeric', 'min:0'],
+            'min_order' => ['nullable', 'integer', 'min:1'],
             'is_promo' => ['nullable', 'boolean'],
         ];
     }

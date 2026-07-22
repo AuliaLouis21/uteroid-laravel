@@ -5,23 +5,30 @@
 
 @section('sidebar-left')
 <div class="sidebar-left">
-    <div class="label-title">Product Category</div>
-    <div class="sidebar-left-scroll">
-        <ul class="category-list">
-            @foreach($categories as $cat)
-                <li><a href="{{ route('products.category', $cat->slug) }}" title="category: {{ $cat->name }}">{{ $cat->name }}</a></li>
-            @endforeach
-        </ul>
+    <div class="sidebar-card">
+        <div class="card-header">
+            <i class="fas fa-th-large"></i>Product Category
+        </div>
+        <div class="category-list-scroll">
+            <ul class="category-list">
+                @foreach($categories as $cat)
+                    <li>
+                        <a href="{{ route('products.category', $cat->slug) }}" title="category: {{ $cat->name }}">
+                            <i class="fas fa-chevron-right"></i>{{ $cat->name }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
     </div>
 </div>
 @endsection
 
 @section('content')
 <div class="main-content">
-    <div class="detail-section">
-        <h1 style="border-bottom:1px solid #999; padding-bottom:4px; margin-bottom:8px;">
-            {{ $page->title }}
-        </h1>
+    <div class="content-card">
+        <div class="page-title">{{ $page->title }}</div>
+        <div class="page-title-bar"></div>
         <div class="isidesc">{!! cleanHtml($page->content) !!}</div>
     </div>
 </div>

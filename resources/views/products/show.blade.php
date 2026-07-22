@@ -6,82 +6,110 @@
 
 @section('sidebar-left')
 <div class="sidebar-left">
-    <div class="label-title">Product Category</div>
-    <div class="sidebar-left-scroll">
-        <ul class="category-list">
-            @foreach($categories as $cat)
-                <li><a href="{{ route('products.category', $cat->slug) }}" title="category: {{ $cat->name }}">{{ $cat->name }}</a></li>
-            @endforeach
-        </ul>
+    <div class="sidebar-card">
+        <div class="card-header">
+            <i class="fas fa-th-large"></i>Product Category
+        </div>
+        <div class="category-list-scroll">
+            <ul class="category-list">
+                @foreach($categories as $cat)
+                    <li>
+                        <a href="{{ route('products.category', $cat->slug) }}" title="category: {{ $cat->name }}">
+                            <i class="fas fa-chevron-right"></i>{{ $cat->name }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
     </div>
 </div>
 @endsection
 
 @section('content')
 <div class="main-content">
-    <div class="detail-section">
-        <h1 style="border-bottom:1px solid #999; padding-bottom:4px; margin-bottom:8px;">
-            {{ $product->name }}
-        </h1>
+    <div class="content-card">
+        <div class="page-title">{{ $product->name }}</div>
+        <div class="page-title-bar"></div>
 
-        <div style="display:flex; flex-wrap:wrap; gap:16px; margin-bottom:16px;">
-            <div style="flex-shrink:0;">
+        <div class="flex flex-col md:flex-row gap-6 mb-6">
+            {{-- Product Image --}}
+            <div class="flex-shrink-0">
                 @if($product->images->count())
-                    <img src="{{ asset('storage/' . $product->images->first()->path) }}" alt="{{ $product->name }}" style="max-width:200px; width:100%; border:1px solid #CCC;" loading="lazy">
+                    <img src="{{ asset('storage/' . $product->images->first()->path) }}" alt="{{ $product->name }}" class="w-full md:w-64 rounded-card shadow-card" loading="lazy">
                 @endif
             </div>
-            <div style="flex:1; min-width:200px;">
-                <table style="width:100%; border-collapse:collapse;">
-                    <tr style="border-bottom:1px solid #CCC;">
-                        <td style="padding:4px; background:#EFEFEF; width:100px;">Kategori</td>
-                        <td style="padding:4px;">{{ $product->category?->name ?? '-' }}</td>
+
+            {{-- Product Info --}}
+            <div class="flex-1 min-w-0">
+                <table class="w-full">
+                    <tr class="border-b border-gray-100">
+                        <td class="py-3 px-4 bg-gray-50 w-36 text-sm font-medium text-gray-600">Kategori</td>
+                        <td class="py-3 px-4 text-sm">{{ $product->category?->name ?? '-' }}</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #CCC;">
-                        <td style="padding:4px; background:#EFEFEF;">Harga</td>
-                        <td style="padding:4px; color:#F00; font-weight:bold;">Rp. {{ number_format($product->price, 0, ',', '.') }},-</td>
+                    <tr class="border-b border-gray-100">
+                        <td class="py-3 px-4 bg-gray-50 text-sm font-medium text-gray-600">Harga</td>
+                        <td class="py-3 px-4 text-sm font-bold text-brand">Rp. {{ number_format($product->price, 0, ',', '.') }},-</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #CCC;">
-                        <td style="padding:4px; background:#EFEFEF;">Ukuran</td>
-                        <td style="padding:4px;">{{ $product->size ?? '-' }}</td>
+                    <tr class="border-b border-gray-100">
+                        <td class="py-3 px-4 bg-gray-50 text-sm font-medium text-gray-600">Ukuran</td>
+                        <td class="py-3 px-4 text-sm">{{ $product->size ?? '-' }}</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #CCC;">
-                        <td style="padding:4px; background:#EFEFEF;">Min. Order</td>
-                        <td style="padding:4px;">{{ $product->min_order ?? 1 }}</td>
+                    <tr class="border-b border-gray-100">
+                        <td class="py-3 px-4 bg-gray-50 text-sm font-medium text-gray-600">Min. Order</td>
+                        <td class="py-3 px-4 text-sm">{{ $product->min_order ?? 1 }}</td>
                     </tr>
-                    <tr style="border-bottom:1px solid #CCC;">
-                        <td style="padding:4px; background:#EFEFEF;">Ketebalan</td>
-                        <td style="padding:4px;">{{ $product->thickness ?? '-' }}</td>
+                    <tr class="border-b border-gray-100">
+                        <td class="py-3 px-4 bg-gray-50 text-sm font-medium text-gray-600">Ketebalan</td>
+                        <td class="py-3 px-4 text-sm">{{ $product->thickness ?? '-' }}</td>
                     </tr>
                 </table>
             </div>
         </div>
 
+        {{-- Description --}}
         @if($product->description)
-            <div class="isidesc">{!! cleanHtml($product->description) !!}</div>
+            <div class="isidesc mt-6">
+                <h3 class="text-lg font-semibold mb-3">Deskripsi Produk</h3>
+                {!! cleanHtml($product->description) !!}
+            </div>
         @endif
 
+        {{-- Additional Images --}}
         @if($product->images->count() > 1)
-            <div class="mt-4">
-                <strong>Gambar Lainnya:</strong>
-                <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">
+            <div class="mt-6">
+                <h3 class="text-lg font-semibold mb-3">Gambar Lainnya</h3>
+                <div class="flex flex-wrap gap-3">
                     @foreach($product->images->skip(1) as $img)
-                        <img src="{{ asset('storage/' . $img->path) }}" alt="{{ $product->name }}" style="width:80px; height:80px; object-fit:cover; border:1px solid #CCC;" loading="lazy">
+                        <img src="{{ asset('storage/' . $img->path) }}" alt="{{ $product->name }}" class="w-20 h-20 object-cover rounded-lg border border-gray-200 hover:shadow-card transition-shadow" loading="lazy">
                     @endforeach
                 </div>
             </div>
         @endif
+
+        {{-- CTA --}}
+        <div class="mt-6 flex gap-3">
+            <a href="{{ route('order.create') }}" class="form-submit">
+                <i class="fas fa-paper-plane"></i>Pesan Sekarang
+            </a>
+            <a href="{{ route('products.index') }}" class="px-6 py-3 rounded-lg text-sm font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors no-underline">
+                <i class="fas fa-arrow-left mr-1"></i>Kembali
+            </a>
+        </div>
     </div>
 
+    {{-- Related Products --}}
     @if($relatedProducts->count())
-        <div class="detail-section mt-4" style="border-top:1px solid #999; padding-top:8px;">
-            <strong>Produk Terkait:</strong>
-            <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">
+        <div class="content-card">
+            <div class="section-label"><i class="fas fa-link mr-2 text-brand"></i>Produk Terkait</div>
+            <div class="product-grid">
                 @foreach($relatedProducts as $related)
-                    <a href="{{ route('products.show', $related->slug) }}" class="block" style="width:120px;">
+                    <a href="{{ route('products.show', $related->slug) }}" class="product-grid-item no-underline">
                         @if($related->images->count())
-                            <img src="{{ asset('storage/' . $related->images->first()->path) }}" alt="{{ $related->name }}" style="width:120px; height:90px; object-fit:cover; border:1px solid #CCC;" loading="lazy">
+                            <img src="{{ asset('storage/' . $related->images->first()->path) }}" alt="{{ $related->name }}" loading="lazy">
                         @endif
-                        <span class="block text-xs mt-1">{{ strtoupper($related->name) }}</span>
+                        <div class="prodtitle">
+                            <a href="{{ route('products.show', $related->slug) }}">{{ strtoupper($related->name) }}</a>
+                        </div>
                     </a>
                 @endforeach
             </div>
