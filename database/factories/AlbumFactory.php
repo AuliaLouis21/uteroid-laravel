@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Album;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -19,8 +20,9 @@ class AlbumFactory extends Factory
 
         return [
             'name' => $name,
-            'slug' => Str::slug($name),
+            'slug' => Str::slug($name) . '-' . fake()->unique()->numerify('###'),
             'description' => fake()->sentence(),
+            'category_id' => Category::factory(),
         ];
     }
 }

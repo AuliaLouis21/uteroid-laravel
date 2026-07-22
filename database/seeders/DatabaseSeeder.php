@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             GallerySeeder::class,
             AlbumSeeder::class,
             PageSeeder::class,
+            DownloadSeeder::class,
         ]);
     }
 }

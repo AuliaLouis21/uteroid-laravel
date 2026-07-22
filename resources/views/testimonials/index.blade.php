@@ -1,6 +1,8 @@
 @extends('layouts.frontend')
 
 @section('title', 'Testimonial | Utero Advertising')
+@section('meta_description', 'Testimonial dan ulasan dari klien Utero Advertising tentang layanan periklanan dan percetakan kami.')
+@section('meta_keywords', 'testimonial utero, ulasan client, review advertising malang')
 
 @section('sidebar-left')
 <div class="sidebar-left">
@@ -61,9 +63,28 @@
             </span>
             <span>
                 <label>&nbsp;</label>
+                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response-testimonial">
                 <input type="submit" value="Kirim">
             </span>
         </form>
     </div>
 </div>
+
+@push('scripts')
+@php $recaptchaSiteKey = config('recaptcha.site_key'); @endphp
+@if($recaptchaSiteKey)
+<script>
+document.querySelector('.form-style').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var form = this;
+    grecaptcha.ready(function() {
+        grecaptcha.execute('{{ $recaptchaSiteKey }}', {action: 'testimonial'}).then(function(token) {
+            document.getElementById('g-recaptcha-response-testimonial').value = token;
+            form.submit();
+        });
+    });
+});
+</script>
+@endif
+@endpush
 @endsection

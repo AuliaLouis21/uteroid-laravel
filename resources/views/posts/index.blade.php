@@ -1,6 +1,8 @@
 @extends('layouts.frontend')
 
 @section('title', 'Berita | Utero Advertising')
+@section('meta_description', 'Berita terkini seputar Utero Advertising, produk, promo, dan tips periklanan di Malang.')
+@section('meta_keywords', 'berita advertising, berita utero, promo printing, tips periklanan malang')
 
 @section('sidebar-left')
 <div class="sidebar-left">
@@ -37,7 +39,7 @@
                     {{ $post->title }}
                 </a>
             </div>
-            <span style="display:block; font:normal 10px/100% Verdana, Geneva, sans-serif; letter-spacing:-1px; color:#CCC;">
+            <span style="display:block; font:normal 11px/100% Verdana, Geneva, sans-serif; letter-spacing:-1px; color:#CCC;">
                 {{ $post->published_at ? $post->published_at->format('F jS, Y') : $post->created_at->format('F jS, Y') }}
             </span>
             <div style="font:normal 12px/100% 'Helvetica Neue', Helvetica, Arial, sans-serif; margin-top:4px;">

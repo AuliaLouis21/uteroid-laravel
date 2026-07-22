@@ -14,21 +14,18 @@
     </div>
 
     <div class="gallery-section">
-        @forelse($album->photos as $index => $photo)
-            @if($index > 0 && $index % 4 == 0)
-                </div><div class="gallery-section">
-            @endif
-            <div class="gallery-item" style="width:190px; {{ ($index + 1) % 4 == 0 ? 'margin-right:0px;' : 'margin-right:16px;' }}">
-                <div class="img" style="height:auto;">
-                    <img src="{{ asset('storage/' . $photo->filename) }}" alt="{{ $photo->caption ?? $album->name }}" loading="lazy" style="height:132px; width:100%; object-fit:cover;">
-                </div>
-                @if($photo->caption)
-                    <div class="desc">{{ $photo->caption }}</div>
-                @endif
+    @forelse($album->photos as $photo)
+        <div class="gallery-item">
+            <div class="img" style="height:auto;">
+                <img src="{{ asset('storage/' . $photo->filename) }}" alt="{{ $photo->caption ?? $album->name }}" loading="lazy" style="height:132px; width:100%; object-fit:cover;">
             </div>
-        @empty
-            <p class="text-gray-500">Album ini belum memiliki foto.</p>
-        @endforelse
+            @if($photo->caption)
+                <div class="desc">{{ $photo->caption }}</div>
+            @endif
+        </div>
+    @empty
+        <p style="color:#999;">Album ini belum memiliki foto.</p>
+    @endforelse
     </div>
 </div>
 @endsection

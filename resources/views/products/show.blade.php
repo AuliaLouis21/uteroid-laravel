@@ -1,6 +1,8 @@
 @extends('layouts.frontend')
 
 @section('title', $product->name . ' | Utero Advertising')
+@section('meta_description', strip_tags(substr($product->description ?? $product->name, 0, 160)))
+@section('og_type', 'product')
 
 @section('sidebar-left')
 <div class="sidebar-left">
@@ -22,17 +24,17 @@
             {{ $product->name }}
         </h1>
 
-        <div class="flex gap-4 mb-4">
-            <div class="flex-shrink-0">
+        <div style="display:flex; flex-wrap:wrap; gap:16px; margin-bottom:16px;">
+            <div style="flex-shrink:0;">
                 @if($product->images->count())
-                    <img src="{{ asset('storage/' . $product->images->first()->path) }}" alt="{{ $product->name }}" style="max-width:200px; border:1px solid #CCC;">
+                    <img src="{{ asset('storage/' . $product->images->first()->path) }}" alt="{{ $product->name }}" style="max-width:200px; width:100%; border:1px solid #CCC;" loading="lazy">
                 @endif
             </div>
-            <div>
+            <div style="flex:1; min-width:200px;">
                 <table style="width:100%; border-collapse:collapse;">
                     <tr style="border-bottom:1px solid #CCC;">
                         <td style="padding:4px; background:#EFEFEF; width:100px;">Kategori</td>
-                        <td style="padding:4px;">{{ $product->category->name ?? '-' }}</td>
+                        <td style="padding:4px;">{{ $product->category?->name ?? '-' }}</td>
                     </tr>
                     <tr style="border-bottom:1px solid #CCC;">
                         <td style="padding:4px; background:#EFEFEF;">Harga</td>
@@ -55,15 +57,15 @@
         </div>
 
         @if($product->description)
-            <div class="isidesc">{!! $product->description !!}</div>
+            <div class="isidesc">{!! cleanHtml($product->description) !!}</div>
         @endif
 
         @if($product->images->count() > 1)
             <div class="mt-4">
                 <strong>Gambar Lainnya:</strong>
-                <div class="flex gap-2 mt-2">
+                <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">
                     @foreach($product->images->skip(1) as $img)
-                        <img src="{{ asset('storage/' . $img->path) }}" alt="{{ $product->name }}" style="width:80px; height:80px; object-fit:cover; border:1px solid #CCC;">
+                        <img src="{{ asset('storage/' . $img->path) }}" alt="{{ $product->name }}" style="width:80px; height:80px; object-fit:cover; border:1px solid #CCC;" loading="lazy">
                     @endforeach
                 </div>
             </div>
@@ -73,11 +75,11 @@
     @if($relatedProducts->count())
         <div class="detail-section mt-4" style="border-top:1px solid #999; padding-top:8px;">
             <strong>Produk Terkait:</strong>
-            <div class="flex gap-2 mt-2">
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">
                 @foreach($relatedProducts as $related)
                     <a href="{{ route('products.show', $related->slug) }}" class="block" style="width:120px;">
                         @if($related->images->count())
-                            <img src="{{ asset('storage/' . $related->images->first()->path) }}" alt="{{ $related->name }}" style="width:120px; height:90px; object-fit:cover; border:1px solid #CCC;">
+                            <img src="{{ asset('storage/' . $related->images->first()->path) }}" alt="{{ $related->name }}" style="width:120px; height:90px; object-fit:cover; border:1px solid #CCC;" loading="lazy">
                         @endif
                         <span class="block text-xs mt-1">{{ strtoupper($related->name) }}</span>
                     </a>

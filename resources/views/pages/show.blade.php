@@ -1,6 +1,7 @@
 @extends('layouts.frontend')
 
 @section('title', $page->title . ' | Utero Advertising')
+@section('meta_description', strip_tags(substr($page->content, 0, 160)))
 
 @section('sidebar-left')
 <div class="sidebar-left">
@@ -21,7 +22,7 @@
         <h1 style="border-bottom:1px solid #999; padding-bottom:4px; margin-bottom:8px;">
             {{ $page->title }}
         </h1>
-        <div class="isidesc">{!! $page->content !!}</div>
+        <div class="isidesc">{!! cleanHtml($page->content) !!}</div>
     </div>
 </div>
 @endsection

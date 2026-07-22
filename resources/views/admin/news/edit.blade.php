@@ -69,6 +69,7 @@
                 <div class="mb-3">
                     <label for="image" class="form-label">New Image</label>
                     <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror" accept="image/jpeg,image/png,image/webp">
+                    <div id="image-preview" class="mt-2"></div>
                     @error('image')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -81,3 +82,28 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js"></script>
+<script>
+tinymce.init({
+    selector: '#content',
+    height: 400,
+    menubar: true,
+    plugins: 'lists link image table code help wordcount',
+    toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | removeformat | code',
+    content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 14px; }'
+});
+document.getElementById('image').addEventListener('change', function(e) {
+    var preview = document.getElementById('image-preview');
+    preview.innerHTML = '';
+    if (e.target.files[0]) {
+        var img = document.createElement('img');
+        img.src = URL.createObjectURL(e.target.files[0]);
+        img.style.maxWidth = '200px';
+        img.style.borderRadius = '4px';
+        preview.appendChild(img);
+    }
+});
+</script>
+@endpush

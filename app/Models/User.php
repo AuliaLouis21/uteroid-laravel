@@ -28,13 +28,6 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function posts()
-    {
-        return $this->hasMany(Post::class);
-    }
-
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
-    }
+    // Order relationship removed: orders table has no user_id column.
+    // Orders are guest-submitted, not tied to authenticated users.
 }

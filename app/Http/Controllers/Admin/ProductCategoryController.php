@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ProductCategory;
-use App\Http\Requests\ProductCategoryRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ProductCategoryController extends Controller
@@ -21,9 +21,14 @@ class ProductCategoryController extends Controller
         return view('admin.product-categories.create');
     }
 
-    public function store(ProductCategoryRequest $request)
+    public function store(Request $request)
     {
-        ProductCategory::create($request->validated());
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'slug' => ['nullable', 'string', 'max:255', 'unique:product_categories,slug'],
+        ]);
+
+        ProductCategory::create($data);
 
         return redirect()->route('admin.product-categories.index')
             ->with('success', 'Product category created successfully.');
@@ -39,9 +44,14 @@ class ProductCategoryController extends Controller
         return view('admin.product-categories.edit', compact('productCategory'));
     }
 
-    public function update(ProductCategoryRequest $request, ProductCategory $productCategory)
+    public function update(Request $request, ProductCategory $productCategory)
     {
-        $productCategory->update($request->validated());
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'slug' => ['nullable', 'string', 'max:255', 'unique:product_categories,slug,' . $productCategory->id],
+        ]);
+
+        $productCategory->update($data);
 
         return redirect()->route('admin.product-categories.index')
             ->with('success', 'Product category updated successfully.');

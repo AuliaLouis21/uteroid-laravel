@@ -17,3 +17,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+deploy-prepare.bat
+UPLOAD-GUIDE.md
+DEPLOYMENT.md

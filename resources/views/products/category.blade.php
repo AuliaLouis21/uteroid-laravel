@@ -1,6 +1,7 @@
 @extends('layouts.frontend')
 
 @section('title', $category->name . ' | Utero Advertising')
+@section('meta_description', 'Produk kategori ' . $category->name . ' dari Utero Advertising — Malang, Jawa Timur.')
 
 @section('sidebar-left')
 <div class="sidebar-left">
@@ -27,18 +28,19 @@
     <div style="display:block; clear:both; margin-bottom:10px; padding:8px!important; background-color:#333; border-radius:4px;">
         <form method="GET" action="{{ route('products.category', $category->slug) }}">
             <span>
-                <input type="text" name="src" value="{{ request('src') }}" placeholder="Cari dalam kategori..." style="width:250px; padding:4px; border:1px solid #CCC; border-radius:2px;"/>
+                <input type="text" name="src" value="{{ request('src') }}" placeholder="Cari dalam kategori..." style="max-width:250px; width:100%; padding:4px; border:1px solid #CCC; border-radius:2px;"/>
                 <input type="submit" value="CARI" style="padding:4px 8px; cursor:pointer;"/>
             </span>
         </form>
     </div>
 
+    <div class="overflow-x-auto">
     <table class="product-table">
         <tr class="thead">
-            <td style="width:36px;">&nbsp;</td>
-            <td style="width:180px;">Nama Produk</td>
+            <td>&nbsp;</td>
+            <td>Nama Produk</td>
             <td>Min. Order</td>
-            <td style="width:90px;">Harga Satuan</td>
+            <td>Harga Satuan</td>
         </tr>
         @forelse($products as $index => $product)
             <tr class="{{ $index % 2 == 0 ? 'row-even' : 'row-odd' }}">
@@ -59,6 +61,7 @@
             </tr>
         @endforelse
     </table>
+    </div>
 
     <div class="text-right">
         {{ $products->withQueryString()->links() }}

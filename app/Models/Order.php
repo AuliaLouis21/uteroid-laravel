@@ -20,6 +20,10 @@ class Order extends Model
         'status',
     ];
 
+    protected $casts = [
+        'status' => 'string',
+    ];
+
     public function items()
     {
         return $this->hasMany(OrderItem::class);

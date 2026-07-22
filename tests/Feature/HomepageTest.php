@@ -33,6 +33,6 @@ class HomepageTest extends TestCase
 
         $response->assertOk();
         $response->assertSee($product->name);
-        $response->assertSee($news->title);
+        $response->assertSee(ucwords($news->title));
     }
 }

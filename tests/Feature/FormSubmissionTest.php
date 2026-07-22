@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
 
 class FormSubmissionTest extends TestCase
 {
@@ -26,6 +27,8 @@ class FormSubmissionTest extends TestCase
 
     public function test_contact_form_successfully_submits(): void
     {
+        Mail::fake();
+
         $data = [
             'name' => 'John Doe',
             'email' => 'john@example.com',

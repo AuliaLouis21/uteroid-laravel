@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\News;
 
 class Category extends Model
 {
@@ -18,6 +19,11 @@ class Category extends Model
 
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(News::class);
+    }
+
+    public function albums()
+    {
+        return $this->hasMany(Album::class);
     }
 }

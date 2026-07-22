@@ -1,6 +1,8 @@
 @extends('layouts.frontend')
 
 @section('title', 'Kontak | Utero Advertising')
+@section('meta_description', 'Hubungi Utero Advertising untuk konsultasi periklanan, digital printing, dan desain kreatif. Alamat, telepon, dan WhatsApp kami.')
+@section('meta_keywords', 'kontak utero, hubungi utero, alamat utero advertising, telepon utero')
 
 @section('sidebar-left')
 <div class="sidebar-left">
@@ -51,9 +53,28 @@
             </span>
             <span>
                 <label>&nbsp;</label>
+                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response-contact">
                 <input type="submit" value="Kirim">
             </span>
         </form>
     </div>
 </div>
+
+@push('scripts')
+@php $recaptchaSiteKey = config('recaptcha.site_key'); @endphp
+@if($recaptchaSiteKey)
+<script>
+document.querySelector('.form-style').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var form = this;
+    grecaptcha.ready(function() {
+        grecaptcha.execute('{{ $recaptchaSiteKey }}', {action: 'contact'}).then(function(token) {
+            document.getElementById('g-recaptcha-response-contact').value = token;
+            form.submit();
+        });
+    });
+});
+</script>
+@endif
+@endpush
 @endsection

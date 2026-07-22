@@ -1,6 +1,8 @@
 @extends('layouts.frontend')
 
 @section('title', $post->title . ' | Berita | Utero Advertising')
+@section('meta_description', strip_tags(substr($post->excerpt ?: strip_tags($post->content), 0, 160)))
+@section('og_type', 'article')
 
 @section('sidebar-left')
 <div class="sidebar-left">
@@ -21,17 +23,17 @@
         <h1 style="border-bottom:1px solid #999; padding-bottom:4px; margin-bottom:8px;">
             {{ $post->title }}
         </h1>
-        <span style="display:block; font:normal 10px/100% Verdana, Geneva, sans-serif; letter-spacing:-1px; color:#CCC; margin-bottom:12px;">
+        <span style="display:block; font:normal 11px/100% Verdana, Geneva, sans-serif; letter-spacing:-1px; color:#CCC; margin-bottom:12px;">
             {{ $post->published_at ? $post->published_at->format('F jS, Y') : $post->created_at->format('F jS, Y') }}
         </span>
 
         @if($post->image)
             <div class="mb-4">
-                <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" style="max-width:100%; border:1px solid #CCC;">
+                <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" style="max-width:100%; border:1px solid #CCC;" loading="lazy">
             </div>
         @endif
 
-        <div class="isidesc">{!! $post->content !!}</div>
+        <div class="isidesc">{!! cleanHtml($post->content) !!}</div>
     </div>
 
     @if(isset($relatedPosts) && $relatedPosts->count())
@@ -42,7 +44,7 @@
                     <a href="{{ route('posts.show', $related->slug) }}" style="font:bold 14px/100% 'Helvetica Neue', Helvetica, Arial, sans-serif; color:#333; text-decoration:none;">
                         {{ $related->title }}
                     </a>
-                    <span style="display:block; font:normal 10px/100% Verdana, Geneva, sans-serif; color:#CCC; letter-spacing:-1px;">
+                    <span style="display:block; font:normal 11px/100% Verdana, Geneva, sans-serif; color:#CCC; letter-spacing:-1px;">
                         {{ $related->published_at ? $related->published_at->format('F jS, Y') : $related->created_at->format('F jS, Y') }}
                     </span>
                 </div>

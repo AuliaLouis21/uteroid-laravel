@@ -1,6 +1,8 @@
 @extends('layouts.frontend')
 
 @section('title', 'Utero Advertising | Idea And Concept Factory')
+@section('meta_description', 'Utero Advertising — Advertising, Digital Printing & Creative Agency di Malang, Jawa Timur. Solusi periklanan, cetak, dan desain kreatif untuk bisnis Anda.')
+@section('meta_keywords', 'advertising malang, perusahaan advertising, utero advertising, printing, digital printing, creative agency, malang')
 
 @section('sidebar-left')
 <div class="sidebar-left">
@@ -50,16 +52,11 @@
     </div>
 
     <div class="label-title" style="margin-bottom:8px;">produk terbaru</div>
-    @php $x = 0; @endphp
     @foreach($latestProducts as $product)
-        @php
-            $x++;
-            $margin = ($x % 3 == 0) ? 'margin-right:0px;' : 'margin-right:8px;';
-        @endphp
-        <div class="product-grid-item" style="{{ $margin }}">
+        <div class="product-grid-item">
             <a href="{{ route('products.show', $product->slug) }}" title="{{ $product->name }}">
                 @if($product->images->count())
-                    <img src="{{ asset('storage/' . $product->images->first()->path) }}" alt="{{ $product->name }}">
+                    <img src="{{ asset('storage/' . $product->images->first()->path) }}" alt="{{ $product->name }}" loading="lazy">
                 @else
                     <div class="bg-gray-200 h-24 flex items-center justify-center text-gray-400 text-xs">No Image</div>
                 @endif

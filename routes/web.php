@@ -10,6 +10,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
@@ -20,6 +21,12 @@ use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialControll
 use App\Http\Controllers\Admin\AlbumController;
 use App\Http\Controllers\Admin\AlbumVideoController;
 use App\Http\Controllers\Admin\AlbumAudioController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\PageController as AdminPageController;
+use App\Http\Controllers\Admin\SettingController as AdminSettingController;
+use App\Http\Controllers\Admin\AdvertisementController as AdminAdvertisementController;
+use App\Http\Controllers\Admin\DownloadController as AdminDownloadController;
+use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
 use Illuminate\Support\Facades\Route;
 
 // =============================================
@@ -58,6 +65,10 @@ Route::get('/halaman/{slug}', [PageController::class, 'show'])->name('pages.show
 
 // Download
 Route::get('/download', [DownloadController::class, 'index'])->name('download.index');
+Route::get('/download/{download}', [DownloadController::class, 'download'])->name('download.file');
+
+// Sitemap
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 // =============================================
 // BREEZE AUTH ROUTES
@@ -99,4 +110,14 @@ Route::prefix('admin')
         Route::delete('albums/{album}/photos/{photo}', [AlbumController::class, 'deletePhoto'])->name('albums.photos.delete');
         Route::resource('videos', AlbumVideoController::class);
         Route::resource('audio', AlbumAudioController::class);
+        Route::resource('galleries', AdminGalleryController::class);
+        Route::resource('orders', AdminOrderController::class)->only(['index', 'show', 'update', 'destroy']);
+        Route::resource('pages', AdminPageController::class);
+        Route::resource('advertisements', AdminAdvertisementController::class);
+        Route::get('settings', [AdminSettingController::class, 'edit'])->name('settings.edit');
+        Route::put('settings', [AdminSettingController::class, 'update'])->name('settings.update');
+        Route::get('downloads', [AdminDownloadController::class, 'index'])->name('downloads.index');
+        Route::post('downloads/file', [AdminDownloadController::class, 'storeFile'])->name('downloads.store-file');
+        Route::post('downloads/gdrive', [AdminDownloadController::class, 'storeGdrive'])->name('downloads.store-gdrive');
+        Route::delete('downloads/{download}', [AdminDownloadController::class, 'destroy'])->name('downloads.destroy');
     });

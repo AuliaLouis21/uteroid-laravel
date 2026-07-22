@@ -2,10 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Traits\ValidatesRecaptcha;
+
 use Illuminate\Foundation\Http\FormRequest;
 
 class ContactRequest extends FormRequest
 {
+    use ValidatesRecaptcha;
+
     public function authorize(): bool
     {
         return true;

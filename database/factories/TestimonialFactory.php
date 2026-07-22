@@ -19,6 +19,7 @@ class TestimonialFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'company' => fake()->company(),
             'content' => fake()->paragraph(),
+            'rating' => fake()->numberBetween(1, 5),
             'status' => 'approved',
         ];
     }

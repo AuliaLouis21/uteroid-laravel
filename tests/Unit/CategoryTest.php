@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\Category;
 use App\Models\Gallery;
-use App\Models\Post;
+use App\Models\News;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -26,10 +26,10 @@ class CategoryTest extends TestCase
     {
         $category = Category::factory()->create();
 
-        Post::factory()->count(4)->create(['category_id' => $category->id]);
+        News::factory()->count(4)->create(['category_id' => $category->id]);
 
         $this->assertCount(4, $category->posts);
-        $this->assertInstanceOf(Post::class, $category->posts->first());
+        $this->assertInstanceOf(News::class, $category->posts->first());
     }
 
     public function test_category_has_correct_fillable_fields(): void

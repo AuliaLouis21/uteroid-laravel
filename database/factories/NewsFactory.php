@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\News;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -19,10 +20,11 @@ class NewsFactory extends Factory
 
         return [
             'title' => $title,
-            'slug' => Str::slug($title),
+            'slug' => Str::slug($title) . '-' . fake()->unique()->numerify('###'),
             'excerpt' => fake()->paragraph(),
             'content' => fake()->paragraphs(3, true),
             'image' => null,
+            'category_id' => Category::factory(),
             'published_at' => now(),
         ];
     }

@@ -60,6 +60,7 @@
                         </div>
                     @endif
                     <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror" accept="image/jpeg,image/png,image/webp">
+                    <div id="image-preview" class="mt-2"></div>
                     @error('image')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -86,3 +87,19 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+document.getElementById('image').addEventListener('change', function(e) {
+    var preview = document.getElementById('image-preview');
+    preview.innerHTML = '';
+    if (e.target.files[0]) {
+        var img = document.createElement('img');
+        img.src = URL.createObjectURL(e.target.files[0]);
+        img.style.maxWidth = '200px';
+        img.style.borderRadius = '4px';
+        preview.appendChild(img);
+    }
+});
+</script>
+@endpush

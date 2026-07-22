@@ -11,7 +11,7 @@ class GalleryController extends Controller
 {
     public function index()
     {
-        $albums = Album::withCount('photos')->get();
+        $albums = Album::with('photos:id,album_id,filename')->get();
         $videos = AlbumVideo::latest()->take(6)->get();
         $audios = AlbumAudio::latest()->take(6)->get();
         $noSidebar = true;

@@ -61,7 +61,7 @@ class AdminNewsTest extends TestCase
         $response = $this->actingAs($this->user)->post(route('admin.news.store'), $data);
 
         $response->assertRedirect(route('admin.news.index'));
-        $this->assertDatabaseHas('news', ['title' => 'Breaking News Title']);
+        $this->assertDatabaseHas('posts', ['title' => 'Breaking News Title']);
     }
 
     public function test_admin_news_show_returns_200(): void
@@ -96,7 +96,7 @@ class AdminNewsTest extends TestCase
         $response = $this->actingAs($this->user)->put(route('admin.news.update', $news), $data);
 
         $response->assertRedirect(route('admin.news.index'));
-        $this->assertDatabaseHas('news', ['id' => $news->id, 'title' => 'Updated News Title']);
+        $this->assertDatabaseHas('posts', ['id' => $news->id, 'title' => 'Updated News Title']);
     }
 
     public function test_admin_news_destroy_deletes_news(): void
@@ -106,6 +106,6 @@ class AdminNewsTest extends TestCase
         $response = $this->actingAs($this->user)->delete(route('admin.news.destroy', $news));
 
         $response->assertRedirect(route('admin.news.index'));
-        $this->assertDatabaseMissing('news', ['id' => $news->id]);
+        $this->assertDatabaseMissing('posts', ['id' => $news->id]);
     }
 }
