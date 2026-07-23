@@ -84,7 +84,7 @@
             font-size: 14px;
             font-weight: 600;
             margin-bottom: 8px;
-            color: #ffffff;
+            color: #ffffff !important;
         }
 
         .form-input{
@@ -97,6 +97,10 @@
             font-size: 14px;
             outline: none;
             transition: .2s ease;
+        }
+
+        .form-input::placeholder{
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .form-input:focus{
