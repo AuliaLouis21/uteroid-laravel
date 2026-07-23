@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,27 +33,31 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @php
-        $gaId = \Illuminate\Support\Facades\Cache::remember('setting_google_analytics_id', 3600, fn() => \App\Models\Setting::where('key', 'google_analytics_id')->value('value'));
-        $waPhone = \Illuminate\Support\Facades\Cache::remember('setting_site_whatsapp', 3600, fn() => \App\Models\Setting::where('key', 'site_whatsapp')->value('value')) ?? '081999900900';
-        $recaptchaSiteKey = config('recaptcha.site_key') ?: (\Illuminate\Support\Facades\Cache::remember('setting_recaptcha_site_key', 3600, fn() => \App\Models\Setting::where('key', 'recaptcha_site_key')->value('value')) ?? '');
+    $gaId = \Illuminate\Support\Facades\Cache::remember('setting_google_analytics_id', 3600, fn() => \App\Models\Setting::where('key', 'google_analytics_id')->value('value'));
+    $waPhone = \Illuminate\Support\Facades\Cache::remember('setting_site_whatsapp', 3600, fn() => \App\Models\Setting::where('key', 'site_whatsapp')->value('value')) ?? '081999900900';
+    $recaptchaSiteKey = config('recaptcha.site_key') ?: (\Illuminate\Support\Facades\Cache::remember('setting_recaptcha_site_key', 3600, fn() => \App\Models\Setting::where('key', 'recaptcha_site_key')->value('value')) ?? '');
     @endphp
 
     @if($gaId)
-        <script async src="https://www.googletagmanager.com/gtag/js?id={{ $gaId }}"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '{{ $gaId }}');
-        </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ $gaId }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', '{{ $gaId }}');
+    </script>
     @endif
 
     @if($recaptchaSiteKey)
-        <script src="https://www.google.com/recaptcha/api.js?render={{ $recaptchaSiteKey }}"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render={{ $recaptchaSiteKey }}"></script>
     @endif
 
     @stack('styles')
 </head>
+
 <body>
     {{-- HEADER / BANNER --}}
     <div id="header">
@@ -75,9 +80,11 @@
                 <div class="nav-brand hidden md:block">
                     <span>UTERO</span> ADVERTISING
                 </div>
-                <button class="nav-toggle md:hidden" @click="open = !open">
+
+                <button class="nav-toggle md:hidden" @click="open = !open" :aria-expanded="open.toString()" aria-label="Toggle navigation menu">
                     <i :class="open ? 'fas fa-times' : 'fas fa-bars'" class="text-white"></i>
                 </button>
+
                 <ul :class="open ? 'open' : ''" class="md:flex">
                     <li>
                         <a href="{{ route('home') }}" title="Home" {{ request()->routeIs('home') ? 'class=active' : '' }}>
@@ -90,11 +97,11 @@
                         </a>
                     </li>
                     @foreach($staticPages as $sp)
-                        <li>
-                            <a href="{{ route('pages.show', $sp->slug) }}" title="{{ $sp->title }}" {{ request()->routeIs('pages.show') && request('slug') == $sp->slug ? 'class=active' : '' }}>
-                                {{ strtoupper($sp->title) }}
-                            </a>
-                        </li>
+                    <li>
+                        <a href="{{ route('pages.show', $sp->slug) }}" title="{{ $sp->title }}">
+                            {{ strtoupper($sp->title) }}
+                        </a>
+                    </li>
                     @endforeach
                     <li>
                         <a href="{{ route('download.index') }}" title="Download" {{ request()->routeIs('download.*') ? 'class=active' : '' }}>
@@ -126,36 +133,16 @@
         </div>
     </div>
 
-    {{-- NEWS TICKER --}}
-    @php
-        $tickerPosts = \Illuminate\Support\Facades\Cache::remember('news_ticker_posts', 600, fn() => \App\Models\News::latest()->take(10)->get());
-        $tickerItems = $tickerPosts->map(function($p) {
-            $date = $p->published_at ? $p->published_at->format('M d, Y') : $p->created_at->format('M d, Y');
-            $url = route('posts.show', $p->slug);
-            $title = e(ucwords($p->title));
-            return "$date : <a href=\"$url\" title=\"$title\">$title</a>";
-        })->values();
-    @endphp
-    <div class="news-ticker"
-         x-data="{ current: 0, items: @json($tickerItems) }"
-         x-init="setInterval(() => current = (current + 1) % items.length, 4000)">
-        <ul>
-            <template x-for="(item, i) in items" :key="i">
-                <li x-show="current === i" x-transition x-html="item"></li>
-            </template>
-        </ul>
-    </div>
-
     {{-- MAIN CONTENT --}}
     <div class="site-wrapper">
         @unless(isset($noSidebar) && $noSidebar)
-            <div class="three-col">
-                @yield('sidebar-left')
-                @yield('content')
-                @yield('sidebar-right')
-            </div>
-        @else
+        <div class="three-col">
+            @yield('sidebar-left')
             @yield('content')
+            @yield('sidebar-right')
+        </div>
+        @else
+        @yield('content')
         @endunless
     </div>
 
@@ -163,7 +150,6 @@
     <div class="footer-area">
         <div class="site-wrapper py-8">
             <div class="footer-grid">
-                {{-- Who We Are --}}
                 <div class="footer-col">
                     <div class="footer-label"><i class="fas fa-building mr-2"></i>Who We Are?</div>
                     <div class="footer-text mb-4">
@@ -181,7 +167,6 @@
                     </div>
                 </div>
 
-                {{-- Map & Testimonial --}}
                 <div class="footer-col">
                     <div class="footer-label"><i class="fas fa-map-marker-alt mr-2"></i>Lokasi Kami</div>
                     <div class="rounded-lg overflow-hidden mb-4 border border-white/10">
@@ -189,17 +174,16 @@
                     </div>
                     <div class="footer-label"><i class="fas fa-quote-left mr-2"></i>Testimonial <a href="{{ route('testimonials.index') }}" class="text-xs">Read More &rarr;</a></div>
                     @php
-                        $randomTestimonial = \Illuminate\Support\Facades\Cache::remember('random_approved_testimonial', 3600, fn() => \App\Models\Testimonial::where('status', 'approved')->inRandomOrder()->first());
+                    $randomTestimonial = \Illuminate\Support\Facades\Cache::remember('random_approved_testimonial', 3600, fn() => \App\Models\Testimonial::where('status', 'approved')->inRandomOrder()->first());
                     @endphp
                     @if($randomTestimonial)
-                        <div class="testimonial-card" style="border-left-color: #D4AF37;">
-                            <div class="testimonial-text">{{ ucfirst($randomTestimonial->content) }}</div>
-                            <div class="testimonial-info">From: {{ $randomTestimonial->name }} &rarr; {{ $randomTestimonial->created_at->format('M d, Y') }}</div>
-                        </div>
+                    <div class="testimonial-card" style="border-left-color: #D4AF37;">
+                        <div class="testimonial-text">{{ ucfirst($randomTestimonial->content) }}</div>
+                        <div class="testimonial-info">From: {{ $randomTestimonial->name }} &rarr; {{ $randomTestimonial->created_at->format('M d, Y') }}</div>
+                    </div>
                     @endif
                 </div>
 
-                {{-- Contact Us --}}
                 <div class="footer-col">
                     <div class="footer-label"><i class="fas fa-phone mr-2"></i>Contact Us</div>
                     <div class="footer-text">
@@ -209,7 +193,8 @@
                             <p><i class="fas fa-map-pin mr-2 text-gold"></i>Jl. Bantaran 1 No. 25, Tulusrejo, Lowokwaru, Malang 65141</p>
                             <p><i class="fas fa-phone mr-2 text-gold"></i>0341 408408</p>
                             <p><i class="fab fa-whatsapp mr-2 text-gold"></i>081 999 900 900 (wahyu)<br>
-                            <span class="ml-5">081 7388 616 (utero)</span></p>
+                                <span class="ml-5">081 7388 616 (utero)</span>
+                            </p>
                             <p><i class="fas fa-envelope mr-2 text-gold"></i>marketingutero@gmail.com</p>
                         </div>
                     </div>
@@ -227,7 +212,7 @@
 
     {{-- WHATSAPP BUTTON --}}
     @php
-        $waNumber = str_replace([' ', '-', '+'], '', $waPhone);
+    $waNumber = str_replace([' ', '-', '+'], '', $waPhone);
     @endphp
     <a href="https://wa.me/{{ $waNumber }}?text=%F0%9F%94%B4%F0%9F%94%B4%F0%9F%94%B4%20%2ASalam%20Merah%2A%20%F0%9F%94%B4%F0%9F%94%B4%F0%9F%94%B4%0ASaya%20dapat%20informasi%20dari%20uterogroup.com%0AMau%20konsultasi%20dong%21%0ANama%20%3A%20%0AAlamat%20%3A%0ANo.%20Telp%20%3A%0AEmail%20%3A%0AKebutuhan%20%3A" class="whatsapp-btn" target="_blank">
         <i class="fab fa-whatsapp"></i>
@@ -235,19 +220,20 @@
 
     {{-- FLASH MESSAGES --}}
     @if(session('success'))
-        <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition
-             class="fixed top-4 right-4 z-50 bg-green-50 border border-green-200 text-green-700 px-5 py-3 rounded-card shadow-lg text-sm font-medium">
-            <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
-        </div>
+    <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition
+        class="fixed top-4 right-4 z-50 bg-green-50 border border-green-200 text-green-700 px-5 py-3 rounded-card shadow-lg text-sm font-medium">
+        <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
+    </div>
     @endif
 
     @if(session('error'))
-        <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition
-             class="fixed top-4 right-4 z-50 bg-red-50 border border-red-200 text-red-700 px-5 py-3 rounded-card shadow-lg text-sm font-medium">
-            <i class="fas fa-exclamation-circle mr-2"></i>{{ session('error') }}
-        </div>
+    <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition
+        class="fixed top-4 right-4 z-50 bg-red-50 border border-red-200 text-red-700 px-5 py-3 rounded-card shadow-lg text-sm font-medium">
+        <i class="fas fa-exclamation-circle mr-2"></i>{{ session('error') }}
+    </div>
     @endif
 
     @stack('scripts')
 </body>
+
 </html>
