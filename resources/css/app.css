@@ -638,7 +638,7 @@
     }
 
     .footer-label {
-        @apply text-gold font-bold capitalize block mb-3;
+        @apply text-brand font-bold capitalize block mb-3;
         font-size: 16px;
         letter-spacing: -0.5px;
     }
@@ -648,7 +648,7 @@
     }
 
     .footer-label a:hover {
-        @apply text-gold no-underline;
+        @apply text-brand no-underline;
     }
 
     .footer-text {
@@ -656,7 +656,7 @@
     }
 
     .footer-text a {
-        @apply text-gold no-underline;
+        @apply text-brand no-underline;
     }
 
     .footer-text a:hover {
@@ -678,7 +678,7 @@
 
     .social-icon:hover {
         @apply text-white;
-        background: rgba(212, 175, 55, 0.2);
+        background: rgba(206, 24, 30, 0.2);
         transform: translateY(-2px);
     }
 
