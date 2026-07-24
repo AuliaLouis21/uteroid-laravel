@@ -28,7 +28,7 @@
 @section('content')
 <div class="main-content">
     <div class="content-card">
-        <a href="{{ route('posts.index') }}" class="text-sm text-brand no-underline hover:text-gold mb-4 inline-block">
+        <a href="{{ route('posts.index') }}" class="text-sm text-brand no-underline hover:text-white mb-4 inline-block">
             <i class="fas fa-arrow-left mr-1"></i>Kembali ke Berita
         </a>
         <div class="page-title">{{ $post->title }}</div>
@@ -53,7 +53,7 @@
                 @foreach($relatedPosts as $related)
                     <a href="{{ route('posts.show', $related->slug) }}" class="block no-underline group">
                         <div class="border border-gray-100 rounded-lg p-4 hover:shadow-card transition-all duration-200 hover:border-brand/20">
-                            <h4 class="font-semibold text-sm group-hover:text-brand transition-colors" style="color: #1A1A2E;">{{ $related->title }}</h4>
+                            <h4 class="font-semibold text-sm group-hover:text-brand transition-colors" style="color: #000000;">{{ $related->title }}</h4>
                             <span class="text-xs text-gray-400">
                                 <i class="far fa-clock mr-1"></i>{{ $related->published_at ? $related->published_at->format('M d, Y') : $related->created_at->format('M d, Y') }}
                             </span>

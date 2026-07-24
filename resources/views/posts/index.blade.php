@@ -42,7 +42,7 @@
             @forelse($posts as $post)
                 <a href="{{ route('posts.show', $post->slug) }}" class="block no-underline group">
                     <div class="bg-white border border-gray-100 rounded-card p-5 hover:shadow-card transition-all duration-200 hover:border-brand/20">
-                        <h3 class="text-base font-semibold mb-1 group-hover:text-brand transition-colors" style="color: #1A1A2E;">
+                        <h3 class="text-base font-semibold mb-1 group-hover:text-brand transition-colors" style="color: #000000;">
                             {{ $post->title }}
                         </h3>
                         <span class="text-xs text-gray-400">

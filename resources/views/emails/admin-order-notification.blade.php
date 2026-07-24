@@ -5,7 +5,7 @@
     <style>
         body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background-color: #DF282A; color: #fff; padding: 15px 20px; border-radius: 4px 4px 0 0; }
+        .header { background-color: #ce181e; color: #fff; padding: 15px 20px; border-radius: 4px 4px 0 0; }
         .body { background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; border-top: none; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th, td { padding: 8px 12px; border: 1px solid #ddd; text-align: left; }

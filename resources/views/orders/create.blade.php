@@ -34,7 +34,7 @@
 
             {{-- Data Pemesan --}}
             <div class="bg-gray-50 rounded-card p-5 mb-6 border border-gray-100">
-                <h3 class="text-sm font-semibold uppercase tracking-wider mb-4" style="color: #1A1A2E;">
+                <h3 class="text-sm font-semibold uppercase tracking-wider mb-4" style="color: #000000;">
                     <i class="fas fa-user mr-2 text-brand"></i>Data Pemesan
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -68,7 +68,7 @@
 
             {{-- Produk yang Dipesan --}}
             <div class="bg-gray-50 rounded-card p-5 mb-6 border border-gray-100">
-                <h3 class="text-sm font-semibold uppercase tracking-wider mb-4" style="color: #1A1A2E;">
+                <h3 class="text-sm font-semibold uppercase tracking-wider mb-4" style="color: #000000;">
                     <i class="fas fa-box mr-2 text-brand"></i>Produk yang Dipesan
                 </h3>
 

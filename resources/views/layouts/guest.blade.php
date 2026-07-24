@@ -14,8 +14,8 @@
             --text-dark: #1f2937;
             --input-bg: rgba(255, 255, 255, 0.92);
             --input-border: rgba(0,0,0,0.08);
-            --primary: #dc2626;
-            --primary-hover: #b91c1c;
+            --primary: #ce181e;
+            --primary-hover: #a01418;
         }
 
         * { box-sizing: border-box; }

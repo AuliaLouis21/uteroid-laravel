@@ -5,7 +5,7 @@
 @section('content')
 <div class="py-6">
     <div class="content-card">
-        <a href="{{ route('gallery.index') }}" class="text-sm text-brand no-underline hover:text-gold mb-4 inline-block">
+        <a href="{{ route('gallery.index') }}" class="text-sm text-brand no-underline hover:text-white mb-4 inline-block">
             <i class="fas fa-arrow-left mr-1"></i>Kembali ke Gallery
         </a>
         <div class="page-title">{{ $album->name }}</div>

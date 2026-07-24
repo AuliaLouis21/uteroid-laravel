@@ -64,7 +64,7 @@
         <div class="site-wrapper">
             <div class="header-overlay">
                 <h1 class="text-white text-3xl md:text-4xl font-bold mb-2" style="text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
-                    UTERO <span class="text-gold">ADVERTISING</span>
+                    UTERO <span class="text-brand">ADVERTISING</span>
                 </h1>
                 <p class="text-gray-300 text-sm md:text-base" style="text-shadow: 0 1px 4px rgba(0,0,0,0.5);">
                     Idea And Concept Factory — Advertising, Digital Printing & Creative Agency
@@ -93,19 +93,7 @@
                     </li>
                     <li>
                         <a href="{{ route('products.index') }}" title="Product" {{ request()->routeIs('products.*') ? 'class=active' : '' }}>
-                            <i class="fas fa-box mr-1 text-xs"></i> PRICE
-                        </a>
-                    </li>
-                    @foreach($staticPages as $sp)
-                    <li>
-                        <a href="{{ route('pages.show', $sp->slug) }}" title="{{ $sp->title }}">
-                            {{ strtoupper($sp->title) }}
-                        </a>
-                    </li>
-                    @endforeach
-                    <li>
-                        <a href="{{ route('download.index') }}" title="Download" {{ request()->routeIs('download.*') ? 'class=active' : '' }}>
-                            <i class="fas fa-download mr-1 text-xs"></i> DOWNLOAD
+                            <i class="fas fa-dollar-sign mr-1 text-xs"></i> PRICE
                         </a>
                     </li>
                     <li>
@@ -119,15 +107,27 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('download.index') }}" title="Download" {{ request()->routeIs('download.*') ? 'class=active' : '' }}>
+                            <i class="fas fa-download mr-1 text-xs"></i> DOWNLOAD
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('testimonials.index') }}" title="Testimonial" {{ request()->routeIs('testimonials.*') ? 'class=active' : '' }}>
                             <i class="fas fa-quote-right mr-1 text-xs"></i> TESTIMONIAL
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('contact.index') }}" title="Kontak" {{ request()->routeIs('contact.*') ? 'class=active' : '' }}>
-                            <i class="fas fa-envelope mr-1 text-xs"></i> KONTAK
+                            <i class="fas fa-phone mr-1 text-xs"></i> KONTAK
                         </a>
                     </li>
+                    @foreach($staticPages as $sp)
+                    <li>
+                        <a href="{{ route('pages.show', $sp->slug) }}" title="{{ $sp->title }}" {{ request()->routeIs('pages.show', $sp->slug) ? 'class=active' : '' }}>
+                            @if($sp->slug === 'tentang-kami')<i class="fas fa-info-circle mr-1 text-xs"></i> @endif{{ strtoupper($sp->title) }}
+                        </a>
+                    </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
@@ -177,7 +177,7 @@
                     $randomTestimonial = \Illuminate\Support\Facades\Cache::remember('random_approved_testimonial', 3600, fn() => \App\Models\Testimonial::where('status', 'approved')->inRandomOrder()->first());
                     @endphp
                     @if($randomTestimonial)
-                    <div class="testimonial-card" style="border-left-color: #D4AF37;">
+                    <div class="testimonial-card" style="border-left-color: #ce181e;">
                         <div class="testimonial-text">{{ ucfirst($randomTestimonial->content) }}</div>
                         <div class="testimonial-info">From: {{ $randomTestimonial->name }} &rarr; {{ $randomTestimonial->created_at->format('M d, Y') }}</div>
                     </div>
@@ -190,12 +190,12 @@
                         <p class="font-semibold text-white mb-1">PT. UTERO KREATIF INDONESIA</p>
                         <p class="text-xs text-gray-400 mb-3">RUMAH MERAH OXYZ</p>
                         <div class="space-y-2 text-sm">
-                            <p><i class="fas fa-map-pin mr-2 text-gold"></i>Jl. Bantaran 1 No. 25, Tulusrejo, Lowokwaru, Malang 65141</p>
-                            <p><i class="fas fa-phone mr-2 text-gold"></i>0341 408408</p>
-                            <p><i class="fab fa-whatsapp mr-2 text-gold"></i>081 999 900 900 (wahyu)<br>
-                                <span class="ml-5">081 7388 616 (utero)</span>
+                            <p><i class="fas fa-map-pin mr-2 text-brand"></i>Jl. Bantaran 1 No. 25, Tulusrejo, Lowokwaru, Malang 65141</p>
+                            <p><i class="fas fa-phone mr-2 text-brand"></i>0341 408408</p>
+                            <p><i class="fab fa-whatsapp mr-2 text-brand"></i>+62 819-9990-0900 (Pak Dadik)<br>
+                                <!-- <span class="ml-5">+62 817-3886-1688 (utero)</span> -->
                             </p>
-                            <p><i class="fas fa-envelope mr-2 text-gold"></i>marketingutero@gmail.com</p>
+                            <p><i class="fas fa-envelope mr-2 text-brand"></i>marketingutero@gmail.com</p>
                         </div>
                     </div>
                 </div>
@@ -205,7 +205,7 @@
         <div class="footer-copyright">
             <div class="site-wrapper flex justify-between items-center">
                 <span>&copy; 2009-{{ date('Y') }} uterogroup.com, All Right Reserved</span>
-                <span class="text-gold text-xs">Idea And Concept Factory</span>
+                <span class="text-gray-400 text-xs">Idea And Concept Factory</span>
             </div>
         </div>
     </div>

@@ -150,7 +150,7 @@ function slider() {
         },
         imgStyle(product) {
             var src = product.image || (product.images && product.images[0] ? product.images[0].path : null);
-            return src ? 'background-image:url(' + '/storage/' + src + ')' : 'background-color:#1A1A2E';
+            return src ? 'background-image:url(' + '/storage/' + src + ')' : 'background-color:#000000';
         },
         formatPrice(val) {
             return new Intl.NumberFormat('id-ID').format(val);

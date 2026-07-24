@@ -46,7 +46,7 @@
                                     <span class="font-medium">{{ $dl->name }}</span>
                                     <span class="text-gray-400 text-xs ml-1">.{{ $dl->extension }}</span>
                                 @else
-                                    <i class="fas fa-link mr-2 text-gold"></i>
+                                    <i class="fas fa-link mr-2 text-white"></i>
                                     <span class="font-medium">{{ $dl->name }}</span>
                                     <span class="text-gray-400 text-xs ml-1">(Google Drive)</span>
                                 @endif
