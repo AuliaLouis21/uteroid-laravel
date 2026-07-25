@@ -129,6 +129,13 @@
                 <a href="{{ $ad->link ?? '#' }}" title="{{ $ad->title }}" target="_blank" class="ad-item block">
                     @if($ad->image)
                         <img src="{{ asset('storage/' . $ad->image) }}" alt="{{ $ad->title }}" loading="lazy">
+                    @else
+                        <div class="ad-fallback">
+                            <div class="ad-fallback-title">{{ $ad->title }}</div>
+                            @if($ad->content)
+                                <div class="ad-fallback-content">{{ \Illuminate\Support\Str::limit($ad->content, 90) }}</div>
+                            @endif
+                        </div>
                     @endif
                 </a>
             @endforeach
@@ -138,10 +145,13 @@
 @endsection
 
 @push('scripts')
+<script type="application/json" id="promo-products-data">{{ $promoProductsJson }}</script>
 <script>
 function slider() {
+    const promoProducts = JSON.parse(document.getElementById('promo-products-data').textContent);
+
     return {
-        products: @json($promoProducts),
+        products: promoProducts,
         current: 0,
         init() {
             setInterval(() => {

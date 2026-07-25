@@ -43,7 +43,7 @@
                                     @endif
                                 @endfor
                             </td>
-                            <td>{{ Str::limit($item->content, 50) }}</td>
+                            <td>{{ \Illuminate\Support\Str::limit($item->content, 50) }}</td>
                             <td>
                                 @if($item->status === 'approved')
                                     <span class="badge bg-success">Approved</span>

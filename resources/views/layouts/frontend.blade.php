@@ -179,6 +179,11 @@
                     @if($randomTestimonial)
                     <div class="testimonial-card" style="border-left-color: #ce181e;">
                         <div class="testimonial-text">{{ ucfirst($randomTestimonial->content) }}</div>
+                        <div class="testimonial-stars" aria-label="Rating {{ $randomTestimonial->rating }} dari 5">
+                            @for($i = 1; $i <= 5; $i++)
+                                <span class="testimonial-star {{ $i <= $randomTestimonial->rating ? 'is-filled' : 'is-empty' }}" aria-hidden="true">&#9733;</span>
+                            @endfor
+                        </div>
                         <div class="testimonial-info">From: {{ $randomTestimonial->name }} &rarr; {{ $randomTestimonial->created_at->format('M d, Y') }}</div>
                     </div>
                     @endif

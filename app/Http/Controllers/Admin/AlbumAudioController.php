@@ -11,6 +11,19 @@ use Illuminate\Support\Str;
 
 class AlbumAudioController extends Controller
 {
+    private function audioFileRules(bool $required = true): array
+    {
+        $rules = ['file', 'max:10240', 'extensions:mp3,wav,ogg,aac,m4a'];
+
+        if ($required) {
+            array_unshift($rules, 'required');
+        } else {
+            array_unshift($rules, 'nullable');
+        }
+
+        return $rules;
+    }
+
     public function index()
     {
         $audios = AlbumAudio::with('album')->latest()->paginate(10);
@@ -31,7 +44,7 @@ class AlbumAudioController extends Controller
             'album_id' => ['nullable', 'exists:albums,id'],
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'unique:album_audio,slug'],
-            'filename' => ['required', 'file', 'mimes:mp3,wav,ogg,aac,m4a', 'max:10240'],
+            'filename' => $this->audioFileRules(),
             'description' => ['nullable', 'string'],
         ]);
 
@@ -65,7 +78,7 @@ class AlbumAudioController extends Controller
             'album_id' => ['nullable', 'exists:albums,id'],
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'unique:album_audio,slug,' . $audio->id],
-            'filename' => ['nullable', 'file', 'mimes:mp3,wav,ogg,aac,m4a', 'max:10240'],
+            'filename' => $this->audioFileRules(false),
             'description' => ['nullable', 'string'],
         ]);
 

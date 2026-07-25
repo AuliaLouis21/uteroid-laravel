@@ -35,6 +35,11 @@
             @forelse($testimonials as $testimonial)
                 <div class="testimonial-card">
                     <div class="testimonial-text">"{{ ucfirst($testimonial->content) }}"</div>
+                    <div class="testimonial-stars" aria-label="Rating {{ $testimonial->rating }} dari 5">
+                        @for($i = 1; $i <= 5; $i++)
+                            <span class="testimonial-star {{ $i <= $testimonial->rating ? 'is-filled' : 'is-empty' }}" aria-hidden="true">&#9733;</span>
+                        @endfor
+                    </div>
                     <div class="testimonial-info">
                         <i class="fas fa-user-circle mr-1"></i>{{ $testimonial->name }}
                         @if($testimonial->company)
@@ -79,6 +84,18 @@
                 <input type="text" name="company" id="company" value="{{ old('company') }}" placeholder="Nama perusahaan (opsional)">
             </div>
             <div class="form-group">
+                <label class="block mb-2">Rating</label>
+                <div class="testimonial-rating-options" data-rating-group>
+                    @for($rating = 1; $rating <= 5; $rating++)
+                        <label class="testimonial-rating-option cursor-pointer" data-rating-value="{{ $rating }}">
+                            <input type="radio" name="rating" value="{{ $rating }}" {{ old('rating', 5) == $rating ? 'checked' : '' }} required>
+                            <span class="text-warning" aria-hidden="true">&#9733;</span>
+                        </label>
+                    @endfor
+                </div>
+                @error('rating') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
+            </div>
+            <div class="form-group">
                 <label for="content">Testimonial</label>
                 <textarea name="content" id="content" rows="4" placeholder="Tulis testimonial Anda..." required>{{ old('content') }}</textarea>
                 @error('content') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
@@ -86,7 +103,7 @@
             <div class="form-group">
                 <label>&nbsp;</label>
                 <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response-testimonial">
-                <button type="submit" class="form-submit">
+                <button type="submit" class="form-submit w-full justify-center md:w-auto">
                     <i class="fas fa-paper-plane"></i>Kirim Testimonial
                 </button>
             </div>
@@ -96,9 +113,41 @@
 
 @push('scripts')
 @php $recaptchaSiteKey = config('recaptcha.site_key'); @endphp
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const ratingGroup = document.querySelector('[data-rating-group]');
+    if (!ratingGroup) {
+        return;
+    }
+
+    const ratingInputs = Array.from(ratingGroup.querySelectorAll('input[type="radio"][name="rating"]'));
+    const ratingOptions = Array.from(ratingGroup.querySelectorAll('[data-rating-value]'));
+
+    const updateRatingState = function (selectedValue) {
+        ratingOptions.forEach(function (option) {
+            const optionValue = Number(option.dataset.ratingValue);
+            option.classList.toggle('is-selected', optionValue <= selectedValue);
+        });
+    };
+
+    ratingInputs.forEach(function (input) {
+        input.addEventListener('change', function () {
+            updateRatingState(Number(input.value));
+        });
+    });
+
+    const initiallyChecked = ratingInputs.find(function (input) {
+        return input.checked;
+    });
+
+    updateRatingState(initiallyChecked ? Number(initiallyChecked.value) : 5);
+});
+</script>
 @if($recaptchaSiteKey)
 <script>
-document.querySelector('form[action="{{ route('testimonials.store') }}"]').addEventListener('submit', function(e) {
+const testimonialForm = document.querySelector("form[action='{{ route('testimonials.store') }}']");
+
+testimonialForm.addEventListener('submit', function(e) {
     e.preventDefault();
     var form = this;
     grecaptcha.ready(function() {

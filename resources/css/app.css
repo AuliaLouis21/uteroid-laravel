@@ -255,6 +255,20 @@
         transition: transform 0.3s ease, filter 0.3s ease;
     }
 
+    .ad-fallback {
+        @apply w-full flex flex-col justify-center p-4 text-white rounded-md;
+        min-height: 140px;
+        background: linear-gradient(135deg, #ce181e 0%, #111111 100%);
+    }
+
+    .ad-fallback-title {
+        @apply font-semibold text-sm mb-2;
+    }
+
+    .ad-fallback-content {
+        @apply text-xs leading-relaxed text-gray-100;
+    }
+
     .ad-item:hover img {
         transform: scale(1.03);
         filter: brightness(1.05);
@@ -614,6 +628,40 @@
         box-shadow: 0 4px 12px rgba(206, 24, 30, 0.3);
     }
 
+    .testimonial-rating-options {
+        @apply flex items-center gap-1;
+    }
+
+    .testimonial-rating-option {
+        @apply inline-flex items-center justify-center select-none leading-none;
+        transition: all 0.2s ease;
+        width: 2.2rem;
+        height: 2.2rem;
+    }
+
+    .testimonial-rating-option input {
+        @apply sr-only;
+    }
+
+    .testimonial-rating-option:hover {
+        transform: scale(1.06);
+    }
+
+    .testimonial-rating-option .text-warning {
+        color: #D1D5DB;
+        font-size: 1.9rem;
+        line-height: 1;
+        transition: color 0.2s ease;
+    }
+
+    .testimonial-rating-option.is-selected {
+        transform: scale(1.06);
+    }
+
+    .testimonial-rating-option.is-selected .text-warning {
+        color: #f2c820;
+    }
+
     .section-divider {
         @apply block text-right py-3;
         border-top: 2px solid #E5E7EB;
@@ -707,6 +755,23 @@
 
     .testimonial-card:hover {
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .testimonial-stars {
+        @apply flex items-center gap-0.5 mt-3;
+    }
+
+    .testimonial-star {
+        font-size: 1rem;
+        line-height: 1;
+    }
+
+    .testimonial-star.is-filled {
+        color: #f2c820;
+    }
+
+    .testimonial-star.is-empty {
+        color: #d1d5db;
     }
 
     .testimonial-text {
@@ -907,6 +972,23 @@
 
     .content-card {
         @apply p-4;
+    }
+
+    .testimonial-rating-options {
+        @apply gap-0;
+    }
+
+    .testimonial-rating-option {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .testimonial-rating-option .text-warning {
+        font-size: 1.6rem;
+    }
+
+    .form-submit {
+        @apply w-full justify-center;
     }
 }
 

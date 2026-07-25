@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\News;
 use App\Models\Advertisement;
+use Illuminate\Support\HtmlString;
 
 class HomeController extends Controller
 {
@@ -15,6 +16,7 @@ class HomeController extends Controller
             ->where('is_promo', true)
             ->latest()
             ->get();
+        $promoProductsJson = new HtmlString($promoProducts->toJson());
 
         $latestProducts = Product::with(['category', 'images'])
             ->latest()
@@ -25,8 +27,8 @@ class HomeController extends Controller
 
         $latestNews = News::latest()->take(5)->get();
 
-        $advertisements = Advertisement::latest()->take(10)->get();
+        $advertisements = Advertisement::where('is_active', true)->latest()->take(10)->get();
 
-        return view('home.index', compact('promoProducts', 'latestProducts', 'categories', 'latestNews', 'advertisements'));
+        return view('home.index', compact('promoProducts', 'promoProductsJson', 'latestProducts', 'categories', 'latestNews', 'advertisements'));
     }
 }
