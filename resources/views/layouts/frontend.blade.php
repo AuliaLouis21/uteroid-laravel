@@ -128,6 +128,25 @@
                         </a>
                     </li>
                     @endforeach
+                    @auth
+                    <li>
+                        <span class="flex items-center gap-2 px-4 py-3 text-sm font-medium" style="color: rgba(255, 255, 255, 0.65);">
+                            <i class="fas fa-user-circle text-xs"></i>{{ Auth::user()->name }}
+                            <form method="POST" action="{{ route('logout') }}" class="inline">
+                                @csrf
+                                <button type="submit" class="text-xs px-2 py-1 rounded transition-colors cursor-pointer hover:text-white" style="color: rgba(255, 255, 255, 0.65); background: none; border: none;" title="Logout">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </button>
+                            </form>
+                        </span>
+                    </li>
+                    @else
+                    <li>
+                        <a href="{{ route('login') }}" title="Login" {{ request()->routeIs('login') ? 'class=active' : '' }}>
+                            <i class="fas fa-sign-in-alt mr-1 text-xs"></i> LOGIN
+                        </a>
+                    </li>
+                    @endauth
                 </ul>
             </div>
         </div>

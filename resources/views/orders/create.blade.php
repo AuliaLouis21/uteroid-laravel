@@ -45,7 +45,7 @@
                     </div>
                     <div class="form-group mb-0">
                         <label for="email">Email <span class="text-brand">*</span></label>
-                        <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="Masukkan email" required>
+                        <input type="email" name="email" id="email" value="{{ old('email', auth()->user()->email ?? '') }}" placeholder="Masukkan email" required>
                     </div>
                     <div class="form-group mb-0">
                         <label for="phone">Telepon <span class="text-brand">*</span></label>

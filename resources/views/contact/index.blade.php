@@ -52,7 +52,7 @@
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="Masukkan email Anda" required>
+                <input type="email" name="email" id="email" value="{{ old('email', auth()->user()->email ?? '') }}" placeholder="Masukkan email Anda" required>
                 @error('email') <span class="text-red-500 text-xs mt-1 block">{{ $message }}</span> @enderror
             </div>
             <div class="form-group">
