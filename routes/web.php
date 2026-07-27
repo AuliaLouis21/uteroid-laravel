@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\Admin\AdvertisementController as AdminAdvertisementController;
 use App\Http\Controllers\Admin\DownloadController as AdminDownloadController;
 use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 // =============================================
@@ -114,6 +115,7 @@ Route::prefix('admin')
         Route::resource('orders', AdminOrderController::class)->only(['index', 'show', 'update', 'destroy']);
         Route::resource('pages', AdminPageController::class);
         Route::resource('advertisements', AdminAdvertisementController::class);
+        Route::resource('users', UserController::class);
         Route::get('settings', [AdminSettingController::class, 'edit'])->name('settings.edit');
         Route::put('settings', [AdminSettingController::class, 'update'])->name('settings.update');
         Route::get('downloads', [AdminDownloadController::class, 'index'])->name('downloads.index');

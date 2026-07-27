@@ -7,6 +7,7 @@
     <title>@yield('title', 'Admin') - Uteroid CMS</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body {
             background-color: #f8f9fa;
@@ -161,6 +162,11 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('admin.downloads.*') ? 'active' : '' }}" href="{{ route('admin.downloads.index') }}">Downloads</a>
                     </li>
+                    @if(Auth::user()->role === 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">Users</a>
+                    </li>
+                    @endif
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}" href="{{ route('admin.settings.edit') }}">Settings</a>
                     </li>
@@ -168,11 +174,6 @@
                 <ul class="nav flex-column" style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 20px;">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}">&#8592; Beranda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" style="cursor: default;">
-                            <i class="fas fa-user-circle me-1"></i> {{ Auth::user()->name }}
-                        </a>
                     </li>
                     <li class="nav-item">
                         <form method="POST" action="{{ route('logout') }}">
