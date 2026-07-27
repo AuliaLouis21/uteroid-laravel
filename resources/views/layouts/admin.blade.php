@@ -170,6 +170,11 @@
                         <a class="nav-link" href="{{ route('home') }}">&#8592; Beranda</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" style="cursor: default;">
+                            <i class="fas fa-user-circle me-1"></i> {{ Auth::user()->name }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="nav-link">&#8592; Logout</button>
