@@ -7,6 +7,7 @@ use App\Models\Album;
 use App\Models\AlbumPhoto;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class AlbumController extends Controller
@@ -35,6 +36,8 @@ class AlbumController extends Controller
         ]);
 
         Album::create($data);
+
+        Cache::forget('gallery.albums');
 
         return redirect()->route('admin.albums.index')
             ->with('success', 'Album berhasil ditambahkan.');
@@ -66,6 +69,8 @@ class AlbumController extends Controller
 
         $album->update($data);
 
+        Cache::forget('gallery.albums');
+
         return redirect()->route('admin.albums.index')
             ->with('success', 'Album berhasil diperbarui.');
     }
@@ -80,6 +85,8 @@ class AlbumController extends Controller
         }
 
         $album->delete();
+
+        Cache::forget('gallery.albums');
 
         return redirect()->route('admin.albums.index')
             ->with('success', 'Album berhasil dihapus.');
@@ -102,6 +109,8 @@ class AlbumController extends Controller
 
         AlbumPhoto::create($data);
 
+        Cache::forget('gallery.albums');
+
         return redirect()->route('admin.albums.edit', $album)
             ->with('success', 'Foto berhasil ditambahkan.');
     }
@@ -113,6 +122,8 @@ class AlbumController extends Controller
         }
 
         $photo->delete();
+
+        Cache::forget('gallery.albums');
 
         return redirect()->route('admin.albums.edit', $album)
             ->with('success', 'Foto berhasil dihapus.');

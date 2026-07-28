@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class PostController extends Controller
 {
@@ -22,12 +23,20 @@ class PostController extends Controller
 
     public function show(string $slug)
     {
-        $post = News::where('slug', $slug)->firstOrFail();
+        $post = Cache::remember("post.{$slug}", 1800, fn() =>
+            News::where('slug', $slug)->first()
+        );
 
-        $relatedPosts = News::where('id', '!=', $post->id)
-            ->latest()
-            ->take(3)
-            ->get();
+        if (!$post) {
+            abort(404);
+        }
+
+        $relatedPosts = Cache::remember("post.{$slug}.related", 1800, fn() =>
+            News::where('id', '!=', $post->id)
+                ->latest()
+                ->take(3)
+                ->get()
+        );
 
         return view('posts.show', compact('post', 'relatedPosts'));
     }

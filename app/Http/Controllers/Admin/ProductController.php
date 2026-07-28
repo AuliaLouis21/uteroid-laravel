@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Http\Requests\Admin\StoreProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -47,6 +48,8 @@ class ProductController extends Controller
                 'is_thumbnail' => true,
             ]);
         }
+
+        $this->clearProductCache();
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Product created successfully.');
@@ -93,6 +96,9 @@ class ProductController extends Controller
 
         $product->update($data);
 
+        Cache::forget('product.' . $product->slug);
+        $this->clearProductCache();
+
         return redirect()->route('admin.products.index')
             ->with('success', 'Product updated successfully.');
     }
@@ -103,9 +109,19 @@ class ProductController extends Controller
             \Storage::disk('public')->delete($product->image);
         }
 
+        Cache::forget('product.' . $product->slug);
         $product->delete();
+
+        $this->clearProductCache();
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Product deleted successfully.');
+    }
+
+    protected function clearProductCache(): void
+    {
+        Cache::forget('home.promo_products');
+        Cache::forget('home.latest_products');
+        Cache::forget('home.categories');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ProductController extends Controller
 {
@@ -30,15 +31,23 @@ class ProductController extends Controller
 
     public function show(string $slug)
     {
-        $product = Product::with(['category', 'images', 'type'])
-            ->where('slug', $slug)
-            ->firstOrFail();
+        $product = Cache::remember("product.{$slug}", 1800, fn() =>
+            Product::with(['category', 'images', 'type'])
+                ->where('slug', $slug)
+                ->first()
+        );
 
-        $relatedProducts = Product::with('images')
-            ->where('product_category_id', $product->product_category_id)
-            ->where('id', '!=', $product->id)
-            ->take(4)
-            ->get();
+        if (!$product) {
+            abort(404);
+        }
+
+        $relatedProducts = Cache::remember("product.{$slug}.related", 1800, fn() =>
+            Product::with('images')
+                ->where('product_category_id', $product->product_category_id)
+                ->where('id', '!=', $product->id)
+                ->take(4)
+                ->get()
+        );
 
         return view('products.show', compact('product', 'relatedProducts'));
     }

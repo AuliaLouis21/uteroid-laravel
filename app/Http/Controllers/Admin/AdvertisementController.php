@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Advertisement;
 use App\Http\Requests\Admin\StoreAdvertisementRequest;
 use App\Http\Requests\Admin\UpdateAdvertisementRequest;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -38,6 +39,8 @@ class AdvertisementController extends Controller
         }
 
         Advertisement::create($data);
+
+        Cache::forget('home.advertisements');
 
         return redirect()->route('admin.advertisements.index')
             ->with('success', 'Advertisement created successfully.');
@@ -74,6 +77,8 @@ class AdvertisementController extends Controller
 
         $advertisement->update($data);
 
+        Cache::forget('home.advertisements');
+
         return redirect()->route('admin.advertisements.index')
             ->with('success', 'Advertisement updated successfully.');
     }
@@ -85,6 +90,8 @@ class AdvertisementController extends Controller
         }
 
         $advertisement->delete();
+
+        Cache::forget('home.advertisements');
 
         return redirect()->route('admin.advertisements.index')
             ->with('success', 'Advertisement deleted successfully.');

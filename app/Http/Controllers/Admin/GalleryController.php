@@ -7,6 +7,7 @@ use App\Models\Gallery;
 use App\Models\Category;
 use App\Http\Requests\Admin\StoreGalleryRequest;
 use App\Http\Requests\Admin\UpdateGalleryRequest;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
@@ -34,6 +35,8 @@ class GalleryController extends Controller
         }
 
         Gallery::create($data);
+
+        Cache::forget('gallery.albums');
 
         return redirect()->route('admin.galleries.index')
             ->with('success', 'Gallery created successfully.');
@@ -68,6 +71,8 @@ class GalleryController extends Controller
 
         $gallery->update($data);
 
+        Cache::forget('gallery.albums');
+
         return redirect()->route('admin.galleries.index')
             ->with('success', 'Gallery updated successfully.');
     }
@@ -79,6 +84,8 @@ class GalleryController extends Controller
         }
 
         $gallery->delete();
+
+        Cache::forget('gallery.albums');
 
         return redirect()->route('admin.galleries.index')
             ->with('success', 'Gallery deleted successfully.');

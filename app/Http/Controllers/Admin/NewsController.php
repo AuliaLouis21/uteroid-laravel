@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\News;
 use App\Http\Requests\Admin\StoreNewsRequest;
 use App\Http\Requests\Admin\UpdateNewsRequest;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
@@ -31,6 +32,8 @@ class NewsController extends Controller
         }
 
         News::create($data);
+
+        Cache::forget('home.latest_news');
 
         return redirect()->route('admin.news.index')
             ->with('success', 'News created successfully.');
@@ -61,6 +64,9 @@ class NewsController extends Controller
 
         $news->update($data);
 
+        Cache::forget('post.' . $news->slug);
+        Cache::forget('home.latest_news');
+
         return redirect()->route('admin.news.index')
             ->with('success', 'News updated successfully.');
     }
@@ -71,7 +77,10 @@ class NewsController extends Controller
             Storage::disk('public')->delete($news->image);
         }
 
+        Cache::forget('post.' . $news->slug);
         $news->delete();
+
+        Cache::forget('home.latest_news');
 
         return redirect()->route('admin.news.index')
             ->with('success', 'News deleted successfully.');

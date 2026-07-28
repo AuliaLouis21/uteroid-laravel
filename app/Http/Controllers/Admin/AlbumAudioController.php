@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AlbumAudio;
 use App\Models\Album;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -54,6 +55,8 @@ class AlbumAudioController extends Controller
 
         AlbumAudio::create($data);
 
+        Cache::forget('gallery.audios');
+
         return redirect()->route('admin.audio.index')
             ->with('success', 'Audio berhasil ditambahkan.');
     }
@@ -92,6 +95,8 @@ class AlbumAudioController extends Controller
 
         $audio->update($data);
 
+        Cache::forget('gallery.audios');
+
         return redirect()->route('admin.audio.index')
             ->with('success', 'Audio berhasil diperbarui.');
     }
@@ -103,6 +108,8 @@ class AlbumAudioController extends Controller
         }
 
         $audio->delete();
+
+        Cache::forget('gallery.audios');
 
         return redirect()->route('admin.audio.index')
             ->with('success', 'Audio berhasil dihapus.');

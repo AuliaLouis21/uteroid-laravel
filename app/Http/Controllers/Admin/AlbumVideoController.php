@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AlbumVideo;
 use App\Models\Album;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
 class AlbumVideoController extends Controller
@@ -35,6 +36,8 @@ class AlbumVideoController extends Controller
         ]);
 
         AlbumVideo::create($data);
+
+        Cache::forget('gallery.videos');
 
         return redirect()->route('admin.videos.index')
             ->with('success', 'Video berhasil ditambahkan.');
@@ -66,6 +69,8 @@ class AlbumVideoController extends Controller
 
         $video->update($data);
 
+        Cache::forget('gallery.videos');
+
         return redirect()->route('admin.videos.index')
             ->with('success', 'Video berhasil diperbarui.');
     }
@@ -73,6 +78,8 @@ class AlbumVideoController extends Controller
     public function destroy(AlbumVideo $video)
     {
         $video->delete();
+
+        Cache::forget('gallery.videos');
 
         return redirect()->route('admin.videos.index')
             ->with('success', 'Video berhasil dihapus.');
