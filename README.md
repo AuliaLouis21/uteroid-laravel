@@ -183,6 +183,42 @@ Database uteroid_cms menggunakan engine **MyISAM** dengan 21 tabel:
 
 ---
 
+## REST API
+
+Website ini menyediakan REST API v1 untuk integrasi dengan mobile app atau third-party:
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/v1/products` | GET | List produk dengan filter & pagination |
+| `/api/v1/products/{slug}` | GET | Detail produk |
+| `/api/v1/news` | GET | List berita |
+| `/api/v1/gallery` | GET | List album galeri |
+| `/api/v1/testimonials` | GET/POST | List & submit testimonial |
+| `/api/v1/orders` | POST | Submit pesanan |
+| `/api/v1/contact` | POST | Kirim pesan kontak |
+| `/api/v1/login` | POST | Autentikasi (Sanctum token) |
+
+> 📖 **Full API Documentation:** Lihat file [`API-DOCS.md`](API-DOCS.md) untuk dokumentasi lengkap semua endpoints, request/response format, authentication, dan rate limiting.
+
+### Quick Start
+
+```bash
+# Login untuk mendapatkan token
+curl -X POST http://localhost:8000/api/v1/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "admin@example.com", "password": "password", "device_name": "test"}'
+
+# List produk
+curl http://localhost:8000/api/v1/products
+
+# Submit order
+curl -X POST http://localhost:8000/api/v1/orders \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Budi", "email": "budi@example.com", "phone": "081234567890", "address": "Jl. Merdeka", "city": "Malang", "items": [{"product_name": "Spanduk", "quantity": 10}]}'
+```
+
+---
+
 ## Status Project
 
 🔴 **Legacy — Perlu Modernisasi Total**
