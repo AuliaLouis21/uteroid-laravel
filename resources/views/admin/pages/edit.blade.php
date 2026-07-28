@@ -32,6 +32,7 @@
 
                 <div class="mb-3">
                     <label for="content" class="form-label">Content</label>
+                    @include('admin.partials._quill', ['textareaId' => 'content'])
                     <textarea name="content" id="content" class="form-control @error('content') is-invalid @enderror" rows="15">{{ old('content', $page->content) }}</textarea>
                     @error('content')
                         <div class="invalid-feedback">{{ $message }}</div>
@@ -69,16 +70,7 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js"></script>
 <script>
-tinymce.init({
-    selector: '#content',
-    height: 400,
-    menubar: true,
-    plugins: 'lists link image table code help wordcount',
-    toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | removeformat | code',
-    content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 14px; }'
-});
 document.getElementById('image').addEventListener('change', function(e) {
     var preview = document.getElementById('image-preview');
     preview.innerHTML = '';
