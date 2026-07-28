@@ -68,6 +68,5 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' => \App\Http\Middleware\RoleMiddleware::class,
-        // 'cache.response' => \App\Http\Middleware\CacheResponse::class, // Disabled: too broad for global use. Apply per-route if needed.
     ];
 }
