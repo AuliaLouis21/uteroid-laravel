@@ -19,6 +19,7 @@ class HomeController extends Controller
                 ->latest()
                 ->get()
         );
+        
         $promoProductsJson = new HtmlString($promoProducts->toJson());
 
         $latestProducts = Cache::remember('home.latest_products', 600, fn() =>

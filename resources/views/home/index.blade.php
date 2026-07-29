@@ -82,7 +82,11 @@
                 <div class="product-grid-item">
                     <a href="{{ route('products.show', $product->slug) }}" title="{{ $product->name }}">
                         @if($product->images->count())
-                            <img src="{{ asset('storage/' . $product->images->first()->path) }}" alt="{{ $product->name }}" width="400" height="180" loading="lazy" decoding="async">
+                            @php $img = $product->images->first(); @endphp
+                            <picture>
+                                <source srcset="{{ $img->webp_url }}" type="image/webp">
+                                <img src="{{ $img->url }}" alt="{{ $product->name }}" width="400" height="180" loading="lazy" decoding="async">
+                            </picture>
                         @else
                             <div class="bg-gray-100 h-44 flex items-center justify-center text-gray-400 text-sm">
                                 <i class="fas fa-image mr-2"></i>No Image
@@ -118,7 +122,7 @@
             <i class="fas fa-newspaper"></i>Berita Terbaru
         </div>
         @foreach($latestNews as $news)
-            <a href="{{ route('posts.show', $news->slug) }}" class="news-item" target="_blank">
+            <a href="{{ route('posts.show', $news->slug) }}" class="news-item" target="_blank" rel="noopener noreferrer">
                 <span class="news-title">{{ ucwords($news->title) }}</span>
                 <span class="news-excerpt">{{ strip_tags(substr($news->excerpt ?: $news->content, 0, 100)) }}...</span>
                 <span class="news-date"><i class="far fa-clock mr-1"></i>{{ $news->published_at ? $news->published_at->format('M d, Y') : $news->created_at->format('M d, Y') }}</span>
@@ -133,7 +137,7 @@
                 <i class="fas fa-bullhorn"></i>Promosi
             </div>
             @foreach($advertisements as $ad)
-                <a href="{{ $ad->link ?? '#' }}" title="{{ $ad->title }}" target="_blank" class="ad-item block">
+                <a href="{{ $ad->link ?? '#' }}" title="{{ $ad->title }}" target="_blank" rel="noopener noreferrer" class="ad-item block">
                     @if($ad->image)
                         <img src="{{ asset('storage/' . $ad->image) }}" alt="{{ $ad->title }}" loading="lazy">
                     @else
@@ -166,8 +170,13 @@ function slider() {
             }, 4000);
         },
         imgStyle(product) {
-            var src = product.image || (product.images && product.images[0] ? product.images[0].path : null);
-            return src ? 'background-image:url(' + '/storage/' + src + ')' : 'background-color:#000000';
+            var src = null;
+            if (product.images && product.images[0]) {
+                src = product.images[0].webp_url || product.images[0].path;
+            } else if (product.image) {
+                src = product.image;
+            }
+            return src ? 'background-image:url(' + (src.startsWith('http') ? src : '/storage/' + src) + ')' : 'background-color:#000000';
         },
         formatPrice(val) {
             return new Intl.NumberFormat('id-ID').format(val);

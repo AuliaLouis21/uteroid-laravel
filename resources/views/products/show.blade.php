@@ -35,7 +35,11 @@
             {{-- Product Image --}}
             <div class="flex-shrink-0">
                 @if($product->images->count())
-                    <img src="{{ asset('storage/' . $product->images->first()->path) }}" alt="{{ $product->name }}" class="w-full md:w-64 rounded-card shadow-card" loading="lazy">
+                    @php $img = $product->images->first(); @endphp
+                    <picture>
+                        <source srcset="{{ $img->webp_url }}" type="image/webp">
+                        <img src="{{ $img->url }}" alt="{{ $product->name }}" class="w-full md:w-64 rounded-card shadow-card" loading="lazy">
+                    </picture>
                 @endif
             </div>
 
@@ -80,7 +84,10 @@
                 <h3 class="text-lg font-semibold mb-3">Gambar Lainnya</h3>
                 <div class="flex flex-wrap gap-3">
                     @foreach($product->images->skip(1) as $img)
-                        <img src="{{ asset('storage/' . $img->path) }}" alt="{{ $product->name }}" class="w-20 h-20 object-cover rounded-lg border border-gray-200 hover:shadow-card transition-shadow" loading="lazy">
+                        <picture>
+                            <source srcset="{{ $img->webp_url }}" type="image/webp">
+                            <img src="{{ $img->url }}" alt="{{ $product->name }}" class="w-20 h-20 object-cover rounded-lg border border-gray-200 hover:shadow-card transition-shadow" loading="lazy">
+                        </picture>
                     @endforeach
                 </div>
             </div>
@@ -105,7 +112,11 @@
                 @foreach($relatedProducts as $related)
                     <a href="{{ route('products.show', $related->slug) }}" class="product-grid-item no-underline">
                         @if($related->images->count())
-                            <img src="{{ asset('storage/' . $related->images->first()->path) }}" alt="{{ $related->name }}" loading="lazy">
+                            @php $img = $related->images->first(); @endphp
+                            <picture>
+                                <source srcset="{{ $img->webp_url }}" type="image/webp">
+                                <img src="{{ $img->url }}" alt="{{ $related->name }}" loading="lazy">
+                            </picture>
                         @endif
                         <div class="prodtitle">
                             <a href="{{ route('products.show', $related->slug) }}">{{ strtoupper($related->name) }}</a>

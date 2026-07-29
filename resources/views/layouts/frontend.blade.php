@@ -29,14 +29,47 @@
     {{-- Preconnect for faster resource loading --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    {{-- Google Fonts with display=swap for non-blocking font load --}}
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    {{-- Google Fonts - non-blocking load --}}
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" as="style" crossorigin onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"></noscript>
     {{-- Preload header banner image to improve LCP --}}
     <link rel="preload" as="image" href="/images/header-banner.webp" type="image/webp">
-    {{-- Font Awesome - critical for icons, load as regular stylesheet --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- Font Awesome - non-blocking load for better mobile performance --}}
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" crossorigin onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    {{-- Critical inline CSS for above-the-fold rendering --}}
+    <style>
+        *,*::before,*::after{box-sizing:border-box}
+        body{margin:0;padding:0;font-family:'Poppins','Inter',sans-serif;font-size:14px;line-height:1.6;background:#F3F4F6;color:#374151}
+        #header{width:100%;height:320px;background:#000;position:relative;overflow:hidden}
+        #header img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+        #header::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(135deg,rgba(0,0,0,.75) 0%,rgba(206,24,30,.55) 100%)}
+        .nav-bar{width:100%;background:#000;box-shadow:0 2px 12px rgba(0,0,0,.2);position:sticky;top:0;z-index:40}
+        .site-wrapper{max-width:1320px;margin:0 auto;padding:0 16px;width:100%}
+        .three-col{display:flex;flex-wrap:wrap;gap:24px;padding:24px 0}
+        .sidebar-left{width:100%}
+        .main-content{width:100%;flex:1;min-width:0}
+        .sidebar-right{width:100%}
+        .sidebar-card{background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.1);overflow:hidden}
+        .sidebar-card .card-header{padding:14px 20px;font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:1.5px;background:#000;color:#fff}
+        .content-card{background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.1);padding:24px;margin-bottom:16px}
+        .page-title{font-size:24px;font-weight:700;margin-bottom:4px;color:#000}
+        .page-title-bar{width:48px;height:4px;border-radius:9999px;margin-bottom:24px;background:linear-gradient(90deg,#ce181e,#a01418)}
+        h1,h2,h3{color:#000}
+        img{max-width:100%;height:auto}
+        @media(max-width:1024px){.three-col{flex-direction:column;gap:24px}}
+        @media(min-width:1025px){.sidebar-left{width:240px;flex-shrink:0}.sidebar-right{width:280px;flex-shrink:0}}
+        @media(max-width:767px){#header{height:180px}}
+    </style>
+    @vite(['resources/css/app.css'])
+    <script>
+        /* Convert render-blocking CSS to non-blocking */
+        document.querySelectorAll('link[rel="stylesheet"][href*="/build/assets/"]').forEach(function(link) {
+            link.setAttribute('media', 'print');
+            link.onload = function() { this.media = 'all'; };
+        });
+    </script>
 
     @php
     $gaId = \Illuminate\Support\Facades\Cache::remember('setting_google_analytics_id', 3600, fn() => \App\Models\Setting::where('key', 'google_analytics_id')->value('value'));
@@ -186,11 +219,11 @@
                         <a href="{{ route('pages.show', 'tentang-kami') }}" title="About Us" class="block mt-2">read more &rarr;</a>
                     </div>
                     <div class="flex gap-3 items-center">
-                        <a href="http://www.facebook.com/uteroadvertisingindonesia" target="_blank" title="Facebook" class="social-icon"><img src="{{ asset('images/new-fb.png') }}" alt="Facebook" class="w-8 h-8 rounded-full" loading="lazy"></a>
-                        <a href="https://x.com/uteroindonesia" target="_blank" title="Twitter" class="social-icon"><img src="{{ asset('images/new-twitter.png') }}" alt="Twitter" class="w-8 h-8 rounded-full" loading="lazy"></a>
-                        <a href="http://instagram.com/uteroindonesia" target="_blank" title="Instagram" class="social-icon"><img src="{{ asset('images/new-instagram.png') }}" alt="Instagram" class="w-8 h-8 rounded-full" loading="lazy"></a>
-                        <a href="https://www.youtube.com/channel/UCkdJC5Tw0bk0xK9sUR80xnA" target="_blank" title="YouTube" class="social-icon"><img src="{{ asset('images/new-youtube.png') }}" alt="YouTube" class="w-8 h-8 rounded-full" loading="lazy"></a>
-                        <a href="https://www.youtube.com/channel/UC--Vge6YlX1y65HqjqYP8uQ" target="_blank" title="YouTube 2" class="social-icon"><img src="{{ asset('images/new-youtube2.png') }}" alt="YouTube 2" class="w-8 h-8 rounded-full" loading="lazy"></a>
+                        <a href="https://www.facebook.com/uteroadvertisingindonesia" target="_blank" rel="noopener noreferrer" title="Facebook" class="social-icon"><img src="{{ asset('images/new-fb.png') }}" alt="Facebook" class="w-8 h-8 rounded-full" loading="lazy"></a>
+                        <a href="https://x.com/uteroindonesia" target="_blank" rel="noopener noreferrer" title="Twitter" class="social-icon"><img src="{{ asset('images/new-twitter.png') }}" alt="Twitter" class="w-8 h-8 rounded-full" loading="lazy"></a>
+                        <a href="https://www.instagram.com/uteroindonesia" target="_blank" rel="noopener noreferrer" title="Instagram" class="social-icon"><img src="{{ asset('images/new-instagram.png') }}" alt="Instagram" class="w-8 h-8 rounded-full" loading="lazy"></a>
+                        <a href="https://www.youtube.com/channel/UCkdJC5Tw0bk0xK9sUR80xnA" target="_blank" rel="noopener noreferrer" title="YouTube" class="social-icon"><img src="{{ asset('images/new-youtube.png') }}" alt="YouTube" class="w-8 h-8 rounded-full" loading="lazy"></a>
+                        <a href="https://www.youtube.com/channel/UC--Vge6YlX1y65HqjqYP8uQ" target="_blank" rel="noopener noreferrer" title="YouTube 2" class="social-icon"><img src="{{ asset('images/new-youtube2.png') }}" alt="YouTube 2" class="w-8 h-8 rounded-full" loading="lazy"></a>
                     </div>
                 </div>
 
@@ -254,7 +287,7 @@
     @php
     $waNumber = str_replace([' ', '-', '+'], '', $waPhone);
     @endphp
-    <a href="https://wa.me/{{ $waNumber }}?text=%F0%9F%94%B4%F0%9F%94%B4%F0%9F%94%B4%20%2ASalam%20Merah%2A%20%F0%9F%94%B4%F0%9F%94%B4%F0%9F%94%B4%0ASaya%20dapat%20informasi%20dari%20uterogroup.com%0AMau%20konsultasi%20dong%21%0ANama%20%3A%20%0AAlamat%20%3A%0ANo.%20Telp%20%3A%0AEmail%20%3A%0AKebutuhan%20%3A" class="whatsapp-btn" target="_blank">
+    <a href="https://wa.me/{{ $waNumber }}?text=%F0%9F%94%B4%F0%9F%94%B4%F0%9F%94%B4%20%2ASalam%20Merah%2A%20%F0%9F%94%B4%F0%9F%94%B4%F0%9F%94%B4%0ASaya%20dapat%20informasi%20dari%20uterogroup.com%0AMau%20konsultasi%20dong%21%0ANama%20%3A%20%0AAlamat%20%3A%0ANo.%20Telp%20%3A%0AEmail%20%3A%0AKebutuhan%20%3A" class="whatsapp-btn" target="_blank" rel="noopener noreferrer">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -272,6 +305,9 @@
         <i class="fas fa-exclamation-circle mr-2"></i>{{ session('error') }}
     </div>
     @endif
+
+    {{-- Alpine.js loaded deferred for non-blocking --}}
+    @vite(['resources/js/app.js'])
 
     @stack('scripts')
 

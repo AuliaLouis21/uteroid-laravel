@@ -66,7 +66,11 @@
                     <tr class="{{ $index % 2 == 0 ? 'row-even' : 'row-odd' }}">
                         <td class="row-center">
                             @if($product->images->count())
-                                <img src="{{ asset('storage/' . $product->images->first()->path) }}" alt="{{ $product->name }}" class="w-10 h-10 object-cover rounded-lg">
+                                @php $img = $product->images->first(); @endphp
+                                <picture>
+                                    <source srcset="{{ $img->webp_url }}" type="image/webp">
+                                    <img src="{{ $img->url }}" alt="{{ $product->name }}" class="w-10 h-10 object-cover rounded-lg">
+                                </picture>
                             @else
                                 <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400 text-xs">
                                     <i class="fas fa-image"></i>
