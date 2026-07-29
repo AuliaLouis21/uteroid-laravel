@@ -7,7 +7,7 @@
 --}}
 
 {{-- CSS --}}
-<link href="{{ asset('quill/quill.snow.css') }}" rel="stylesheet">
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
 <style>
     .quill-editor-wrapper {
         margin-bottom: 1rem;
@@ -37,7 +37,7 @@
 </div>
 
 {{-- JavaScript initialization (also inline, no @push needed) --}}
-<script src="{{ asset('quill/quill.js') }}"></script>
+<script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     var textareaId = '{{ $textareaId ?? "content" }}';

@@ -14,7 +14,8 @@ class CacheHeaders
 
         if ($request->isMethod('GET') && $response instanceof Response) {
             if ($request->is('admin/*') || $request->is('login') || $request->is('register')
-                || $request->is('dashboard') || $request->is('profile*')) {
+                || $request->is('dashboard') || $request->is('profile*')
+                || $request->user()) {
                 $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
             } else {
                 $response->headers->set('Cache-Control', 'public, max-age=3600, s-maxage=3600');

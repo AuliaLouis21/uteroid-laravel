@@ -4,6 +4,8 @@
 @section('meta_description', 'Galeri foto, video, dan audio hasil karya Utero Advertising — portfolio periklanan dan percetakan di Malang.')
 @section('meta_keywords', 'galeri utero, portfolio advertising, foto produk, video advertising malang')
 
+@php $noSidebar = true; @endphp
+
 @section('content')
 <div class="py-6">
     {{-- Photo Gallery --}}

@@ -5,8 +5,9 @@ if (!function_exists('cleanHtml')) {
      * Sanitize HTML content to prevent XSS while preserving safe formatting tags.
      * Used for TinyMCE editor content from admin users.
      */
-    function cleanHtml(string $html): string
+    function cleanHtml(?string $html): string
     {
+        if ($html === null) return '';
         $allowed = implode(',', [
             'p', 'br', 'hr', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
             'strong', 'b', 'em', 'i', 'u', 's', 'sub', 'sup',

@@ -1,0 +1,48 @@
+RewriteEngine On
+RewriteBase /utero-group-dev/01-legacy/
+
+# ===========================
+# HOME
+# ===========================
+RewriteRule ^$ index.php [L,QSA]
+
+# ===========================
+# MENU
+# ===========================
+RewriteRule ^produk\.app/?$ index.php?t=produk [L,QSA]
+RewriteRule ^gallery\.app/?$ index.php?t=gallery [L,QSA]
+RewriteRule ^news\.app/?$ index.php?t=news [L,QSA]
+RewriteRule ^testimonial\.app/?$ index.php?t=testimonial [L,QSA]
+RewriteRule ^contact\.app/?$ index.php?t=contact [L,QSA]
+RewriteRule ^download\.app/?$ index.php?t=download [L,QSA]
+RewriteRule ^audio\.app/?$ index.php?t=audio [L,QSA]
+RewriteRule ^video\.app/?$ index.php?t=video [L,QSA]
+RewriteRule ^picture\.app/?$ index.php?t=picture [L,QSA]
+
+# ===========================
+# PAGE
+# ===========================
+RewriteRule ^p/(.*)\.app$ index.php?t=pages&p=$1 [L,QSA]
+
+# ===========================
+# PRODUK
+# ===========================
+RewriteRule ^produk/(.*)\.app$ index.php?t=produk&p=$1 [L,QSA]
+
+# ===========================
+# NEWS
+# ===========================
+RewriteRule ^news/(.*)\.app$ index.php?t=news&p=$1 [L,QSA]
+
+# ===========================
+# GALLERY
+# ===========================
+RewriteRule ^picture/(.*)\.jpg$ index.php?t=picture&p=$1 [L,QSA]
+RewriteRule ^video/(.*)\.flv$ index.php?t=video&p=$1 [L,QSA]
+
+# ===========================
+# FALLBACK
+# ===========================
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L,QSA]

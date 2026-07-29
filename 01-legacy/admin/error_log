@@ -1,0 +1,96 @@
+[04-Apr-2025 02:15:45 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; CI_Exceptions has a deprecated constructor in /home2/uteroid/subdomains/utero.group/admin/system/libraries/Exceptions.php on line 27
+[04-Apr-2025 02:15:45 UTC] PHP Notice:  Only variables should be passed by reference in /home2/uteroid/subdomains/utero.group/admin/system/codeigniter/Common.php on line 148
+[04-Apr-2025 02:15:45 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_pconnect() in /home2/uteroid/subdomains/utero.group/admin/system/database/drivers/mysql/mysql_driver.php:88
+Stack trace:
+#0 /home2/uteroid/subdomains/utero.group/admin/system/database/DB_driver.php(115): CI_DB_mysql_driver->db_pconnect()
+#1 /home2/uteroid/subdomains/utero.group/admin/system/database/DB.php(137): CI_DB_driver->initialize()
+#2 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Loader.php(224): DB(Array, false)
+#3 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Loader.php(985): CI_Loader->database()
+#4 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Controller.php(83): CI_Loader->_ci_autoloader()
+#5 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Controller.php(43): Controller->_ci_initialize()
+#6 /home2/uteroid/subdomains/utero.group/admin/system/application/controllers/login.php(4): Controller->Controller()
+#7 /home2/uteroid/subdomains/utero.group/admin/system/codeigniter/CodeIgniter.php(201): Log in /home2/uteroid/subdomains/utero.group/admin/system/database/drivers/mysql/mysql_driver.php on line 88
+[10-May-2025 09:13:17 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; CI_Exceptions has a deprecated constructor in /home2/uteroid/subdomains/utero.group/admin/system/libraries/Exceptions.php on line 27
+[10-May-2025 09:13:17 UTC] PHP Notice:  Only variables should be passed by reference in /home2/uteroid/subdomains/utero.group/admin/system/codeigniter/Common.php on line 148
+[10-May-2025 09:13:17 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_pconnect() in /home2/uteroid/subdomains/utero.group/admin/system/database/drivers/mysql/mysql_driver.php:88
+Stack trace:
+#0 /home2/uteroid/subdomains/utero.group/admin/system/database/DB_driver.php(115): CI_DB_mysql_driver->db_pconnect()
+#1 /home2/uteroid/subdomains/utero.group/admin/system/database/DB.php(137): CI_DB_driver->initialize()
+#2 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Loader.php(224): DB(Array, false)
+#3 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Loader.php(985): CI_Loader->database()
+#4 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Controller.php(83): CI_Loader->_ci_autoloader()
+#5 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Controller.php(43): Controller->_ci_initialize()
+#6 /home2/uteroid/subdomains/utero.group/admin/system/application/controllers/login.php(4): Controller->Controller()
+#7 /home2/uteroid/subdomains/utero.group/admin/system/codeigniter/CodeIgniter.php(201): Log in /home2/uteroid/subdomains/utero.group/admin/system/database/drivers/mysql/mysql_driver.php on line 88
+[20-May-2025 21:27:12 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; CI_Exceptions has a deprecated constructor in /home2/uteroid/subdomains/utero.group/admin/system/libraries/Exceptions.php on line 27
+[20-May-2025 21:27:12 UTC] PHP Notice:  Only variables should be passed by reference in /home2/uteroid/subdomains/utero.group/admin/system/codeigniter/Common.php on line 148
+[20-May-2025 21:27:13 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_pconnect() in /home2/uteroid/subdomains/utero.group/admin/system/database/drivers/mysql/mysql_driver.php:88
+Stack trace:
+#0 /home2/uteroid/subdomains/utero.group/admin/system/database/DB_driver.php(115): CI_DB_mysql_driver->db_pconnect()
+#1 /home2/uteroid/subdomains/utero.group/admin/system/database/DB.php(137): CI_DB_driver->initialize()
+#2 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Loader.php(224): DB(Array, false)
+#3 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Loader.php(985): CI_Loader->database()
+#4 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Controller.php(83): CI_Loader->_ci_autoloader()
+#5 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Controller.php(43): Controller->_ci_initialize()
+#6 /home2/uteroid/subdomains/utero.group/admin/system/application/controllers/login.php(4): Controller->Controller()
+#7 /home2/uteroid/subdomains/utero.group/admin/system/codeigniter/CodeIgniter.php(201): Log in /home2/uteroid/subdomains/utero.group/admin/system/database/drivers/mysql/mysql_driver.php on line 88
+[31-May-2025 08:04:34 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; CI_Exceptions has a deprecated constructor in /home2/uteroid/subdomains/utero.group/admin/system/libraries/Exceptions.php on line 27
+[31-May-2025 08:04:34 UTC] PHP Notice:  Only variables should be passed by reference in /home2/uteroid/subdomains/utero.group/admin/system/codeigniter/Common.php on line 148
+[31-May-2025 08:04:34 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_pconnect() in /home2/uteroid/subdomains/utero.group/admin/system/database/drivers/mysql/mysql_driver.php:88
+Stack trace:
+#0 /home2/uteroid/subdomains/utero.group/admin/system/database/DB_driver.php(115): CI_DB_mysql_driver->db_pconnect()
+#1 /home2/uteroid/subdomains/utero.group/admin/system/database/DB.php(137): CI_DB_driver->initialize()
+#2 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Loader.php(224): DB(Array, false)
+#3 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Loader.php(985): CI_Loader->database()
+#4 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Controller.php(83): CI_Loader->_ci_autoloader()
+#5 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Controller.php(43): Controller->_ci_initialize()
+#6 /home2/uteroid/subdomains/utero.group/admin/system/application/controllers/login.php(4): Controller->Controller()
+#7 /home2/uteroid/subdomains/utero.group/admin/system/codeigniter/CodeIgniter.php(201): Log in /home2/uteroid/subdomains/utero.group/admin/system/database/drivers/mysql/mysql_driver.php on line 88
+[12-Dec-2025 02:55:05 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; CI_Exceptions has a deprecated constructor in /home2/uteroid/subdomains/utero.group/admin/system/libraries/Exceptions.php on line 27
+[12-Dec-2025 02:55:05 UTC] PHP Notice:  Only variables should be passed by reference in /home2/uteroid/subdomains/utero.group/admin/system/codeigniter/Common.php on line 148
+[12-Dec-2025 02:55:05 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_pconnect() in /home2/uteroid/subdomains/utero.group/admin/system/database/drivers/mysql/mysql_driver.php:88
+Stack trace:
+#0 /home2/uteroid/subdomains/utero.group/admin/system/database/DB_driver.php(115): CI_DB_mysql_driver->db_pconnect()
+#1 /home2/uteroid/subdomains/utero.group/admin/system/database/DB.php(137): CI_DB_driver->initialize()
+#2 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Loader.php(224): DB(Array, false)
+#3 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Loader.php(985): CI_Loader->database()
+#4 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Controller.php(83): CI_Loader->_ci_autoloader()
+#5 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Controller.php(43): Controller->_ci_initialize()
+#6 /home2/uteroid/subdomains/utero.group/admin/system/application/controllers/login.php(4): Controller->Controller()
+#7 /home2/uteroid/subdomains/utero.group/admin/system/codeigniter/CodeIgniter.php(201): Log in /home2/uteroid/subdomains/utero.group/admin/system/database/drivers/mysql/mysql_driver.php on line 88
+[12-Dec-2025 02:55:06 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; CI_Exceptions has a deprecated constructor in /home2/uteroid/subdomains/utero.group/admin/system/libraries/Exceptions.php on line 27
+[12-Dec-2025 02:55:06 UTC] PHP Notice:  Only variables should be passed by reference in /home2/uteroid/subdomains/utero.group/admin/system/codeigniter/Common.php on line 148
+[12-Dec-2025 02:55:06 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_pconnect() in /home2/uteroid/subdomains/utero.group/admin/system/database/drivers/mysql/mysql_driver.php:88
+Stack trace:
+#0 /home2/uteroid/subdomains/utero.group/admin/system/database/DB_driver.php(115): CI_DB_mysql_driver->db_pconnect()
+#1 /home2/uteroid/subdomains/utero.group/admin/system/database/DB.php(137): CI_DB_driver->initialize()
+#2 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Loader.php(224): DB(Array, false)
+#3 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Loader.php(985): CI_Loader->database()
+#4 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Controller.php(83): CI_Loader->_ci_autoloader()
+#5 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Controller.php(43): Controller->_ci_initialize()
+#6 /home2/uteroid/subdomains/utero.group/admin/system/application/controllers/login.php(4): Controller->Controller()
+#7 /home2/uteroid/subdomains/utero.group/admin/system/codeigniter/CodeIgniter.php(201): Log in /home2/uteroid/subdomains/utero.group/admin/system/database/drivers/mysql/mysql_driver.php on line 88
+[01-Feb-2026 17:35:08 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; CI_Exceptions has a deprecated constructor in /home2/uteroid/subdomains/utero.group/admin/system/libraries/Exceptions.php on line 27
+[01-Feb-2026 17:35:08 UTC] PHP Notice:  Only variables should be passed by reference in /home2/uteroid/subdomains/utero.group/admin/system/codeigniter/Common.php on line 148
+[01-Feb-2026 17:35:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_pconnect() in /home2/uteroid/subdomains/utero.group/admin/system/database/drivers/mysql/mysql_driver.php:88
+Stack trace:
+#0 /home2/uteroid/subdomains/utero.group/admin/system/database/DB_driver.php(115): CI_DB_mysql_driver->db_pconnect()
+#1 /home2/uteroid/subdomains/utero.group/admin/system/database/DB.php(137): CI_DB_driver->initialize()
+#2 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Loader.php(224): DB(Array, false)
+#3 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Loader.php(985): CI_Loader->database()
+#4 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Controller.php(83): CI_Loader->_ci_autoloader()
+#5 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Controller.php(43): Controller->_ci_initialize()
+#6 /home2/uteroid/subdomains/utero.group/admin/system/application/controllers/login.php(4): Controller->Controller()
+#7 /home2/uteroid/subdomains/utero.group/admin/system/codeigniter/CodeIgniter.php(201): Log in /home2/uteroid/subdomains/utero.group/admin/system/database/drivers/mysql/mysql_driver.php on line 88
+[01-Feb-2026 17:35:13 UTC] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; CI_Exceptions has a deprecated constructor in /home2/uteroid/subdomains/utero.group/admin/system/libraries/Exceptions.php on line 27
+[01-Feb-2026 17:35:13 UTC] PHP Notice:  Only variables should be passed by reference in /home2/uteroid/subdomains/utero.group/admin/system/codeigniter/Common.php on line 148
+[01-Feb-2026 17:35:13 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_pconnect() in /home2/uteroid/subdomains/utero.group/admin/system/database/drivers/mysql/mysql_driver.php:88
+Stack trace:
+#0 /home2/uteroid/subdomains/utero.group/admin/system/database/DB_driver.php(115): CI_DB_mysql_driver->db_pconnect()
+#1 /home2/uteroid/subdomains/utero.group/admin/system/database/DB.php(137): CI_DB_driver->initialize()
+#2 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Loader.php(224): DB(Array, false)
+#3 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Loader.php(985): CI_Loader->database()
+#4 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Controller.php(83): CI_Loader->_ci_autoloader()
+#5 /home2/uteroid/subdomains/utero.group/admin/system/libraries/Controller.php(43): Controller->_ci_initialize()
+#6 /home2/uteroid/subdomains/utero.group/admin/system/application/controllers/login.php(4): Controller->Controller()
+#7 /home2/uteroid/subdomains/utero.group/admin/system/codeigniter/CodeIgniter.php(201): Log in /home2/uteroid/subdomains/utero.group/admin/system/database/drivers/mysql/mysql_driver.php on line 88

@@ -48,7 +48,7 @@
                         <span class="text-xs text-gray-400">
                             <i class="far fa-clock mr-1"></i>{{ $post->published_at ? $post->published_at->format('M d, Y') : $post->created_at->format('M d, Y') }}
                         </span>
-                        <p class="text-sm text-gray-500 mt-2 line-clamp-2">{{ strip_tags(substr($post->content, 0, 200)) }}...</p>
+                        <p class="text-sm text-gray-500 mt-2 line-clamp-2">{{ strip_tags(substr($post->excerpt ?: $post->content, 0, 200)) }}...</p>
                     </div>
                 </a>
             @empty

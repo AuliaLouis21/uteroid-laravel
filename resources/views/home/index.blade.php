@@ -100,6 +100,13 @@
             <a href="{{ route('products.index') }}" title="All Product">Lihat Semua Produk &raquo;</a>
         </div>
     </div>
+
+    {{-- Wide Banner --}}
+    <!-- <div class="mt-4 rounded-card overflow-hidden shadow-card">
+        <a href="{{ route('contact.index') }}" title="Hubungi Kami">
+            <img src="{{ asset('images/more-wide-banner.png') }}" alt="Utero Advertising - Solusi Periklanan" class="w-full h-auto" loading="lazy">
+        </a>
+    </div> -->
 </div>
 @endsection
 
@@ -113,7 +120,7 @@
         @foreach($latestNews as $news)
             <a href="{{ route('posts.show', $news->slug) }}" class="news-item" target="_blank">
                 <span class="news-title">{{ ucwords($news->title) }}</span>
-                <span class="news-excerpt">{{ strip_tags(substr($news->content, 0, 100)) }}...</span>
+                <span class="news-excerpt">{{ strip_tags(substr($news->excerpt ?: $news->content, 0, 100)) }}...</span>
                 <span class="news-date"><i class="far fa-clock mr-1"></i>{{ $news->published_at ? $news->published_at->format('M d, Y') : $news->created_at->format('M d, Y') }}</span>
             </a>
         @endforeach

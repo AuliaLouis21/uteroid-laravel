@@ -1,0 +1,554 @@
+@charset "utf-8";
+/* 
+	CSS Document
+	By		: Rio Adetya Rizky
+	mail	: rio@teknoku.com
+*/
+body{
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color:#666;
+	padding:0px;
+	margin:0px;
+}
+
+h1{
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:34px;
+	margin:10px 0px 10px 0px;
+}
+
+h2{
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size:20px;
+	margin:0px 0px 10px 0px;
+}
+
+hr{
+	border-width:1px 0px 0px 0px;
+}
+
+#header{
+	background:url(../images/bg-footer.png) 0px -19px repeat-x;
+	color:#666;
+	overflow:hidden;
+	padding:8px 14px 8px 14px!important;
+	font-size:14px;
+}
+#header a:link, #header a:visited{
+	color:#666;
+	text-decoration:none;
+	clear:both;
+	padding:8px!important;
+	margin:0px;
+}
+#header a:hover{
+	color:#333;
+}
+#header a:active{
+	color:#F00;
+	text-decoration:none;
+}
+#header #current{
+	color:#F00;
+	background-color:#666;
+	margin:0px;
+}
+
+#header2{
+	background-color:#666;
+	color:#EFEFEF;
+	overflow:hidden;
+	padding:8px 14px 8px 14px!important;
+	border-bottom:2px solid #F00;
+}
+
+#headsub1{
+	float:right;
+}
+
+#headsub2{
+	float:left;
+	padding:24px 0px 0px 0px;
+	font-size:16px;
+}
+#headsub2 a:link, #headsub2 a:visited{
+	font-size:16px;
+	color:#EFEFEF;
+	text-decoration:none;
+	clear:both;
+	padding:2px!important;
+	margin-right:10px;
+}
+#headsub2 a:hover{
+	color:#F00;
+	border-bottom:1px solid #F00;
+}
+#headsub2 a:active{
+	color:#FFF;
+}
+#headsub2 #current2{
+	color:#F00;
+}
+
+#content{
+	padding:14px!important;
+}
+
+#formnya{
+	float:left;
+	overflow:hidden;
+	padding:0px!important;
+	width:100%;
+}
+#formnya form{
+	margin:0px;
+	padding:0px;
+	overflow:hidden;
+}
+#formnya form fieldset{
+	border-color:#999;
+	border-style:dotted;
+	border-width:1px 0px 0px 0px;
+	width:780px;
+	margin:0px;
+	padding:0px!important;
+}
+#formnya form legend{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+	background-color:#FFF;
+	color:#090;
+}
+#formnya form .judul{
+	font-size:20px;
+	color:#999;
+	padding:4px!important;
+	background:url(../images/cntback.png) 0px -3px repeat-x;
+	border:1px solid #999;
+	width:735px;
+	margin:16px 16px 16px 0px!important;
+}
+#formnya form .linput{
+	font-size:20px;
+	color:#999;
+	padding:4px!important;
+	background:url(../images/cntback.png) 0px -3px repeat-x;
+	border:1px solid #999;
+	width:250px;
+	margin:16px 16px 16px 0px!important;
+}
+#formnya form input[type="text"]:hover {
+	background:url(../images/cntback.png) 0px -2px repeat-x;
+}
+#formnya form input[type="submit"] {
+	font-size:20px;
+	border:4px solid #09F;
+	background-color:#09F;
+	color:#FFF;
+	padding:2px 6px 2px 6px;
+	text-transform:uppercase;
+	float:left;
+	margin:16px 16px 16px 0px!important;
+}
+#formnya form input[type="submit"]:hover {
+	border:4px solid #09F;
+	background-color:#06F;
+	cursor:pointer;
+}
+#formnya form textarea{
+	font-size:20px;
+	color:#666;
+	margin:16px 16px 16px 0px!important;
+	border:1px solid #999;
+	width:735px;
+	background:url(../images/cntback.png) 0px -3px repeat-x #FFF;
+}
+#formnya form textarea:hover{
+	background:url(../images/cntback.png) 0px -2px repeat-x #FFF;
+}
+#formnya select{
+	padding:4px!important;
+	margin:16px 16px 16px 0px!important;
+	font-size:18px;
+	color:#666;
+	border:1px solid #999;
+	background:url(../images/cntback.png) 0px -3px repeat-x #FFF;
+}
+#formnya option{
+	color:#999;
+}
+#formnya .stextarea{
+	margin:16px 0px 16px 0px; 
+	padding:0px!important;
+	float:left;
+}
+#formnya .errform{
+	color:#F00;
+	font-size:9px;
+	margin-left:16px;
+	clear:both;
+}
+	
+#contentwrapper{
+	float: left;
+	width: 100%;
+}
+
+#contentcolumn{
+	margin-right: 400px; /*Set right margin to RightColumnWidth*/
+}
+
+#rightcolumn{
+	float: left;
+	width: 380px; /*Width of right column in pixels*/
+	margin-left: -380px; /*Set left margin to -(RightColumnWidth) */
+	padding:0px!important;
+	overflow:hidden;
+}
+
+#contentcolumn2{
+	margin-right: 460px; /*Set right margin to RightColumnWidth*/
+	border-right:1px solid #EFEFEF;
+}
+
+#rightcolumn2{
+	float: left;
+	width: 440px; /*Width of right column in pixels*/
+	margin-left: -440px; /*Set left margin to -(RightColumnWidth) */
+	padding:0px!important;
+	overflow:hidden;
+}
+
+
+#hor-zebra
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	margin: 0px;
+	width: 100%;
+	text-align: left;
+	border-collapse: collapse;
+	border-bottom:1px solid #CCC;
+}
+#hor-zebra th
+{
+	font-size: 14px;
+	font-weight: normal;
+	padding: 0px 8px 0px 8px!important;
+	color: #039;
+	border:1px solid #FFF;
+	border-top:1px solid #EFEFEF;
+	margin-bottom:4px;
+	height:30px;
+	background:url(../images/bg-footer.png) 0px -21px repeat-x;
+}
+#hor-zebra td
+{
+	padding: 0px 8px 0px 8px;
+	color: #669;
+	border:1px solid #FFF;
+	height:30px;
+	font-size:12px;
+}
+#hor-zebra .odd1
+{
+	background: #EBF5FE; 
+}
+#hor-zebra .odd0
+{
+	background: #FFF; 
+}
+#hor-zebra th input, #hor-zebra td input{
+	margin:0px;
+}
+#hor-zebra th.chk, #hor-zebra td.chk{
+	width:20px;
+	text-align:center;
+}
+#hor-zebra th.post, #hor-zebra td.post{
+	width:38px;
+	text-align:center;
+}
+#hor-zebra th.cat, #hor-zebra td.cat{
+	width:300px;
+}
+#hor-zebra th.jdpost, #hor-zebra td.jdpost{
+	width:300px;
+}
+#hor-zebra th.isipost, #hor-zebra td.isipost{
+	width:600px;
+}
+#hor-zebra th.date, #hor-zebra td.date{
+	width:100px;
+}
+#hor-zebra th.cate, #hor-zebra td.cate{
+	width:150px;
+}
+#hor-zebra td.empty{
+	text-align:center;
+	color:#CCC;
+	font-size:14px;
+}
+#hor-zebra a:link, #hor-zebra a:visited{
+	color:#06F;
+	text-decoration:none;
+	border-bottom:1px dashed #CCC;
+}
+#hor-zebra a:hover{
+	color:#03F;
+	border-bottom:1px dashed #03F;
+	font-weight:bold;
+}
+
+
+#formcat{
+	margin:0px;
+	padding:0px!important;
+	overflow:hidden;
+	background:url(../images/container_bg.png) 0px 30px repeat-x;
+}
+#formcat span{
+	padding:8px 0px 0px 10px!important;
+	height:20px;
+	width:380px;
+	float:left;
+	font-size:12px;
+	background:url(../images/bg-footer.png) 0px -22px repeat-x;
+	border-top:1px solid #EFEFEF;
+	color:#009;
+}
+#formcat form{
+	margin:0px;
+	padding:0px!important;
+	float:left;
+}
+#formcat form .formnya{
+	text-align:left;
+	padding:16px!important;
+	overflow:hidden;
+	border-top:1px solid #EFEFEF;
+}
+#formcat form .formnya label{
+	float:left;
+	color:#06F;
+	margin-bottom:6px;
+}
+#formcat form .formnya input[type="text"]{
+	width:80%;
+	border:1px solid #CCC;
+	font-size:20px;
+	background:url(../images/cntback.png) 0px -3px repeat-x;
+}
+#formcat form .formnya textarea{
+	width:100%;
+	border:1px solid #CCC;
+	font-size:20px;
+	background:url(../images/cntback.png) 0px -3px repeat-x;
+	height:80px;
+}
+#formcat form .formnya input[type="submit"]{
+	font-size:20px;
+	border:4px solid #09F;
+	background-color:#09F;
+	color:#FFF;
+	padding:2px 6px 2px 6px!important;
+	text-transform:uppercase;
+	float:left;
+	margin:0px;
+}
+#formcat form .formnya input[type="submit"]:hover{
+	border:4px solid #09F;
+	background-color:#06F;
+	cursor:pointer;
+}
+#errorform{
+	width: 730px;
+	border: 1px solid #CCC;
+	background-color: #EFEFEF;
+	margin-bottom: 10px;
+	padding: 14px!important;
+}
+
+#errorform2{
+	display:block;
+	border: 1px solid #F00;
+	background-color:#FFE1E1;
+	margin-bottom: 10px;
+	padding: 4px 4px 14px 14px!important;
+	color:#000;
+}
+
+#errorform2 a:link, #errorform2 a:visited{
+	color:#F00;
+	text-decoration:none;
+}
+#errorform2 a:hover{
+	color:#006;
+}
+#errorform2 hr{
+	border-width:1px 0px 0px 0px;
+	margin:2px;
+}
+
+#errorform3{
+	display:block;
+	border: 1px solid #090;
+	background-color:#EAFFEA;
+	margin-bottom: 10px;
+	padding: 4px 4px 14px 14px!important;
+	color:#000;
+}
+
+#errorform3 a:link, #errorform3 a:visited{
+	color:#090;
+	text-decoration:none;
+}
+#errorform3 a:hover{
+	color:#333;
+}
+
+
+
+.cssform p{
+	width: 426px;
+	clear: left;
+	margin: 0;
+	padding: 10px 0 10px 0;
+	padding-left: 155px; /*width of left column containing the label elements*/
+	border-top: 1px dotted #cccccc;
+	height: 1%;
+}
+
+.cssform p:hover{
+	background:url(../images/inner_prev.png) right center no-repeat;
+}
+
+.cssform label{
+	float: left;
+	margin-left: -155px; /*width of left column*/
+	width: 155px; /*width of labels. Should be smaller than left column (155px) to create some right margin*/
+	margin-right:8px;
+	font-size:11px;
+	color:#09F;
+	margin-top:4px;
+}
+
+.cssform input[type="text"]{ /*width of text boxes. IE6 does not understand this attribute*/
+	width: 200px;
+	background:url(../images/cntback.png) 0px -2px repeat-x;
+	border:1px solid #999;
+	font-size:14px;
+}
+
+.cssform input[type="text"]:hover{
+	background:url(../images/cntback.png) 0px -3px repeat-x;
+}
+
+.cssform textarea{
+	width: 400px;
+	height: 150px;
+	background:url(../images/cntback.png) 0px -2px repeat-x;
+	border:1px solid #999;	
+}
+
+/*---*/
+
+.cssformright p{
+	width: 400px;
+	clear: left;
+	margin: 0;
+	padding: 10px 0 10px 0;
+	padding-left: 100px; /*width of left column containing the label elements*/
+	border-top: 1px dotted #cccccc;
+	height: 1%;
+}
+
+.cssformright p:hover{
+	background:url(../images/inner_prev.png) right center no-repeat;
+}
+
+.cssformright label{
+	float: left;
+	margin-left: -100px; /*width of left column*/
+	width: 100px; /*width of labels. Should be smaller than left column (155px) to create some right margin*/
+	margin-right:8px;
+	font-size:11px;
+	color:#09F;
+	margin-top:4px;
+}
+
+.cssformright input[type="text"]{ /*width of text boxes. IE6 does not understand this attribute*/
+	width: 320px;
+	background:url(../images/cntback.png) 0px -2px repeat-x;
+	border:1px solid #999;
+	font-size:14px;
+}
+
+.cssformright input[type="text"]:hover{
+	background:url(../images/cntback.png) 0px -3px repeat-x;
+}
+
+.cssformright textarea{
+	width: 320px;
+	height: 100px;
+	background:url(../images/cntback.png) 0px -2px repeat-x;
+	border:1px solid #999;	
+}
+
+.cssformright select{
+	background:url(../images/cntback.png) 0px -2px repeat-x #FFF;
+	border:1px solid #999;
+	font-size:14px;
+	color:#000;
+}
+
+.titleform{
+	padding:8px 0px 0px 10px!important;
+	height:20px;
+	width:100%;
+	float:left;
+	font-size:12px;
+	background:url(../images/bg-footer.png) 0px -22px repeat-x;
+	border-top:1px solid #EFEFEF;
+	color:#009;
+}
+.info{
+	font-size:10px;
+	color:#999;
+	display:block;
+	margin-left:8px;
+	letter-spacing:-1px;
+}
+.tablesorter{
+	width:100%;
+	background-color:#FFF;
+	margin:0px;
+	padding:0px;
+	border-collapse: collapse;
+}
+.ttop th{
+	background:url(../images/bg-footer.png) 0px -20px repeat-x;
+	height:31px;
+	text-transform:uppercase;
+	border:1px solid #FFF;
+}
+.tbhead th{
+	background:url(../images/bg-footer.png) 0px -20px repeat-x;
+	height:31px;
+	border:1px solid #FFF;
+	text-align:center;
+}
+.tbrow td{
+	text-align:center;
+	font:normal 11px/100% helvetica neue, helvetica, arial, sans-serif;
+	padding:6px;
+	border:1px solid #FFF;
+}
+.tbrow td a:link, .tbrow td a:visited{
+	color:#333;
+	text-decoration:underline;
+}
+.tbrow td a:hover{
+	color:#999;
+}

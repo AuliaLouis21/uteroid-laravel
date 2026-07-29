@@ -1,0 +1,11 @@
+<script type="text/javascript" src="<?=$view?>/js/jquery-1.3.1.js"></script>
+<script type="text/javascript" src="<?=$view?>/js/jquery.innerfade.js"></script>
+<script type="text/javascript" src="<?=$view?>/js/ajaxcombo.js"></script>
+<script type="text/javascript" src="<?=$view?>/js/jquery-easing-1.3.pack.js"></script>
+<script type="text/javascript" src="<?=$view?>/js/jquery-easing-compatibility.1.2.pack.js"></script>
+<script type="text/javascript" src="<?=$view?>/js/coda-slider.1.1.1.pack.js"></script>
+<script type="text/javascript" src="<?=$view?>/js/jslide.php"></script>
+<script type="text/javascript" src="<?=$view?>/js/calculate.js"></script>
+<script type="text/javascript" src="<?=$view?>/js/jquery.vticker.js"></script>
+<script type="text/javascript" src="<?=$view?>/js/util.js"></script>
+<script type="text/javascript" src="<?=$view?>/js/ajaxjquery.js"></script>

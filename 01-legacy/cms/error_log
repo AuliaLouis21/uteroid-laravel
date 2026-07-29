@@ -1,0 +1,30 @@
+[04-Apr-2025 02:15:46 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home2/uteroid/subdomains/utero.group/cms/config.php:7
+Stack trace:
+#0 /home2/uteroid/subdomains/utero.group/cms/index.php(6): require()
+#1 {main}
+  thrown in /home2/uteroid/subdomains/utero.group/cms/config.php on line 7
+[10-May-2025 09:13:19 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home2/uteroid/subdomains/utero.group/cms/config.php:7
+Stack trace:
+#0 /home2/uteroid/subdomains/utero.group/cms/index.php(6): require()
+#1 {main}
+  thrown in /home2/uteroid/subdomains/utero.group/cms/config.php on line 7
+[20-May-2025 21:27:14 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home2/uteroid/subdomains/utero.group/cms/config.php:7
+Stack trace:
+#0 /home2/uteroid/subdomains/utero.group/cms/index.php(6): require()
+#1 {main}
+  thrown in /home2/uteroid/subdomains/utero.group/cms/config.php on line 7
+[19-Nov-2025 14:31:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home2/uteroid/subdomains/utero.group/cms/config.php:7
+Stack trace:
+#0 /home2/uteroid/subdomains/utero.group/cms/index.php(6): require()
+#1 {main}
+  thrown in /home2/uteroid/subdomains/utero.group/cms/config.php on line 7
+[05-Dec-2025 10:28:41 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home2/uteroid/subdomains/utero.group/cms/config.php:7
+Stack trace:
+#0 /home2/uteroid/subdomains/utero.group/cms/index.php(6): require()
+#1 {main}
+  thrown in /home2/uteroid/subdomains/utero.group/cms/config.php on line 7
+[05-Dec-2025 11:00:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mysql_connect() in /home2/uteroid/subdomains/utero.group/cms/config.php:7
+Stack trace:
+#0 /home2/uteroid/subdomains/utero.group/cms/index.php(6): require()
+#1 {main}
+  thrown in /home2/uteroid/subdomains/utero.group/cms/config.php on line 7

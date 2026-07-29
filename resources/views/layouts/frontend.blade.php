@@ -13,7 +13,7 @@
     <meta property="og:type" content="@yield('og_type', 'website')">
     <meta property="og:title" content="@yield('title', 'Utero Advertising | Idea And Concept Factory')">
     <meta property="og:description" content="@yield('meta_description', 'Utero Advertising — Advertising, Digital Printing & Creative Agency di Malang, Jawa Timur.')">
-    <meta property="og:image" content="@yield('og_image', asset('images/header-banner.png'))">
+    <meta property="og:image" content="@yield('og_image', asset('images/banner-web.jpg'))">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:site_name" content="Utero Advertising">
     <meta property="og:locale" content="id_ID">
@@ -22,7 +22,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="@yield('title', 'Utero Advertising | Idea And Concept Factory')">
     <meta name="twitter:description" content="@yield('meta_description', 'Utero Advertising — Advertising, Digital Printing & Creative Agency di Malang, Jawa Timur.')">
-    <meta name="twitter:image" content="@yield('og_image', asset('images/header-banner.png'))">
+    <meta name="twitter:image" content="@yield('og_image', asset('images/banner-web.jpg'))">
 
     <title>@yield('title', 'Utero Advertising | Idea And Concept Factory')</title>
     <link rel="icon" type="image/x-icon" href="/images/utero.ico">
@@ -52,7 +52,8 @@
 </head>
 
 <body>
-    {{-- HEADER / BANNER - Using <img> instead of CSS background for proper LCP detection --}}
+    {{-- HEADER / BANNER --}}
+    @if(!isset($hideHeader) || !$hideHeader)
     <div id="header">
         <img src="/images/header-banner.png" alt="Utero Advertising" width="1320" height="320" fetchpriority="high" decoding="async" class="header-bg-img">
         <div class="site-wrapper">
@@ -66,13 +67,15 @@
             </div>
         </div>
     </div>
+    @endif
 
     {{-- NAVBAR --}}
     <div class="nav-bar">
         <div class="site-wrapper">
             <div class="nav-inner" x-data="{ open: false }">
-                <div class="nav-brand hidden md:block">
-                    <span>UTERO</span> ADVERTISING
+                <div class="nav-brand hidden md:flex items-center gap-2">
+                    <img src="{{ asset('images/LOGO UTERO-01.png') }}" alt="Utero Logo" class="h-8 w-auto" loading="eager">
+                    <span>UTERO ADVERTISING</span>
                 </div>
 
                 <button class="nav-toggle md:hidden" @click="open = !open" :aria-expanded="open.toString()" aria-label="Toggle navigation menu">
@@ -81,43 +84,43 @@
 
                 <ul :class="open ? 'open' : ''" class="md:flex">
                     <li>
-                        <a href="{{ route('home') }}" title="Home" {{ request()->routeIs('home') ? 'class=active' : '' }}>
+                        <a href="{{ route('home') }}" title="Home" {{ request()->routeIs('home') ? 'class="active"' : '' }}>
                             <i class="fas fa-home mr-1 text-xs"></i> HOME
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('products.index') }}" title="Product" {{ request()->routeIs('products.*') ? 'class=active' : '' }}>
+                        <a href="{{ route('products.index') }}" title="Product" {{ request()->routeIs('products.*') ? 'class="active"' : '' }}>
                             <i class="fas fa-dollar-sign mr-1 text-xs"></i> PRICE
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('gallery.index') }}" title="Gallery" {{ request()->routeIs('gallery.*') ? 'class=active' : '' }}>
+                        <a href="{{ route('gallery.index') }}" title="Gallery" {{ request()->routeIs('gallery.*') ? 'class="active"' : '' }}>
                             <i class="fas fa-images mr-1 text-xs"></i> GALLERY
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('posts.index') }}" title="News" {{ request()->routeIs('posts.*') ? 'class=active' : '' }}>
+                        <a href="{{ route('posts.index') }}" title="News" {{ request()->routeIs('posts.*') ? 'class="active"' : '' }}>
                             <i class="fas fa-newspaper mr-1 text-xs"></i> NEWS
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('download.index') }}" title="Download" {{ request()->routeIs('download.*') ? 'class=active' : '' }}>
+                        <a href="{{ route('download.index') }}" title="Download" {{ request()->routeIs('download.*') ? 'class="active"' : '' }}>
                             <i class="fas fa-download mr-1 text-xs"></i> DOWNLOAD
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('testimonials.index') }}" title="Testimonial" {{ request()->routeIs('testimonials.*') ? 'class=active' : '' }}>
+                        <a href="{{ route('testimonials.index') }}" title="Testimonial" {{ request()->routeIs('testimonials.*') ? 'class="active"' : '' }}>
                             <i class="fas fa-quote-right mr-1 text-xs"></i> TESTIMONIAL
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('contact.index') }}" title="Kontak" {{ request()->routeIs('contact.*') ? 'class=active' : '' }}>
+                        <a href="{{ route('contact.index') }}" title="Kontak" {{ request()->routeIs('contact.*') ? 'class="active"' : '' }}>
                             <i class="fas fa-phone mr-1 text-xs"></i> KONTAK
                         </a>
                     </li>
                     @foreach($staticPages as $sp)
                     <li>
-                        <a href="{{ route('pages.show', $sp->slug) }}" title="{{ $sp->title }}" {{ request()->routeIs('pages.show', $sp->slug) ? 'class=active' : '' }}>
+                        <a href="{{ route('pages.show', $sp->slug) }}" title="{{ $sp->title }}" {{ request()->routeIs('pages.show', $sp->slug) ? 'class="active"' : '' }}>
                             @if($sp->slug === 'tentang-kami')<i class="fas fa-info-circle mr-1 text-xs"></i> @endif{{ strtoupper($sp->title) }}
                         </a>
                     </li>
@@ -146,23 +149,31 @@
         </div>
     </div>
 
+    {{-- HERO SECTION (full-width) --}}
+    @hasSection('hero')
+        @yield('hero')
+    @endif
+
     {{-- MAIN CONTENT --}}
-    <div class="site-wrapper">
-        @unless(isset($noSidebar) && $noSidebar)
-        <div class="three-col">
-            @yield('sidebar-left')
+    <div class="flex-1">
+        <div class="site-wrapper">
+            @unless(isset($noSidebar) && $noSidebar)
+            <div class="three-col">
+                @yield('sidebar-left')
+                @yield('content')
+                @yield('sidebar-right')
+            </div>
+            @else
             @yield('content')
-            @yield('sidebar-right')
+            @endunless
         </div>
-        @else
-        @yield('content')
-        @endunless
     </div>
 
     {{-- FOOTER --}}
     <div class="footer-area">
-        <div class="site-wrapper py-8">
+        <div class="site-wrapper py-16">
             <div class="footer-grid">
+                {{-- Kolom 1: Who We Are --}}
                 <div class="footer-col">
                     <div class="footer-label"><i class="fas fa-building mr-2"></i>Who We Are?</div>
                     <div class="footer-text mb-4">
@@ -171,20 +182,25 @@
                         mewujudkan nilai-nilai penjualan yang maksimal.
                         <a href="{{ route('pages.show', 'tentang-kami') }}" title="About Us" class="block mt-2">read more &rarr;</a>
                     </div>
-                    <div class="flex gap-2">
-                        <a href="http://www.facebook.com/uteroadvertisingindonesia" target="_blank" title="Facebook" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://x.com/uteroindonesia" target="_blank" title="Twitter" class="social-icon"><i class="fab fa-x-twitter"></i></a>
-                        <a href="http://instagram.com/uteroindonesia" target="_blank" title="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.youtube.com/channel/UCkdJC5Tw0bk0xK9sUR80xnA" target="_blank" title="YouTube" class="social-icon"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.youtube.com/channel/UC--Vge6YlX1y65HqjqYP8uQ" target="_blank" title="YouTube 2" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    <div class="flex gap-3 items-center">
+                        <a href="http://www.facebook.com/uteroadvertisingindonesia" target="_blank" title="Facebook" class="social-icon"><img src="{{ asset('images/new-fb.png') }}" alt="Facebook" class="w-8 h-8 rounded-full" loading="lazy"></a>
+                        <a href="https://x.com/uteroindonesia" target="_blank" title="Twitter" class="social-icon"><img src="{{ asset('images/new-twitter.png') }}" alt="Twitter" class="w-8 h-8 rounded-full" loading="lazy"></a>
+                        <a href="http://instagram.com/uteroindonesia" target="_blank" title="Instagram" class="social-icon"><img src="{{ asset('images/new-instagram.png') }}" alt="Instagram" class="w-8 h-8 rounded-full" loading="lazy"></a>
+                        <a href="https://www.youtube.com/channel/UCkdJC5Tw0bk0xK9sUR80xnA" target="_blank" title="YouTube" class="social-icon"><img src="{{ asset('images/new-youtube.png') }}" alt="YouTube" class="w-8 h-8 rounded-full" loading="lazy"></a>
+                        <a href="https://www.youtube.com/channel/UC--Vge6YlX1y65HqjqYP8uQ" target="_blank" title="YouTube 2" class="social-icon"><img src="{{ asset('images/new-youtube2.png') }}" alt="YouTube 2" class="w-8 h-8 rounded-full" loading="lazy"></a>
                     </div>
                 </div>
 
+                {{-- Kolom 2: Lokasi Kami --}}
                 <div class="footer-col">
                     <div class="footer-label"><i class="fas fa-map-marker-alt mr-2"></i>Lokasi Kami</div>
                     <div class="rounded-lg overflow-hidden mb-4 border border-white/10">
                         <iframe loading="lazy" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126438.2886993069!2d112.6317828409092!3d-7.9786290600267975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd629c5e8a20281%3A0x3ff201ddaa440c96!2sPT%20UTERO%20KREATIF%20INDONESIA!5e0!3m2!1sen!2sid!4v1696298771980!5m2!1sen!2sid" width="100%" height="180" frameborder="0" style="border:0; border-radius:8px;" allowfullscreen title="Lokasi Utero Advertising"></iframe>
                     </div>
+                </div>
+
+                {{-- Kolom 3: Testimonial --}}
+                <div class="footer-col">
                     <div class="footer-label"><i class="fas fa-quote-left mr-2"></i>Testimonial <a href="{{ route('testimonials.index') }}" class="text-xs">Read More &rarr;</a></div>
                     @php
                     $randomTestimonial = \Illuminate\Support\Facades\Cache::remember('random_approved_testimonial', 3600, fn() => \App\Models\Testimonial::where('status', 'approved')->inRandomOrder()->first());
@@ -199,9 +215,12 @@
                         </div>
                         <div class="testimonial-info">From: {{ $randomTestimonial->name }} &rarr; {{ $randomTestimonial->created_at->format('M d, Y') }}</div>
                     </div>
+                    @else
+                    <p class="text-gray-400 text-sm">Belum ada testimonial.</p>
                     @endif
                 </div>
 
+                {{-- Kolom 4: Contact Us --}}
                 <div class="footer-col">
                     <div class="footer-label"><i class="fas fa-phone mr-2"></i>Contact Us</div>
                     <div class="footer-text">
