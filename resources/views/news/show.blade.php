@@ -5,161 +5,123 @@
 @section('og_type', 'article')
 @section('og_image', $post->image ? asset('storage/' . $post->image) : asset('images/banner-web.jpg'))
 
-@php $noSidebar = true; $hideHeader = true; @endphp
-
-@push('styles')
-    @vite(['resources/css/news.css'])
-@endpush
-
-@section('hero')
-<div class="news-detail-hero" style="background-image: url('{{ $post->image ? asset('storage/' . $post->image) : asset('images/banner-web.jpg') }}');">
-    <div class="news-detail-hero-content">
-        @if($post->category)
-            <span class="news-detail-category">{{ $post->category->name }}</span>
-        @endif
-        <h1>{{ $post->title }}</h1>
-        <div class="news-detail-hero-meta">
-            <span><i class="far fa-calendar-alt"></i>{{ $post->published_at ? $post->published_at->format('F d, Y') : $post->created_at->format('F d, Y') }}</span>
-            <span><i class="far fa-user"></i>Utero Advertising</span>
-            @if($post->category)
-                <span><i class="far fa-folder"></i>{{ $post->category->name }}</span>
-            @endif
+@section('sidebar-left')
+<div class="sidebar-left">
+    {{-- Search --}}
+    <div class="sidebar-card">
+        <div class="card-header">
+            <i class="fas fa-search"></i>Cari Berita
         </div>
+        <div style="padding: 16px;">
+            <form action="{{ route('posts.index') }}" method="GET" style="display: flex; gap: 0;">
+                <input type="text" name="src" placeholder="Ketik kata kunci..." style="flex: 1; border: 1px solid #E5E7EB; border-right: none; border-radius: 8px 0 0 8px; padding: 10px 14px; font-size: 14px; outline: none;">
+                <button type="submit" style="background: #ce181e; color: #fff; border: none; border-radius: 0 8px 8px 0; padding: 10px 16px; cursor: pointer;"><i class="fas fa-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+
+    {{-- News Categories --}}
+    @if($categories->count())
+    <div class="sidebar-card mt-4">
+        <div class="card-header">
+            <i class="fas fa-folder"></i>Kategori Berita
+        </div>
+        <ul class="category-list">
+            @foreach($categories as $cat)
+                <li>
+                    <a href="{{ route('posts.index', ['category' => $cat->slug]) }}" title="category: {{ $cat->name }}">
+                        <i class="fas fa-chevron-right"></i>
+                        {{ $cat->name }}
+                        <span class="ml-auto text-xs text-gray-400">({{ $cat->posts_count }})</span>
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+    {{-- Quick Links --}}
+    <div class="sidebar-card mt-4">
+        <div class="card-header">
+            <i class="fas fa-bolt"></i>Quick Links
+        </div>
+        <ul class="category-list">
+            <li><a href="{{ route('products.index') }}"><i class="fas fa-shopping-cart"></i>Price List</a></li>
+            <li><a href="{{ route('download.index') }}"><i class="fas fa-download"></i>Download</a></li>
+            <li><a href="{{ route('order.create') }}"><i class="fas fa-paper-plane"></i>Pesan Sekarang</a></li>
+            <li><a href="{{ route('contact.index') }}"><i class="fas fa-envelope"></i>Hubungi Kami</a></li>
+        </ul>
     </div>
 </div>
 @endsection
 
 @section('content')
-<div class="news-detail-container">
-    <div class="news-detail-layout">
+<div class="main-content">
+    <div class="content-card">
+        {{-- Breadcrumb --}}
+        <div class="text-sm text-gray-400 mb-4">
+            <a href="{{ route('home') }}" style="color: #ce181e;">Home</a>
+            <span class="mx-2">/</span>
+            <a href="{{ route('posts.index') }}" style="color: #ce181e;">News</a>
+            <span class="mx-2">/</span>
+            <span>{{ Str::limit($post->title, 40) }}</span>
+        </div>
 
-        {{-- MAIN ARTICLE --}}
-        <div>
-            <article class="news-detail-body">
+        {{-- Title --}}
+        <h1 class="page-title" style="color: #000000;">{{ $post->title }}</h1>
+        <div class="page-title-bar"></div>
 
-                {{-- Featured Image --}}
-                @if($post->image)
-                <div class="news-detail-featured">
-                    <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}">
-                </div>
-                @endif
-
-                {{-- Content --}}
-                <div class="news-detail-content">
-                    {!! cleanHtml($post->content) !!}
-                </div>
-
-                {{-- Share --}}
-                <div class="news-share">
-                    <span class="news-share-label"><i class="fas fa-share-alt mr-1"></i>Share:</span>
-                    <a href="#" class="news-share-btn facebook" data-network="facebook" title="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="news-share-btn twitter" data-network="twitter" title="Share on Twitter"><i class="fab fa-x-twitter"></i></a>
-                    <a href="#" class="news-share-btn whatsapp" data-network="whatsapp" title="Share on WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" class="news-share-btn linkedin" data-network="linkedin" title="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-            </article>
-
-            {{-- Related Posts --}}
-            @if(isset($relatedPosts) && $relatedPosts->count())
-            <div class="news-related">
-                <h3 class="news-related-title"><i class="fas fa-link mr-2"></i>Berita Terkait</h3>
-                <div class="news-related-grid">
-                    @foreach($relatedPosts as $related)
-                    <article class="news-card news-fade-in">
-                        <a href="{{ route('posts.show', $related->slug) }}" class="news-card-thumb">
-                            @if($related->image)
-                                <img src="{{ asset('storage/' . $related->image) }}" alt="{{ $related->title }}" loading="lazy">
-                            @else
-                                <img src="{{ asset('images/placeholder-news.jpg') }}" alt="{{ $related->title }}" loading="lazy">
-                            @endif
-                            @if($related->category)
-                                <span class="news-card-category">{{ $related->category->name }}</span>
-                            @endif
-                        </a>
-                        <div class="news-card-body">
-                            <div class="news-card-meta">
-                                <span><i class="far fa-calendar-alt"></i>{{ $related->published_at ? $related->published_at->format('M d, Y') : $related->created_at->format('M d, Y') }}</span>
-                            </div>
-                            <h3 class="news-card-title">
-                                <a href="{{ route('posts.show', $related->slug) }}" style="text-decoration:none;color:inherit;">{{ $related->title }}</a>
-                            </h3>
-                            <a href="{{ route('posts.show', $related->slug) }}" class="news-card-link">
-                                Read More <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </article>
-                    @endforeach
-                </div>
-            </div>
+        {{-- Meta --}}
+        <div class="flex items-center gap-4 text-sm text-gray-400 mb-6">
+            <span><i class="far fa-calendar-alt mr-1"></i>{{ $post->published_at ? $post->published_at->format('F d, Y') : $post->created_at->format('F d, Y') }}</span>
+            <span><i class="far fa-user mr-1"></i>Utero Advertising</span>
+            @if($post->category)
+                <span><i class="far fa-folder mr-1"></i>{{ $post->category->name }}</span>
             @endif
         </div>
 
-        {{-- SIDEBAR --}}
-        <aside class="news-sidebar">
-
-            {{-- Search --}}
-            <div class="news-sidebar-widget">
-                <div class="news-sidebar-title"><i class="fas fa-search"></i> Search News</div>
-                <form action="{{ route('posts.index') }}" method="GET" class="news-search-form">
-                    <input type="text" name="src" placeholder="Cari berita...">
-                    <button type="submit"><i class="fas fa-arrow-right"></i></button>
-                </form>
+        {{-- Featured Image --}}
+        @if($post->image)
+            <div class="mb-6 rounded-card overflow-hidden">
+                <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="w-full" loading="eager">
             </div>
+        @endif
 
-            {{-- Recent Posts --}}
-            <div class="news-sidebar-widget">
-                <div class="news-sidebar-title"><i class="fas fa-clock"></i> Recent Posts</div>
-                @foreach($recentPosts as $recent)
-                <a href="{{ route('posts.show', $recent->slug) }}" class="news-recent-item">
-                    <div class="news-recent-thumb">
-                        @if($recent->image)
-                            <img src="{{ asset('storage/' . $recent->image) }}" alt="{{ $recent->title }}" loading="lazy">
-                        @else
-                            <img src="{{ asset('images/placeholder-news.jpg') }}" alt="{{ $recent->title }}" loading="lazy">
-                        @endif
-                    </div>
-                    <div class="news-recent-info">
-                        <div class="news-recent-title">{{ $recent->title }}</div>
-                        <div class="news-recent-date"><i class="far fa-calendar-alt mr-1"></i>{{ $recent->published_at ? $recent->published_at->format('M d, Y') : $recent->created_at->format('M d, Y') }}</div>
-                    </div>
-                </a>
+        {{-- Content --}}
+        <div class="isidesc">
+            {!! cleanHtml($post->content) !!}
+        </div>
+
+        {{-- Share --}}
+        <div class="mt-8 pt-6" style="border-top: 1px solid #E5E7EB;">
+            <span class="text-sm font-semibold mr-3" style="color: #374151;"><i class="fas fa-share-alt mr-1"></i>Share:</span>
+            <a href="#" class="inline-flex items-center justify-center w-10 h-10 rounded-full text-white no-underline mr-2" style="background: #1877F2;" data-network="facebook" title="Share on Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="inline-flex items-center justify-center w-10 h-10 rounded-full text-white no-underline mr-2" style="background: #1DA1F2;" data-network="twitter" title="Share on Twitter"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" class="inline-flex items-center justify-center w-10 h-10 rounded-full text-white no-underline mr-2" style="background: #25D366;" data-network="whatsapp" title="Share on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" class="inline-flex items-center justify-center w-10 h-10 rounded-full text-white no-underline" style="background: #0A66C2;" data-network="linkedin" title="Share on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </div>
+
+    {{-- Related Posts --}}
+    @if(isset($relatedPosts) && $relatedPosts->count())
+        <div class="content-card mt-4">
+            <div class="section-label"><i class="fas fa-link mr-2 text-brand"></i>Berita Terkait</div>
+            <div class="space-y-3">
+                @foreach($relatedPosts as $related)
+                    <a href="{{ route('posts.show', $related->slug) }}" class="block no-underline group">
+                        <div class="flex items-center gap-4 p-3 rounded-lg transition-all" style="border: 1px solid #F3F4F6;">
+                            @if($related->image)
+                                <img src="{{ asset('storage/' . $related->image) }}" alt="{{ $related->title }}" class="w-20 h-14 object-cover rounded-lg" loading="lazy">
+                            @endif
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-sm font-semibold truncate group-hover:text-brand transition-colors" style="color: #000000;">{{ $related->title }}</h4>
+                                <span class="text-xs text-gray-400"><i class="far fa-calendar-alt mr-1"></i>{{ $related->published_at ? $related->published_at->format('M d, Y') : $related->created_at->format('M d, Y') }}</span>
+                            </div>
+                        </div>
+                    </a>
                 @endforeach
             </div>
-
-            {{-- Categories --}}
-            @if($categories->count())
-            <div class="news-sidebar-widget">
-                <div class="news-sidebar-title"><i class="fas fa-folder"></i> Categories</div>
-                <ul class="news-category-list">
-                    @foreach($categories as $cat)
-                    <li>
-                        <a href="{{ route('posts.index', ['category' => $cat->slug]) }}">
-                            <span>{{ $cat->name }}</span>
-                            <span class="news-category-count">{{ $cat->posts_count }}</span>
-                        </a>
-                    </li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-
-            {{-- Popular Tags --}}
-            @if(count($tags))
-            <div class="news-sidebar-widget">
-                <div class="news-sidebar-title"><i class="fas fa-tags"></i> Popular Tags</div>
-                <div class="news-tags">
-                    @foreach($tags as $tag)
-                    <a href="{{ route('posts.index', ['tag' => $tag]) }}" class="news-tag">{{ $tag }}</a>
-                    @endforeach
-                </div>
-            </div>
-            @endif
-
-        </aside>
-    </div>
+        </div>
+    @endif
 </div>
 @endsection
-
-@push('scripts')
-    @vite(['resources/js/news.js'])
-@endpush

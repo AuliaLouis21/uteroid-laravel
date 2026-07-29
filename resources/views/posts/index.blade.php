@@ -32,9 +32,9 @@
         <div class="page-title-bar"></div>
 
         @if(request('src'))
-            <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4 text-sm">
+            <div style="background: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;">
                 <i class="fas fa-search mr-1"></i>Pencarian: "<strong>{{ request('src') }}</strong>"
-                <a href="{{ route('posts.index') }}" class="text-brand ml-2 font-medium">Reset</a>
+                <a href="{{ route('posts.index') }}" style="color: #ce181e; margin-left: 8px; font-weight: 500;">Reset</a>
             </div>
         @endif
 

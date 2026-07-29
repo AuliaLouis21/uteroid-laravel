@@ -2,145 +2,104 @@
 
 @section('title', 'News | Utero Advertising')
 @section('meta_description', 'Berita terkini seputar Utero Advertising, produk, promo, dan tips periklanan di Malang.')
-@section('og_type', 'website')
 
-@php $noSidebar = true; $hideHeader = true; @endphp
-
-@push('styles')
-    @vite(['resources/css/news.css'])
-@endpush
-
-@section('hero')
-<div class="news-hero">
-    <div class="news-hero-content">
-        <h1>NEWS</h1>
-        <div class="news-breadcrumb">
-            <a href="{{ route('home') }}">Home</a>
-            <span class="separator">/</span>
-            <span class="current">News</span>
+@section('sidebar-left')
+<div class="sidebar-left">
+    {{-- Search --}}
+    <div class="sidebar-card">
+        <div class="card-header">
+            <i class="fas fa-search"></i>Cari Berita
         </div>
+        <div class="p-4">
+            <form action="{{ route('posts.index') }}" method="GET" class="flex">
+                <input type="text" name="src" placeholder="Ketik kata kunci..." value="{{ request('src') }}" class="flex-1 min-w-0 px-3 py-2 text-sm border border-gray-200 border-r-0 rounded-l-lg focus:outline-none focus:border-brand">
+                <button type="submit" class="px-4 py-2 bg-brand text-white border-none rounded-r-lg hover:bg-brand-dark transition-colors">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    {{-- News Categories --}}
+    @if($categories->count())
+    <div class="sidebar-card mt-4">
+        <div class="card-header">
+            <i class="fas fa-folder"></i>Kategori Berita
+        </div>
+        <ul class="category-list">
+            @foreach($categories as $cat)
+                <li>
+                    <a href="{{ route('posts.index', ['category' => $cat->slug]) }}" title="category: {{ $cat->name }}">
+                        <i class="fas fa-chevron-right"></i>
+                        {{ $cat->name }}
+                        <span class="ml-auto text-xs text-gray-400">({{ $cat->posts_count }})</span>
+                    </a>
+                </li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+    {{-- Quick Links --}}
+    <div class="sidebar-card mt-4">
+        <div class="card-header">
+            <i class="fas fa-bolt"></i>Quick Links
+        </div>
+        <ul class="category-list">
+            <li><a href="{{ route('products.index') }}"><i class="fas fa-shopping-cart"></i>Price List</a></li>
+            <li><a href="{{ route('download.index') }}"><i class="fas fa-download"></i>Download</a></li>
+            <li><a href="{{ route('order.create') }}"><i class="fas fa-paper-plane"></i>Pesan Sekarang</a></li>
+            <li><a href="{{ route('contact.index') }}"><i class="fas fa-envelope"></i>Hubungi Kami</a></li>
+        </ul>
     </div>
 </div>
 @endsection
 
 @section('content')
-<div class="news-container">
-    <div class="news-layout">
+<div class="main-content">
+    <div class="content-card">
+        <div class="page-title"><i class="fas fa-newspaper mr-2 text-brand"></i>Berita Terkini</div>
+        <div class="page-title-bar"></div>
 
-        {{-- LEFT: ARTICLE GRID --}}
-        <div>
-            @if($posts->count())
-            <div class="news-grid">
-                @foreach($posts as $index => $post)
-                <article class="news-card news-fade-in" style="transition-delay: {{ $index * 0.08 }}s;">
-                    <a href="{{ route('posts.show', $post->slug) }}" class="news-card-thumb">
-                        @if($post->image)
-                            <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" loading="lazy">
-                        @else
-                            <img src="{{ asset('images/placeholder-news.jpg') }}" alt="{{ $post->title }}" loading="lazy">
-                        @endif
-                        @if($post->category)
-                            <span class="news-card-category">{{ $post->category->name }}</span>
-                        @endif
-                    </a>
-                    <div class="news-card-body">
-                        <div class="news-card-meta">
-                            <span><i class="far fa-calendar-alt"></i>{{ $post->published_at ? $post->published_at->format('M d, Y') : $post->created_at->format('M d, Y') }}</span>
-                            @if($post->category)
-                                <span><i class="far fa-folder"></i>{{ $post->category->name }}</span>
-                            @endif
+        @if(request('src'))
+            <div style="background: #FEF2F2; border: 1px solid #FECACA; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 14px;">
+                <i class="fas fa-search mr-1"></i>Pencarian: "<strong>{{ request('src') }}</strong>"
+                <a href="{{ route('posts.index') }}" style="color: #ce181e; margin-left: 8px; font-weight: 500;">Reset</a>
+            </div>
+        @endif
+
+        @if($posts->count())
+            <div class="space-y-4">
+                @foreach($posts as $post)
+                    <a href="{{ route('posts.show', $post->slug) }}" class="block no-underline group">
+                        <div style="background: #fff; border: 1px solid #F3F4F6; border-radius: 12px; padding: 20px; transition: all 0.3s ease;">
+                            <div class="flex items-center gap-3 text-xs text-gray-400 mb-2">
+                                <span><i class="far fa-calendar-alt mr-1"></i>{{ $post->published_at ? $post->published_at->format('M d, Y') : $post->created_at->format('M d, Y') }}</span>
+                                @if($post->category)
+                                    <span><i class="far fa-folder mr-1"></i>{{ $post->category->name }}</span>
+                                @endif
+                            </div>
+                            <h3 class="text-base font-semibold mb-1 group-hover:text-brand transition-colors" style="color: #000000;">
+                                {{ $post->title }}
+                            </h3>
+                            <p class="text-sm text-gray-500 line-clamp-2">{{ strip_tags(substr($post->excerpt ?: $post->content, 0, 200)) }}...</p>
+                            <span class="inline-flex items-center gap-1 text-sm font-medium mt-3" style="color: #ce181e;">
+                                Read More <i class="fas fa-arrow-right text-xs"></i>
+                            </span>
                         </div>
-                        <h3 class="news-card-title">
-                            <a href="{{ route('posts.show', $post->slug) }}" style="text-decoration:none;color:inherit;">{{ $post->title }}</a>
-                        </h3>
-                        <p class="news-card-excerpt">{{ Str::limit(strip_tags($post->excerpt ?: $post->content), 100) }}</p>
-                        <a href="{{ route('posts.show', $post->slug) }}" class="news-card-link">
-                            Read More <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </article>
+                    </a>
                 @endforeach
             </div>
 
-            {{-- Pagination --}}
-            <div class="news-pagination">
-                {{ $posts->withQueryString()->links('pagination::bootstrap-5') }}
+            <div class="flex justify-end mt-6">
+                {{ $posts->withQueryString()->links() }}
             </div>
-            @else
-            <div class="news-empty">
-                <i class="far fa-newspaper"></i>
-                <h3>Belum ada berita</h3>
-                <p>Berita terbaru akan segera hadir di sini.</p>
+        @else
+            <div class="text-center py-12 text-gray-400">
+                <i class="fas fa-newspaper text-3xl mb-3 block"></i>
+                Belum ada berita.
             </div>
-            @endif
-        </div>
-
-        {{-- RIGHT: SIDEBAR --}}
-        <aside class="news-sidebar">
-
-            {{-- Search --}}
-            <div class="news-sidebar-widget">
-                <div class="news-sidebar-title"><i class="fas fa-search"></i> Search News</div>
-                <form action="{{ route('posts.index') }}" method="GET" class="news-search-form">
-                    <input type="text" name="src" placeholder="Cari berita..." value="{{ request('src') }}">
-                    <button type="submit"><i class="fas fa-arrow-right"></i></button>
-                </form>
-            </div>
-
-            {{-- Recent Posts --}}
-            <div class="news-sidebar-widget">
-                <div class="news-sidebar-title"><i class="fas fa-clock"></i> Recent Posts</div>
-                @foreach($recentPosts as $recent)
-                <a href="{{ route('posts.show', $recent->slug) }}" class="news-recent-item">
-                    <div class="news-recent-thumb">
-                        @if($recent->image)
-                            <img src="{{ asset('storage/' . $recent->image) }}" alt="{{ $recent->title }}" loading="lazy">
-                        @else
-                            <img src="{{ asset('images/placeholder-news.jpg') }}" alt="{{ $recent->title }}" loading="lazy">
-                        @endif
-                    </div>
-                    <div class="news-recent-info">
-                        <div class="news-recent-title">{{ $recent->title }}</div>
-                        <div class="news-recent-date"><i class="far fa-calendar-alt mr-1"></i>{{ $recent->published_at ? $recent->published_at->format('M d, Y') : $recent->created_at->format('M d, Y') }}</div>
-                    </div>
-                </a>
-                @endforeach
-            </div>
-
-            {{-- Categories --}}
-            @if($categories->count())
-            <div class="news-sidebar-widget">
-                <div class="news-sidebar-title"><i class="fas fa-folder"></i> Categories</div>
-                <ul class="news-category-list">
-                    @foreach($categories as $cat)
-                    <li>
-                        <a href="{{ route('posts.index', ['category' => $cat->slug]) }}">
-                            <span>{{ $cat->name }}</span>
-                            <span class="news-category-count">{{ $cat->posts_count }}</span>
-                        </a>
-                    </li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
-
-            {{-- Popular Tags --}}
-            @if(count($tags))
-            <div class="news-sidebar-widget">
-                <div class="news-sidebar-title"><i class="fas fa-tags"></i> Popular Tags</div>
-                <div class="news-tags">
-                    @foreach($tags as $tag)
-                    <a href="{{ route('posts.index', ['tag' => $tag]) }}" class="news-tag">{{ $tag }}</a>
-                    @endforeach
-                </div>
-            </div>
-            @endif
-
-        </aside>
+        @endif
     </div>
 </div>
 @endsection
-
-@push('scripts')
-    @vite(['resources/js/news.js'])
-@endpush
