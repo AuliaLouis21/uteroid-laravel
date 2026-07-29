@@ -33,10 +33,9 @@
     {{-- Google Fonts with display=swap for non-blocking font load --}}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     {{-- Preload header banner image to improve LCP --}}
-    <link rel="preload" as="image" href="/images/header-banner.png">
-    {{-- Font Awesome - non-blocking load for better mobile performance --}}
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    <link rel="preload" as="image" href="/images/header-banner.webp" type="image/webp">
+    {{-- Font Awesome - critical for icons, load as regular stylesheet --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @php
@@ -49,16 +48,6 @@
     <script defer src="https://www.google.com/recaptcha/api.js?render={{ $recaptchaSiteKey }}"></script>
     @endif
 
-    <style>
-        /* Critical above-the-fold CSS for instant mobile rendering */
-        *, *::before, *::after { box-sizing: border-box; }
-        body { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; font-size: 14px; line-height: 1.6; background: #F3F4F6; }
-        #header { width: 100%; height: 320px; background: #000; position: relative; overflow: hidden; }
-        #header img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
-        .nav-bar { width: 100%; background: #000; box-shadow: 0 2px 12px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 40; }
-        @media (max-width: 767px) { #header { height: 180px; } }
-    </style>
-
     @stack('styles')
 </head>
 
@@ -66,7 +55,10 @@
     {{-- HEADER / BANNER --}}
     @if(!isset($hideHeader) || !$hideHeader)
     <div id="header">
-        <img src="/images/header-banner.png" alt="Utero Advertising" width="1320" height="320" fetchpriority="high" decoding="async" class="header-bg-img">
+        <picture>
+            <source srcset="/images/header-banner.webp" type="image/webp">
+            <img src="/images/header-banner.png" alt="Utero Advertising" width="1320" height="320" fetchpriority="high" decoding="async" class="header-bg-img">
+        </picture>
         <div class="site-wrapper">
             <div class="header-overlay">
                 <h1 class="text-white text-3xl md:text-4xl font-bold mb-2" style="text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
