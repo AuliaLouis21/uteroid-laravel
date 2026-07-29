@@ -82,7 +82,7 @@
                 <div class="product-grid-item">
                     <a href="{{ route('products.show', $product->slug) }}" title="{{ $product->name }}">
                         @if($product->images->count())
-                            <img src="{{ asset('storage/' . $product->images->first()->path) }}" alt="{{ $product->name }}" loading="lazy">
+                            <img src="{{ asset('storage/' . $product->images->first()->path) }}" alt="{{ $product->name }}" width="400" height="180" loading="lazy" decoding="async">
                         @else
                             <div class="bg-gray-100 h-44 flex items-center justify-center text-gray-400 text-sm">
                                 <i class="fas fa-image mr-2"></i>No Image

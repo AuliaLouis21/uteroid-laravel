@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -37,24 +35,29 @@
     }
 
     #header {
-        background: url('/images/header-banner.png') center center no-repeat;
-        background-size: cover;
         @apply w-full relative overflow-hidden;
         height: 320px;
+        background: #000;
+    }
+
+    #header .header-bg-img {
+        @apply absolute inset-0 w-full h-full;
+        object-fit: cover;
+        object-position: center;
     }
 
     #header::after {
         content: '';
-        @apply absolute inset-0;
+        @apply absolute inset-0 z-[1];
         background: linear-gradient(135deg, rgba(0, 0, 0, 0.75) 0%, rgba(206, 24, 30, 0.55) 100%);
     }
 
     #header .site-wrapper {
-        @apply relative z-10 h-full flex flex-col justify-end pb-8;
+        @apply relative z-[2] h-full flex flex-col justify-end pb-8;
     }
 
     #header .header-overlay {
-        @apply relative z-10;
+        @apply relative z-[2];
     }
 
     .nav-bar {

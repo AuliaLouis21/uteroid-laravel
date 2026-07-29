@@ -26,10 +26,16 @@
 
     <title>@yield('title', 'Utero Advertising | Idea And Concept Factory')</title>
     <link rel="icon" type="image/x-icon" href="/images/utero.ico">
+    {{-- Preconnect for faster resource loading --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    {{-- Google Fonts with display=swap for non-blocking font load --}}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    {{-- Preload header banner image to improve LCP --}}
+    <link rel="preload" as="image" href="/images/header-banner.png">
+    {{-- Font Awesome - critical for icons, load as regular stylesheet --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @php
@@ -38,29 +44,17 @@
     $recaptchaSiteKey = config('recaptcha.site_key') ?: (\Illuminate\Support\Facades\Cache::remember('setting_recaptcha_site_key', 3600, fn() => \App\Models\Setting::where('key', 'recaptcha_site_key')->value('value')) ?? '');
     @endphp
 
-    @if($gaId)
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ $gaId }}"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', '{{ $gaId }}');
-    </script>
-    @endif
-
     @if($recaptchaSiteKey)
-    <script src="https://www.google.com/recaptcha/api.js?render={{ $recaptchaSiteKey }}"></script>
+    <script defer src="https://www.google.com/recaptcha/api.js?render={{ $recaptchaSiteKey }}"></script>
     @endif
 
     @stack('styles')
 </head>
 
 <body>
-    {{-- HEADER / BANNER --}}
+    {{-- HEADER / BANNER - Using <img> instead of CSS background for proper LCP detection --}}
     <div id="header">
+        <img src="/images/header-banner.png" alt="Utero Advertising" width="1320" height="320" fetchpriority="high" decoding="async" class="header-bg-img">
         <div class="site-wrapper">
             <div class="header-overlay">
                 <h1 class="text-white text-3xl md:text-4xl font-bold mb-2" style="text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
@@ -189,7 +183,7 @@
                 <div class="footer-col">
                     <div class="footer-label"><i class="fas fa-map-marker-alt mr-2"></i>Lokasi Kami</div>
                     <div class="rounded-lg overflow-hidden mb-4 border border-white/10">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126438.2886993069!2d112.6317828409092!3d-7.9786290600267975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd629c5e8a20281%3A0x3ff201ddaa440c96!2sPT%20UTERO%20KREATIF%20INDONESIA!5e0!3m2!1sen!2sid!4v1696298771980!5m2!1sen!2sid" width="100%" height="180" frameborder="0" style="border:0; border-radius:8px;" allowfullscreen></iframe>
+                        <iframe loading="lazy" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126438.2886993069!2d112.6317828409092!3d-7.9786290600267975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd629c5e8a20281%3A0x3ff201ddaa440c96!2sPT%20UTERO%20KREATIF%20INDONESIA!5e0!3m2!1sen!2sid!4v1696298771980!5m2!1sen!2sid" width="100%" height="180" frameborder="0" style="border:0; border-radius:8px;" allowfullscreen title="Lokasi Utero Advertising"></iframe>
                     </div>
                     <div class="footer-label"><i class="fas fa-quote-left mr-2"></i>Testimonial <a href="{{ route('testimonials.index') }}" class="text-xs">Read More &rarr;</a></div>
                     @php
@@ -258,6 +252,17 @@
     @endif
 
     @stack('scripts')
+
+    {{-- Google Analytics - moved to end of body for non-render-blocking --}}
+    @if($gaId)
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ $gaId }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', '{{ $gaId }}');
+    </script>
+    @endif
 </body>
 
 </html>
