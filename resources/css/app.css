@@ -734,7 +734,18 @@
     .social-icon {
         @apply inline-flex items-center justify-center w-10 h-10 rounded-full mr-2 no-underline;
         background: rgba(255, 255, 255, 0.08);
+        color: #FFFFFF;
         transition: all 0.3s ease;
+    }
+
+    .social-icon i {
+        font-family: "Font Awesome 6 Brands";
+        font-weight: 400;
+        font-style: normal;
+        font-size: 18px;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
 
     .social-icon:hover {
