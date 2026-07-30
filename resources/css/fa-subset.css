@@ -2,11 +2,11 @@
  * Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com
  * Subset: Only icons used in Utero Advertising project
  */
-@font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:900;font-display:swap;src:url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-solid-900.woff2) format("woff2"),url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-solid-900.ttf) format("truetype")}
-@font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:400;font-display:swap;src:url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-regular-400.woff2) format("woff2"),url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-regular-400.ttf) format("truetype")}
-@font-face{font-family:"Font Awesome 6 Brands";font-style:normal;font-weight:400;font-display:swap;src:url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-brands-400.woff2) format("woff2"),url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-brands-400.ttf) format("truetype")}
+@font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:900;font-display:swap;src:url('/fonts/fa-solid-900.woff2') format('woff2')}
+@font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/fa-regular-400.woff2') format('woff2')}
+@font-face{font-family:"Font Awesome 6 Brands";font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/fa-brands-400.woff2') format('woff2')}
 
-.fas,.far{font-style:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.fas,.far{font-family:"Font Awesome 6 Free";font-style:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 
 /* Solid icons */
 .fa-arrow-right::before{content:"\f061"}
@@ -37,11 +37,12 @@
 .far{font-weight:400}
 
 /* Brand icons */
-.fab{font-weight:400}
-.fa-brands{font-weight:400}
+.fab{font-weight:400;font-family:"Font Awesome 6 Brands"}
+.fa-brands{font-weight:400;font-family:"Font Awesome 6 Brands"}
 .fa-facebook-f::before{content:"\f39e"}
 .fa-instagram::before{content:"\f16d"}
 .fa-tiktok::before{content:"\e07b"}
 .fa-whatsapp::before{content:"\f232"}
 .fa-x-twitter::before{content:"\e61b"}
+.fa-linkedin-in::before{content:"\f08c"}
 .fa-youtube::before{content:"\f167"}
