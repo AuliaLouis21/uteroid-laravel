@@ -114,11 +114,13 @@
     }
 
     .nav-bar ul li a.active {
-        @apply text-white;
+        @apply text-white font-semibold;
+        background: linear-gradient(180deg, rgba(206, 24, 30, 0.15) 0%, rgba(206, 24, 30, 0.05) 100%);
+        border-bottom: 2px solid #ce181e;
     }
 
     .nav-bar ul li a.active::after {
-        @apply w-3/4;
+        display: none;
     }
 
     /* HAPUS BAR PUTIH / GARIS EMAS BAWAH NAVBAR */
@@ -737,6 +739,7 @@
 
     .social-icon:hover {
         transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(206, 24, 30, 0.3);
     }
 
     .social-icon.facebook { color: #1877F2; }

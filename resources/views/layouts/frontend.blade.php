@@ -46,6 +46,9 @@
         #header img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
         #header::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(135deg,rgba(0,0,0,.75) 0%,rgba(206,24,30,.55) 100%)}
         .nav-bar{width:100%;background:#000;box-shadow:0 2px 12px rgba(0,0,0,.2);position:sticky;top:0;z-index:40}
+        .nav-bar ul li a{color:rgba(255,255,255,0.65);transition:all .25s ease;position:relative}
+        .nav-bar ul li a:hover{color:#fff}
+        .nav-bar ul li a.active{color:#fff;font-weight:600;background:linear-gradient(180deg,rgba(206,24,30,.2) 0%,rgba(206,24,30,.08) 100%);border-bottom:2px solid #ce181e}
         .site-wrapper{max-width:1320px;margin:0 auto;padding:0 16px;width:100%}
         .three-col{display:flex;flex-wrap:wrap;gap:24px;padding:24px 0}
         .sidebar-left{width:100%}
@@ -120,43 +123,43 @@
 
                 <ul :class="open ? 'open' : ''" class="md:flex">
                     <li>
-                        <a href="{{ route('home') }}" title="Home" {{ request()->routeIs('home') ? 'class="active"' : '' }}>
+                        <a href="{{ route('home') }}" title="Home" class="{{ request()->routeIs('home') ? 'active' : '' }}">
                             <i class="fas fa-home mr-1 text-xs"></i> HOME
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('products.index') }}" title="Product" {{ request()->routeIs('products.*') ? 'class="active"' : '' }}>
+                        <a href="{{ route('products.index') }}" title="Product" class="{{ request()->routeIs('products.*') ? 'active' : '' }}">
                             <i class="fas fa-dollar-sign mr-1 text-xs"></i> PRICE
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('gallery.index') }}" title="Gallery" {{ request()->routeIs('gallery.*') ? 'class="active"' : '' }}>
+                        <a href="{{ route('gallery.index') }}" title="Gallery" class="{{ request()->routeIs('gallery.*') ? 'active' : '' }}">
                             <i class="fas fa-images mr-1 text-xs"></i> GALLERY
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('posts.index') }}" title="News" {{ request()->routeIs('posts.*') ? 'class="active"' : '' }}>
+                        <a href="{{ route('posts.index') }}" title="News" class="{{ request()->routeIs('posts.*') ? 'active' : '' }}">
                             <i class="fas fa-newspaper mr-1 text-xs"></i> NEWS
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('download.index') }}" title="Download" {{ request()->routeIs('download.*') ? 'class="active"' : '' }}>
+                        <a href="{{ route('download.index') }}" title="Download" class="{{ request()->routeIs('download.*') ? 'active' : '' }}">
                             <i class="fas fa-download mr-1 text-xs"></i> DOWNLOAD
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('testimonials.index') }}" title="Testimonial" {{ request()->routeIs('testimonials.*') ? 'class="active"' : '' }}>
+                        <a href="{{ route('testimonials.index') }}" title="Testimonial" class="{{ request()->routeIs('testimonials.*') ? 'active' : '' }}">
                             <i class="fas fa-quote-right mr-1 text-xs"></i> TESTIMONIAL
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('contact.index') }}" title="Kontak" {{ request()->routeIs('contact.*') ? 'class="active"' : '' }}>
+                        <a href="{{ route('contact.index') }}" title="Kontak" class="{{ request()->routeIs('contact.*') ? 'active' : '' }}">
                             <i class="fas fa-phone mr-1 text-xs"></i> KONTAK
                         </a>
                     </li>
                     @foreach($staticPages as $sp)
                     <li>
-                        <a href="{{ route('pages.show', $sp->slug) }}" title="{{ $sp->title }}" {{ request()->routeIs('pages.show', $sp->slug) ? 'class="active"' : '' }}>
+                        <a href="{{ route('pages.show', $sp->slug) }}" title="{{ $sp->title }}" class="{{ request()->routeIs('pages.show', $sp->slug) ? 'active' : '' }}">
                             @if($sp->slug === 'tentang-kami')<i class="fas fa-info-circle mr-1 text-xs"></i> @endif{{ strtoupper($sp->title) }}
                         </a>
                     </li>
@@ -175,7 +178,7 @@
                     </li>
                     @else
                     <li>
-                        <a href="{{ route('login') }}" title="Login" {{ request()->routeIs('login') ? 'class=active' : '' }}>
+                        <a href="{{ route('login') }}" title="Login" class="{{ request()->routeIs('login') ? 'active' : '' }}">
                             <i class="fas fa-sign-in-alt mr-1 text-xs"></i> LOGIN
                         </a>
                     </li>
@@ -219,11 +222,12 @@
                         <a href="{{ route('pages.show', 'tentang-kami') }}" title="About Us" class="block mt-2">read more <i class="fas fa-arrow-right"></i></a>
                     </div>
                     <div class="flex gap-3 items-center">
-                        <a href="https://www.facebook.com/uteroadvertisingindonesia" target="_blank" rel="noopener noreferrer" title="Facebook" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://x.com/uteroindonesia" target="_blank" rel="noopener noreferrer" title="Twitter" class="social-icon twitter"><i class="fab fa-x-twitter"></i></a>
-                        <a href="https://www.instagram.com/uteroindonesia" target="_blank" rel="noopener noreferrer" title="Instagram" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.youtube.com/channel/UCkdJC5Tw0bk0xK9sUR80xnA" target="_blank" rel="noopener noreferrer" title="YouTube" class="social-icon youtube"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.youtube.com/channel/UC--Vge6YlX1y65HqjqYP8uQ" target="_blank" rel="noopener noreferrer" title="YouTube 2" class="social-icon youtube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@uteroindonesia" target="_blank" rel="noopener noreferrer" title="TikTok" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://www.youtube.com/channel/UCkdJC5Tw0bk0xK9sUR80xnA" target="_blank" rel="noopener noreferrer" title="YouTube" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.youtube.com/channel/UC--Vge6YlX1y65HqjqYP8uQ" target="_blank" rel="noopener noreferrer" title="YouTube 2" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="https://x.com/uteroindonesia" target="_blank" rel="noopener noreferrer" title="X (Twitter)" class="social-icon"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://www.instagram.com/uteroindonesia" target="_blank" rel="noopener noreferrer" title="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/uteroadvertisingindonesia" target="_blank" rel="noopener noreferrer" title="Facebook" class="social-icon"><i class="fab fa-facebook-f"></i></a>
                     </div>
                 </div>
 
