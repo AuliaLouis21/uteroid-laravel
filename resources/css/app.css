@@ -1098,3 +1098,59 @@
         display: none !important;
     }
 }
+
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+
+/* content-visibility: defer rendering off-screen sections */
+.footer-area {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 500px;
+}
+
+.sidebar-right {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 400px;
+}
+
+/* contain: layout for performance-critical components */
+.product-grid-item,
+.gallery-item,
+.video-item,
+.news-card,
+.sidebar-card {
+    contain: layout style;
+}
+
+/* Disable hover effects on touch devices to reduce repaints */
+@media (hover: none) and (pointer: coarse) {
+    .product-grid-item:hover,
+    .gallery-item:hover,
+    .video-item:hover,
+    .sidebar-card:hover,
+    .news-card:hover,
+    .ad-item:hover img,
+    .content-card:hover,
+    .testimonial-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .product-grid-item:hover img,
+    .gallery-item:hover .img img,
+    .video-item:hover .img img {
+        transform: none;
+    }
+
+    .social-icon:hover,
+    .download-btn:hover,
+    .whatsapp-btn:hover,
+    .news-item:hover,
+    .category-list li a:hover {
+        transform: none;
+        padding-left: inherit;
+    }
+
+    .nav-bar ul li a:hover::after {
+        width: 0;
+    }
+}

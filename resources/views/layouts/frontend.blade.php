@@ -26,18 +26,13 @@
 
     <title>@yield('title', 'Utero Advertising | Idea And Concept Factory')</title>
     <link rel="icon" type="image/x-icon" href="/images/utero.ico">
-    {{-- Preconnect for faster resource loading --}}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    {{-- Preconnect & dns-prefetch for faster resource loading --}}
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    {{-- Google Fonts - non-blocking load --}}
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" as="style" crossorigin onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"></noscript>
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://maps.googleapis.com">
     {{-- Preload header banner image to improve LCP --}}
     <link rel="preload" as="image" href="/images/header-banner.webp" type="image/webp">
-    {{-- Font Awesome - non-blocking load for better mobile performance --}}
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" crossorigin onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
     {{-- Critical inline CSS for above-the-fold rendering --}}
     <style>
         *,*::before,*::after{box-sizing:border-box}
@@ -46,9 +41,6 @@
         #header img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
         #header::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(135deg,rgba(0,0,0,.75) 0%,rgba(206,24,30,.55) 100%)}
         .nav-bar{width:100%;background:#000;box-shadow:0 2px 12px rgba(0,0,0,.2);position:sticky;top:0;z-index:40}
-        .nav-bar ul li a{color:rgba(255,255,255,0.65);transition:all .25s ease;position:relative}
-        .nav-bar ul li a:hover{color:#fff}
-        .nav-bar ul li a.active{color:#fff;font-weight:600;background:linear-gradient(180deg,rgba(206,24,30,.2) 0%,rgba(206,24,30,.08) 100%);border-bottom:2px solid #ce181e}
         .site-wrapper{max-width:1320px;margin:0 auto;padding:0 16px;width:100%}
         .three-col{display:flex;flex-wrap:wrap;gap:24px;padding:24px 0}
         .sidebar-left{width:100%}
@@ -66,13 +58,6 @@
         @media(max-width:767px){#header{height:180px}}
     </style>
     @vite(['resources/css/app.css'])
-    <script>
-        /* Convert render-blocking CSS to non-blocking */
-        document.querySelectorAll('link[rel="stylesheet"][href*="/build/assets/"]').forEach(function(link) {
-            link.setAttribute('media', 'print');
-            link.onload = function() { this.media = 'all'; };
-        });
-    </script>
 
     @php
     $gaId = \Illuminate\Support\Facades\Cache::remember('setting_google_analytics_id', 3600, fn() => \App\Models\Setting::where('key', 'google_analytics_id')->value('value'));

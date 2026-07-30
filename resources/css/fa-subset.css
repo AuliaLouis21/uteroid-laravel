@@ -1,0 +1,47 @@
+/*!
+ * Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com
+ * Subset: Only icons used in Utero Advertising project
+ */
+@font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:900;font-display:swap;src:url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-solid-900.woff2) format("woff2"),url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-solid-900.ttf) format("truetype")}
+@font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:400;font-display:swap;src:url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-regular-400.woff2) format("woff2"),url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-regular-400.ttf) format("truetype")}
+@font-face{font-family:"Font Awesome 6 Brands";font-style:normal;font-weight:400;font-display:swap;src:url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-brands-400.woff2) format("woff2"),url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-brands-400.ttf) format("truetype")}
+
+.fas,.far{font-style:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+
+/* Solid icons */
+.fa-arrow-right::before{content:"\f061"}
+.fa-bars::before{content:"\f0c9"}
+.fa-building::before{content:"\f1ad"}
+.fa-check-circle::before{content:"\f058"}
+.fa-chevron-right::before{content:"\f054"}
+.fa-dollar-sign::before{content:"\f155"}
+.fa-download::before{content:"\f019"}
+.fa-envelope::before{content:"\f0e0"}
+.fa-exclamation-circle::before{content:"\f06a"}
+.fa-home::before{content:"\f015"}
+.fa-images::before{content:"\f00e"}
+.fa-info-circle::before{content:"\f05a"}
+.fa-map-marker-alt::before{content:"\f3c5"}
+.fa-map-pin::before{content:"\f4c0"}
+.fa-newspaper::before{content:"\f1ea"}
+.fa-paper-plane::before{content:"\f1d8"}
+.fa-phone::before{content:"\f095"}
+.fa-quote-left::before{content:"\f10d"}
+.fa-quote-right::before{content:"\f10e"}
+.fa-shopping-cart::before{content:"\f07a"}
+.fa-sign-in-alt::before{content:"\f2f6"}
+.fa-sign-out-alt::before{content:"\f2f5"}
+.fa-times::before{content:"\f00d"}
+.fa-user-circle::before{content:"\f2bd"}
+.fas{font-weight:900}
+.far{font-weight:400}
+
+/* Brand icons */
+.fab{font-weight:400}
+.fa-brands{font-weight:400}
+.fa-facebook-f::before{content:"\f39e"}
+.fa-instagram::before{content:"\f16d"}
+.fa-tiktok::before{content:"\e07b"}
+.fa-whatsapp::before{content:"\f232"}
+.fa-x-twitter::before{content:"\e61b"}
+.fa-youtube::before{content:"\f167"}
