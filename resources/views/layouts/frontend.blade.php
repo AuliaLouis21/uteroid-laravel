@@ -57,7 +57,7 @@
         @media(min-width:1025px){.sidebar-left{width:240px;flex-shrink:0}.sidebar-right{width:280px;flex-shrink:0}}
         @media(max-width:767px){#header{height:180px}}
     </style>
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/css/fa-subset.css', 'resources/css/fonts.css'])
 
     @php
     $gaId = \Illuminate\Support\Facades\Cache::remember('setting_google_analytics_id', 3600, fn() => \App\Models\Setting::where('key', 'google_analytics_id')->value('value'));
