@@ -754,8 +754,8 @@
     }
 
     /* Brand colors - target by FA icon class */
-    .social-icon .fa-tiktok { color: #000000; }
-    .social-icon:hover .fa-tiktok { color: #010101; }
+    .social-icon .fa-tiktok { color: #FFFFFF; }
+    .social-icon:hover .fa-tiktok { color: #FF0000; }
     .social-icon .fa-youtube { color: #FF0000; }
     .social-icon:hover .fa-youtube { color: #FF0000; }
     .social-icon .fa-x-twitter { color: #FFFFFF; }
