@@ -15,23 +15,23 @@
                     mewujudkan nilai-nilai penjualan yang maksimal melalui concept-concept 
                     ide baik dalam grafis maupun photografi yang diolah dengan 
                     perangkat computer dan peralatan canggih
-                    <a href="<?=$root?>/p/abaut.app" title="About Us">read more &rarr;</a>
+                    <a href="<?=$root?>/p/abaut.app" title="About Us">read more <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <a href="http://www.facebook.com/uteroadvertisingindonesia" target="_blank" title="Find us on Facebook">
-                	<img src="<?=$view?>/images/new-fb.png" height=45 width=300 alt="Find us on Facebook" style="border:none;padding-bottom: 15px;"/> 
+                 	<i class="fa fa-facebook" style="color:#1877F2"></i>
 				</a>              
                 <a href="https://twitter.com/utero_indonesia" target="_blank" title="Follow us on Twitter">
-                	<img src="<?=$view?>/images/new-twitter.png" height=45 width=300 alt="Follow us on Twitter" style="border:none;padding-bottom: 15px;"/> 
+                 	<i class="fa fa-twitter" style="color:#FFFFFF"></i>
 				</a>              
                 <a href="http://instagram.com/uteroindonesia" target="_blank" title="Find us on Instagram">
-                	<img src="<?=$view?>/images/new-instagram.png" height=45 width=300 alt="Find us on Instagram" style="border:none;padding-bottom: 15px;"/> 
+                 	<i class="fa fa-instagram" style="background:linear-gradient(135deg,#833AB4,#E1306C,#F77737);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text"></i>
 				</a>              
                 <a href="https://www.youtube.com/channel/UCkdJC5Tw0bk0xK9sUR80xnA" target="_blank" title="Find us on Youtube">
-                        <img src="<?=$view?>/images/new-youtube.png" height=45 width=300 alt="Find us on Youtube" style="border:none;padding-bottom: 15px;"/>
-                                </a>              
+                	<i class="fa fa-youtube" style="color:#FF0000"></i>
+                </a>              
                 <a href="https://www.youtube.com/channel/UC--Vge6YlX1y65HqjqYP8uQ" target="_blank" title="Find us on Youtube">
-                        <img src="<?=$view?>/images/new-youtube2.png" height=45 width=300 alt="Find us on Youtube" style="border:none;padding-bottom: 15px;"/>
-                                </a>
+                	<i class="fa fa-youtube" style="color:#FF0000"></i>
+                </a>
 
 </div>    
             <div class="footer3">
@@ -184,7 +184,7 @@
 </div>
 <br />
                 <div class="labelfooter">Testimonial &raquo; 
-						<a href="<?=$root?>/testimonial.app">Read More &rarr;</a>
+						<a href="<?=$root?>/testimonial.app">Read More <i class="fas fa-arrow-right"></i></a>
 				</div>
 				<!-- mulai sini -->
 				

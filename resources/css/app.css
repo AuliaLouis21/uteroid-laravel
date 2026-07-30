@@ -732,15 +732,29 @@
     .social-icon {
         @apply inline-flex items-center justify-center w-10 h-10 rounded-full mr-2 no-underline;
         background: rgba(255, 255, 255, 0.08);
-        color: #FFFFFF;
         transition: all 0.3s ease;
     }
 
     .social-icon:hover {
-        @apply text-white;
-        background: rgba(206, 24, 30, 0.2);
         transform: translateY(-2px);
     }
+
+    .social-icon.facebook { color: #1877F2; }
+    .social-icon.facebook:hover { background: rgba(24, 119, 242, 0.2); }
+
+    .social-icon.twitter { color: #FFFFFF; }
+    .social-icon.twitter:hover { background: rgba(255, 255, 255, 0.2); }
+
+    .social-icon.instagram i {
+        background: linear-gradient(135deg, #833AB4 0%, #E1306C 50%, #F77737 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .social-icon.instagram:hover { background: rgba(228, 64, 95, 0.2); }
+
+    .social-icon.youtube { color: #FF0000; }
+    .social-icon.youtube:hover { background: rgba(255, 0, 0, 0.2); }
 
     .whatsapp-btn {
         @apply fixed z-50 text-center text-white rounded-full shadow-lg no-underline flex items-center justify-center;
