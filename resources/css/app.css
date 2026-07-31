@@ -732,51 +732,42 @@
     }
 
     .social-icon {
-        @apply inline-flex items-center justify-center w-10 h-10 rounded-full mr-2 no-underline;
-        background: rgba(255, 255, 255, 0.08);
+        @apply inline-flex items-center justify-center no-underline;
+        width: 30px;
+        height: 30px;
         color: #FFFFFF;
-        transition: all 0.3s ease;
+        transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
-    .social-icon i {
-        font-family: "Font Awesome 6 Brands";
-        font-weight: 400;
-        font-style: normal;
-        font-size: 18px;
-        line-height: 1;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+    .social-icon svg {
+        display: block;
+        width: 100%;
+        height: 100%;
     }
 
     .social-icon:hover {
         transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(206, 24, 30, 0.3);
+        opacity: 0.92;
     }
 
-    /* Brand colors - target by FA icon class */
-    .social-icon .fa-tiktok { color: #FFFFFF; }
-    .social-icon:hover .fa-tiktok { color: #FF0000; }
-    .social-icon .fa-youtube { color: #FF0000; }
-    .social-icon:hover .fa-youtube { color: #FF0000; }
-    .social-icon .fa-x-twitter { color: #FFFFFF; }
-    .social-icon:hover .fa-x-twitter { color: #FFFFFF; }
-    .social-icon .fa-instagram {
-        background: linear-gradient(135deg, #833AB4 0%, #E1306C 50%, #F77737 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+    .share-social {
+        @apply inline-flex items-center justify-center align-middle no-underline;
+        width: 30px;
+        height: 30px;
+        margin-right: 8px;
+        transition: transform 0.3s ease, opacity 0.3s ease;
     }
-    .social-icon .fa-facebook-f { color: #1877F2; }
-    .social-icon:hover .fa-facebook-f { color: #1877F2; }
-    .social-icon .fa-whatsapp { color: #25D366; }
-    .social-icon:hover .fa-whatsapp { color: #25D366; }
 
-    /* Hover background per brand */
-    .social-icon:has(.fa-tiktok):hover { background: rgba(0, 0, 0, 0.15); }
-    .social-icon:has(.fa-youtube):hover { background: rgba(255, 0, 0, 0.15); }
-    .social-icon:has(.fa-x-twitter):hover { background: rgba(255, 255, 255, 0.15); }
-    .social-icon:has(.fa-instagram):hover { background: rgba(228, 64, 95, 0.15); }
-    .social-icon:has(.fa-facebook-f):hover { background: rgba(24, 119, 242, 0.15); }
+    .share-social svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    .share-social:hover {
+        transform: translateY(-2px);
+        opacity: 0.85;
+    }
 
     .whatsapp-btn {
         @apply fixed z-50 text-center text-white rounded-full shadow-lg no-underline flex items-center justify-center;

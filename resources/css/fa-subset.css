@@ -9,30 +9,52 @@
 .fas,.far{font-family:"Font Awesome 6 Free";font-style:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 
 /* Solid icons */
+.fa-arrow-left::before{content:"\f060"}
 .fa-arrow-right::before{content:"\f061"}
 .fa-bars::before{content:"\f0c9"}
+.fa-bolt::before{content:"\f0e7"}
+.fa-box::before{content:"\f466"}
+.fa-box-open::before{content:"\f49e"}
 .fa-building::before{content:"\f1ad"}
+.fa-bullhorn::before{content:"\f0a1"}
+.fa-calendar-alt::before{content:"\f073"}
 .fa-check-circle::before{content:"\f058"}
 .fa-chevron-right::before{content:"\f054"}
+.fa-clock::before{content:"\f017"}
 .fa-dollar-sign::before{content:"\f155"}
 .fa-download::before{content:"\f019"}
 .fa-envelope::before{content:"\f0e0"}
 .fa-exclamation-circle::before{content:"\f06a"}
+.fa-file::before{content:"\f15b"}
+.fa-folder::before{content:"\f07b"}
+.fa-headphones::before{content:"\f025"}
 .fa-home::before{content:"\f015"}
+.fa-image::before{content:"\f03e"}
 .fa-images::before{content:"\f00e"}
+.fa-inbox::before{content:"\f01c"}
 .fa-info-circle::before{content:"\f05a"}
+.fa-link::before{content:"\f0c1"}
 .fa-map-marker-alt::before{content:"\f3c5"}
 .fa-map-pin::before{content:"\f4c0"}
 .fa-newspaper::before{content:"\f1ea"}
 .fa-paper-plane::before{content:"\f1d8"}
+.fa-pen::before{content:"\f304"}
 .fa-phone::before{content:"\f095"}
+.fa-play-circle::before{content:"\f144"}
+.fa-plus::before{content:"\f067"}
 .fa-quote-left::before{content:"\f10d"}
 .fa-quote-right::before{content:"\f10e"}
+.fa-search::before{content:"\f002"}
+.fa-share-alt::before{content:"\f064"}
 .fa-shopping-cart::before{content:"\f07a"}
 .fa-sign-in-alt::before{content:"\f2f6"}
 .fa-sign-out-alt::before{content:"\f2f5"}
+.fa-th-large::before{content:"\f009"}
 .fa-times::before{content:"\f00d"}
+.fa-trash::before{content:"\f1f8"}
+.fa-user::before{content:"\f007"}
 .fa-user-circle::before{content:"\f2bd"}
+.fa-video::before{content:"\f03d"}
 .fas{font-weight:900}
 .far{font-weight:400}
 

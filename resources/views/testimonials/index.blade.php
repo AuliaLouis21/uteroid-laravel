@@ -28,7 +28,7 @@
 @section('content')
 <div class="main-content">
     <div class="content-card">
-        <div class="page-title"><i class="fas fa-quote-right mr-2"></i>Testimonial</div>
+        <div class="page-title"><i class="fas fa-envelope mr-2"></i>Testimonial</div>
         <div class="page-title-bar"></div>
 
         <div class="space-y-4">
