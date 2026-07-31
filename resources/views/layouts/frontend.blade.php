@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
     <meta name="description" content="@yield('meta_description', 'Utero Advertising — Advertising, Digital Printing & Creative Agency di Malang, Jawa Timur. Solusi periklanan, cetak, dan desain kreatif untuk bisnis Anda.')">
     <meta name="keywords" content="@yield('meta_keywords', 'advertising malang, perusahaan advertising, utero advertising, printing, digital printing, creative agency, desain grafis, malang')">
     <meta name="robots" content="Index, Follow">
@@ -26,47 +27,123 @@
 
     <title>@yield('title', 'Utero Advertising | Idea And Concept Factory')</title>
     <link rel="icon" type="image/x-icon" href="/images/utero.ico">
-    {{-- Preconnect & dns-prefetch for faster resource loading --}}
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="dns-prefetch" href="https://www.google-analytics.com">
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+
+    {{-- Preconnect --}}
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+    <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
     <link rel="dns-prefetch" href="https://maps.googleapis.com">
+
     {{-- Preload header banner image to improve LCP --}}
-    <link rel="preload" as="image" href="/images/header-banner.webp" type="image/webp">
-    {{-- Critical inline CSS for above-the-fold rendering --}}
+    <link rel="preload" as="image" href="/images/header-banner.webp" type="image/webp" fetchpriority="high">
+
+    {{-- Preload critical fonts - Poppins --}}
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins/pxiEyp8kv8JHgFVrJJfecg.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2" crossorigin>
+
+    {{-- Preload Font Awesome fonts (293KB total - critical for above-the-fold icons) --}}
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/fa-solid-900.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/fa-brands-400.woff2" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/fa-regular-400.woff2" crossorigin>
+
+    {{-- Inline FA @font-face so icons render immediately with above-the-fold content --}}
     <style>
-        *,*::before,*::after{box-sizing:border-box}
-        body{margin:0;padding:0;font-family:'Poppins','Inter',sans-serif;font-size:14px;line-height:1.6;background:#F3F4F6;color:#374151}
-        #header{width:100%;height:320px;background:#000;position:relative;overflow:hidden}
-        #header img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
-        #header::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(135deg,rgba(0,0,0,.75) 0%,rgba(206,24,30,.55) 100%)}
-        .nav-bar{width:100%;background:#000;box-shadow:0 2px 12px rgba(0,0,0,.2);position:sticky;top:0;z-index:40}
-        .site-wrapper{max-width:1320px;margin:0 auto;padding:0 16px;width:100%}
-        .three-col{display:flex;flex-wrap:wrap;gap:24px;padding:24px 0}
-        .sidebar-left{width:100%}
-        .main-content{width:100%;flex:1;min-width:0}
-        .sidebar-right{width:100%}
-        .sidebar-card{background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.1);overflow:hidden}
-        .sidebar-card .card-header{padding:14px 20px;font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:1.5px;background:#000;color:#fff}
-        .content-card{background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.1);padding:24px;margin-bottom:16px}
-        .page-title{font-size:24px;font-weight:700;margin-bottom:4px;color:#000}
-        .page-title-bar{width:48px;height:4px;border-radius:9999px;margin-bottom:24px;background:linear-gradient(90deg,#ce181e,#a01418)}
-        h1,h2,h3{color:#000}
-        img{max-width:100%;height:auto}
-        @media(max-width:1024px){.three-col{flex-direction:column;gap:24px}}
-        @media(min-width:1025px){.sidebar-left{width:240px;flex-shrink:0}.sidebar-right{width:280px;flex-shrink:0}}
-        @media(max-width:767px){#header{height:180px}}
+        @font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:900;font-display:swap;src:url('/fonts/fa-solid-900.woff2') format('woff2')}
+        @font-face{font-family:"Font Awesome 6 Free";font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/fa-regular-400.woff2') format('woff2')}
+        @font-face{font-family:"Font Awesome 6 Brands";font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/fa-brands-400.woff2') format('woff2')}
+        .fas,.fab,.far{font-style:normal;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+        .fas{font-family:"Font Awesome 6 Free";font-weight:900}
+        .far{font-family:"Font Awesome 6 Free";font-weight:400}
+        .fab{font-family:"Font Awesome 6 Brands";font-weight:400}
     </style>
-    @vite(['resources/css/app.css', 'resources/css/fa-subset.css', 'resources/css/fonts.css'])
+
+    {{-- Critical inline CSS: ONLY above-the-fold rendering (header + navbar + body + layout primitives) --}}
+    <style>
+        body{margin:0;padding:0;background:#F3F4F6;font-family:'Poppins','Inter',sans-serif;font-size:14px;line-height:1.6;color:#374151;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;min-height:100vh;display:flex;flex-direction:column}
+        *,*::before,*::after{box-sizing:border-box}
+        html{min-height:100%;background-color:#1A1A2E}
+        a{text-decoration:none;color:#ce181e}
+        img{max-width:100%;height:auto}
+
+        /* Header / Banner - LCP element */
+        #header{width:100%;height:320px;background:#000;position:relative;overflow:hidden}
+        #header .header-bg-img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+        #header::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(135deg,rgba(0,0,0,.75) 0%,rgba(206,24,30,.55) 100%)}
+        #header .site-wrapper{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:32px}
+        .header-overlay{position:relative;z-index:2}
+
+        /* Navbar */
+        .nav-bar{width:100%;background:#000;box-shadow:0 2px 12px rgba(0,0,0,.2);position:sticky;top:0;z-index:40}
+        .nav-bar .nav-inner{display:flex;align-items:center;justify-content:space-between}
+        .nav-bar .nav-brand{color:#fff;font-weight:700;font-size:18px;letter-spacing:.5px;padding:12px 8px;display:flex;align-items:center;gap:8px}
+        .nav-bar .nav-brand span{color:#ce181e}
+        .nav-bar ul{list-style:none;margin:0;padding:0;display:flex;align-items:center}
+        .nav-bar ul li a{display:block;padding:12px 16px;font-size:14px;font-weight:500;color:rgba(255,255,255,.65);text-decoration:none;transition:all .25s ease}
+        .nav-bar ul li a:hover{color:#fff}
+        .nav-bar ul li a.active{color:#fff;font-weight:600;background:linear-gradient(180deg,rgba(206,24,30,.15),rgba(206,24,30,.05));border-bottom:2px solid #ce181e}
+        .nav-toggle{display:none;cursor:pointer;color:rgba(255,255,255,.95);padding:10px 12px;font-size:18px;border:1px solid rgba(255,255,255,.12);border-radius:8px;background:rgba(255,255,255,.04)}
+
+        /* Layout primitives */
+        .site-wrapper{max-width:1320px;margin:0 auto;padding:0 16px;width:100%}
+        .flex-1{flex:1}
+        .text-white{color:#fff}
+        .text-brand{color:#ce181e}
+        .text-gray-300{color:#d1d5db}
+        .text-sm{font-size:.875rem;line-height:1.25rem}
+        .text-base{font-size:1rem;line-height:1.5rem}
+        .text-3xl{font-size:1.875rem;line-height:2.25rem}
+        .text-xs{font-size:.75rem;line-height:1rem}
+        .font-bold{font-weight:700}
+        .mb-2{margin-bottom:.5rem}
+        .mr-1{margin-right:.25rem}
+        .hidden{display:none}
+        .md\:flex{display:none}
+        .md\:text-4xl{font-size:1.875rem;line-height:2.25rem}
+        .md\:text-base{font-size:1rem;line-height:1.5rem}
+
+        /* Responsive: Tablet & below */
+        @media(max-width:1024px){
+            .nav-bar ul{display:none;flex-direction:column;width:100%;background:#111;border-top:1px solid rgba(255,255,255,.08);margin-top:8px;border-radius:10px;overflow:hidden}
+            .nav-bar ul.open{display:flex}
+            .nav-toggle{display:block}
+            .nav-bar ul li{width:100%}
+            .nav-bar ul li a{display:flex;align-items:center;gap:6px;border-bottom:1px solid rgba(255,255,255,.06);color:rgba(255,255,255,.88)}
+            .nav-bar ul li:last-child a{border-bottom:0}
+            .nav-bar ul li a.active{color:#fff;background:rgba(206,24,30,.08);border-left:3px solid #ce181e;padding-left:13px}
+            #header{height:180px}
+        }
+        @media(max-width:767px){.site-wrapper{padding:0 12px}.nav-bar .nav-brand{font-size:14px}}
+        @media(min-width:768px){.md\:flex{display:flex}.md\:text-4xl{font-size:2.25rem;line-height:2.5rem}.md\:text-base{font-size:1rem;line-height:1.5rem}}
+    </style>
 
     @php
     $gaId = \Illuminate\Support\Facades\Cache::remember('setting_google_analytics_id', 3600, fn() => \App\Models\Setting::where('key', 'google_analytics_id')->value('value'));
     $waPhone = \Illuminate\Support\Facades\Cache::remember('setting_site_whatsapp', 3600, fn() => \App\Models\Setting::where('key', 'site_whatsapp')->value('value')) ?? '081999900900';
-    $recaptchaSiteKey = config('recaptcha.site_key') ?: (\Illuminate\Support\Facades\Cache::remember('setting_recaptcha_site_key', 3600, fn() => \App\Models\Setting::where('key', 'recaptcha_site_key')->value('value')) ?? '');
     @endphp
 
-    @if($recaptchaSiteKey)
-    <script defer src="https://www.google.com/recaptcha/api.js?render={{ $recaptchaSiteKey }}"></script>
+    {{-- In dev mode: use @vite for HMR. In production: defer CSS for non-render-blocking. --}}
+    @if(app()->isLocal())
+        @vite(['resources/css/app.css', 'resources/css/fa-subset.css', 'resources/css/fonts.css'])
+    @else
+        @php
+            $manifestPath = public_path('build/manifest.json');
+            $appManifest = file_exists($manifestPath) ? json_decode(file_get_contents($manifestPath), true) : [];
+            $cssApp = $appManifest['resources/css/app.css']['file'] ?? '';
+            $cssFa = $appManifest['resources/css/fa-subset.css']['file'] ?? '';
+            $cssFonts = $appManifest['resources/css/fonts.css']['file'] ?? '';
+        @endphp
+        @if($cssApp)
+        <link rel="preload" href="/build/{{ $cssApp }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/build/{{ $cssApp }}"></noscript>
+        @endif
+        @if($cssFonts)
+        <link rel="preload" href="/build/{{ $cssFonts }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/build/{{ $cssFonts }}"></noscript>
+        @endif
+        @if($cssFa)
+        <link rel="preload" href="/build/{{ $cssFa }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/build/{{ $cssFa }}"></noscript>
+        @endif
     @endif
 
     @stack('styles')
@@ -81,11 +158,11 @@
             <img src="/images/header-banner.png" alt="Utero Advertising" width="1320" height="320" fetchpriority="high" decoding="async" class="header-bg-img">
         </picture>
         <div class="site-wrapper">
-            <div class="header-overlay">
-                <h1 class="text-white text-3xl md:text-4xl font-bold mb-2" style="text-shadow: 0 2px 8px rgba(0,0,0,0.5);">
+            <div class="header-overlay" style="position:relative;z-index:2">
+                <h1 class="text-white text-3xl md:text-4xl font-bold mb-2" style="text-shadow:0 2px 8px rgba(0,0,0,.5)">
                     UTERO <span class="text-brand">ADVERTISING</span>
                 </h1>
-                <p class="text-gray-300 text-sm md:text-base" style="text-shadow: 0 1px 4px rgba(0,0,0,0.5);">
+                <p class="text-gray-300 text-sm md:text-base" style="text-shadow:0 1px 4px rgba(0,0,0,.5)">
                     Idea And Concept Factory — Advertising, Digital Printing & Creative Agency
                 </p>
             </div>
@@ -97,13 +174,13 @@
     <div class="nav-bar">
         <div class="site-wrapper">
             <div class="nav-inner" x-data="{ open: false }">
-                <div class="nav-brand hidden md:flex items-center gap-2">
-                    <img src="{{ asset('images/LOGO UTERO-01.png') }}" alt="Utero Logo" class="h-8 w-auto" loading="eager">
+                <div class="nav-brand">
+                    <img src="{{ asset('images/LOGO UTERO-01.png') }}" alt="Utero Logo" style="height:32px;width:auto" loading="eager" width="96" height="32">
                     <span>UTERO ADVERTISING</span>
                 </div>
 
-                <button class="nav-toggle md:hidden" @click="open = !open" :aria-expanded="open.toString()" aria-label="Toggle navigation menu">
-                    <i :class="open ? 'fas fa-times' : 'fas fa-bars'" class="text-white"></i>
+                <button class="nav-toggle" @click="open = !open" :aria-expanded="open.toString()" aria-label="Toggle navigation menu">
+                    <i :class="open ? 'fas fa-times' : 'fas fa-bars'" style="color:#fff"></i>
                 </button>
 
                 <ul :class="open ? 'open' : ''" class="md:flex">
@@ -151,11 +228,11 @@
                     @endforeach
                     @auth
                     <li>
-                        <span class="flex items-center gap-2 px-4 py-3 text-sm font-medium" style="color: rgba(255, 255, 255, 0.65);">
+                        <span style="display:flex;align-items:center;gap:8px;padding:12px 16px;font-size:14px;font-weight:500;color:rgba(255,255,255,.65)">
                             <i class="fas fa-user-circle text-xs"></i>{{ Auth::user()->name }}
                             <form method="POST" action="{{ route('logout') }}" class="inline">
                                 @csrf
-                                <button type="submit" class="text-xs px-2 py-1 rounded transition-colors cursor-pointer hover:text-white" style="color: rgba(255, 255, 255, 0.65); background: none; border: none;" title="Logout">
+                                <button type="submit" style="font-size:12px;padding:4px 8px;border-radius:4px;cursor:pointer;color:rgba(255,255,255,.65);background:none;border:none" title="Logout">
                                     <i class="fas fa-sign-out-alt"></i> Logout
                                 </button>
                             </form>
@@ -194,83 +271,7 @@
     </div>
 
     {{-- FOOTER --}}
-    <div class="footer-area">
-        <div class="site-wrapper py-16">
-            <div class="footer-grid">
-                {{-- Kolom 1: Who We Are --}}
-                <div class="footer-col">
-                    <div class="footer-label"><i class="fas fa-building mr-2"></i>Who We Are?</div>
-                    <div class="footer-text mb-4">
-                        Suatu perusahaan yang bergerak dalam bidang jasa dan produk periklanan,
-                        idea dan concept yang konsisten dalam membantu para kliennya untuk
-                        mewujudkan nilai-nilai penjualan yang maksimal.
-                        <a href="{{ route('pages.show', 'tentang-kami') }}" title="About Us" class="block mt-2">read more <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="flex gap-3 items-center">
-                        <a href="https://www.tiktok.com/@uteroindonesia" target="_blank" rel="noopener noreferrer" title="TikTok" class="social-icon"><i class="fab fa-tiktok"></i></a>
-                        <a href="https://www.youtube.com/channel/UCkdJC5Tw0bk0xK9sUR80xnA" target="_blank" rel="noopener noreferrer" title="YouTube" class="social-icon"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.youtube.com/channel/UC--Vge6YlX1y65HqjqYP8uQ" target="_blank" rel="noopener noreferrer" title="YouTube 2" class="social-icon"><i class="fab fa-youtube"></i></a>
-                        <a href="https://x.com/uteroindonesia" target="_blank" rel="noopener noreferrer" title="X (Twitter)" class="social-icon"><i class="fab fa-x-twitter"></i></a>
-                        <a href="https://www.instagram.com/uteroindonesia" target="_blank" rel="noopener noreferrer" title="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.facebook.com/uteroadvertisingindonesia" target="_blank" rel="noopener noreferrer" title="Facebook" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-                    </div>
-                </div>
-
-                {{-- Kolom 2: Lokasi Kami --}}
-                <div class="footer-col">
-                    <div class="footer-label"><i class="fas fa-map-marker-alt mr-2"></i>Lokasi Kami</div>
-                    <div class="rounded-lg overflow-hidden mb-4 border border-white/10">
-                        <iframe loading="lazy" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126438.2886993069!2d112.6317828409092!3d-7.9786290600267975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd629c5e8a20281%3A0x3ff201ddaa440c96!2sPT%20UTERO%20KREATIF%20INDONESIA!5e0!3m2!1sen!2sid!4v1696298771980!5m2!1sen!2sid" width="100%" height="180" frameborder="0" style="border:0; border-radius:8px;" allowfullscreen title="Lokasi Utero Advertising"></iframe>
-                    </div>
-                </div>
-
-                {{-- Kolom 3: Testimonial --}}
-                <div class="footer-col">
-                    <div class="footer-label"><i class="fas fa-quote-left mr-2"></i>Testimonial <a href="{{ route('testimonials.index') }}" class="text-xs">Read More <i class="fas fa-arrow-right"></i></a></div>
-                    @php
-                    $randomTestimonial = \Illuminate\Support\Facades\Cache::remember('random_approved_testimonial', 3600, fn() => \App\Models\Testimonial::where('status', 'approved')->inRandomOrder()->first());
-                    @endphp
-                    @if($randomTestimonial)
-                    <div class="testimonial-card" style="border-left-color: #ce181e;">
-                        <div class="testimonial-text">{{ ucfirst($randomTestimonial->content) }}</div>
-                        <div class="testimonial-stars" aria-label="Rating {{ $randomTestimonial->rating }} dari 5">
-                            @for($i = 1; $i <= 5; $i++)
-                                <span class="testimonial-star {{ $i <= $randomTestimonial->rating ? 'is-filled' : 'is-empty' }}" aria-hidden="true">&#9733;</span>
-                            @endfor
-                        </div>
-                        <div class="testimonial-info">From: {{ $randomTestimonial->name }} &rarr; {{ $randomTestimonial->created_at->format('M d, Y') }}</div>
-                    </div>
-                    @else
-                    <p class="text-gray-400 text-sm">Belum ada testimonial.</p>
-                    @endif
-                </div>
-
-                {{-- Kolom 4: Contact Us --}}
-                <div class="footer-col">
-                    <div class="footer-label"><i class="fas fa-phone mr-2"></i>Contact Us</div>
-                    <div class="footer-text">
-                        <p class="font-semibold text-white mb-1">PT. UTERO KREATIF INDONESIA</p>
-                        <p class="text-xs text-gray-400 mb-3">RUMAH MERAH OXYZ</p>
-                        <div class="space-y-2 text-sm">
-                            <p><i class="fas fa-map-pin mr-2 text-brand"></i>Jl. Bantaran 1 No. 25, Tulusrejo, Lowokwaru, Malang 65141</p>
-                            <p><i class="fas fa-phone mr-2 text-brand"></i>0341 408408</p>
-                            <p><i class="fab fa-whatsapp mr-2 text-brand"></i>+62 819-9990-0900 (Pak Dadik)<br>
-                                <!-- <span class="ml-5">+62 817-3886-1688 (utero)</span> -->
-                            </p>
-                            <p><i class="fas fa-envelope mr-2 text-brand"></i>marketingutero@gmail.com</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer-copyright">
-            <div class="site-wrapper flex justify-between items-center">
-                <span>&copy; 2009-{{ date('Y') }} uterogroup.com, All Right Reserved</span>
-                <span class="text-gray-400 text-xs">Idea And Concept Factory</span>
-            </div>
-        </div>
-    </div>
+    @include('layouts.partials._footer')
 
     {{-- WHATSAPP BUTTON --}}
     @php
@@ -283,31 +284,46 @@
     {{-- FLASH MESSAGES --}}
     @if(session('success'))
     <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition
-        class="fixed top-4 right-4 z-50 bg-green-50 border border-green-200 text-green-700 px-5 py-3 rounded-card shadow-lg text-sm font-medium">
+        style="position:fixed;top:16px;right:16px;z-index:50;background:#f0fdf4;border:1px solid #bbf7d0;color:#15803d;padding:12px 20px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1);font-size:14px;font-weight:500">
         <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
     </div>
     @endif
 
     @if(session('error'))
     <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition
-        class="fixed top-4 right-4 z-50 bg-red-50 border border-red-200 text-red-700 px-5 py-3 rounded-card shadow-lg text-sm font-medium">
+        style="position:fixed;top:16px;right:16px;z-index:50;background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;padding:12px 20px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.1);font-size:14px;font-weight:500">
         <i class="fas fa-exclamation-circle mr-2"></i>{{ session('error') }}
     </div>
     @endif
 
-    {{-- Alpine.js loaded deferred for non-blocking --}}
-    @vite(['resources/js/app.js'])
+    {{-- Alpine.js - deferred --}}
+    @if(app()->isLocal())
+        @vite(['resources/js/app.js'])
+    @else
+        @if(!empty($appManifest['resources/js/app.js']['file']))
+        <script defer src="/build/{{ $appManifest['resources/js/app.js']['file'] }}"></script>
+        @endif
+    @endif
 
     @stack('scripts')
 
-    {{-- Google Analytics - moved to end of body for non-render-blocking --}}
+    {{-- Google Analytics - lazy load after page idle (requestIdleCallback) --}}
     @if($gaId)
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ $gaId }}"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', '{{ $gaId }}');
+    (function(){
+        function loadGA(){
+            var s=document.createElement('script');
+            s.async=true;
+            s.src='https://www.googletagmanager.com/gtag/js?id={{ $gaId }}';
+            document.head.appendChild(s);
+            window.dataLayer=window.dataLayer||[];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js',new Date());
+            gtag('config','{{ $gaId }}');
+        }
+        if('requestIdleCallback' in window){requestIdleCallback(loadGA,{timeout:5000})}
+        else{setTimeout(loadGA,200)}
+    })();
     </script>
     @endif
 </body>

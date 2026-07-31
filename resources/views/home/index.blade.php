@@ -88,7 +88,7 @@
                                 <img src="{{ $img->url }}" alt="{{ $product->name }}" width="400" height="180" loading="lazy" decoding="async">
                             </picture>
                         @else
-                            <div class="bg-gray-100 h-44 flex items-center justify-center text-gray-400 text-sm">
+                            <div class="bg-gray-100 h-44 flex items-center justify-center text-gray-400 text-sm" role="img" aria-label="No Image">
                                 <i class="fas fa-image mr-2"></i>No Image
                             </div>
                         @endif
@@ -104,13 +104,6 @@
             <a href="{{ route('products.index') }}" title="All Product">Lihat Semua Produk &raquo;</a>
         </div>
     </div>
-
-    {{-- Wide Banner --}}
-    <!-- <div class="mt-4 rounded-card overflow-hidden shadow-card">
-        <a href="{{ route('contact.index') }}" title="Hubungi Kami">
-            <img src="{{ asset('images/more-wide-banner.png') }}" alt="Utero Advertising - Solusi Periklanan" class="w-full h-auto" loading="lazy">
-        </a>
-    </div> -->
 </div>
 @endsection
 
@@ -139,7 +132,7 @@
             @foreach($advertisements as $ad)
                 <a href="{{ $ad->link ?? '#' }}" title="{{ $ad->title }}" target="_blank" rel="noopener noreferrer" class="ad-item block">
                     @if($ad->image)
-                        <img src="{{ asset('storage/' . $ad->image) }}" alt="{{ $ad->title }}" loading="lazy">
+                        <img src="{{ asset('storage/' . $ad->image) }}" alt="{{ $ad->title }}" loading="lazy" width="280" height="140">
                     @else
                         <div class="ad-fallback">
                             <div class="ad-fallback-title">{{ $ad->title }}</div>

@@ -1,10 +1,10 @@
-/* Self-hosted Poppins fonts - eliminate external DNS lookup */
+/* Self-hosted Poppins fonts - WOFF2 format for optimal compression */
 @font-face {
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 400;
     font-display: swap;
-    src: url('/fonts/poppins/pxiEyp8kv8JHgFVrFJA.ttf') format('truetype');
+    src: url('/fonts/poppins/pxiEyp8kv8JHgFVrJJfecg.woff2') format('woff2');
 }
 
 @font-face {
@@ -12,7 +12,7 @@
     font-style: normal;
     font-weight: 500;
     font-display: swap;
-    src: url('/fonts/poppins/pxiByp8kv8JHgFVrLGT9V1s.ttf') format('truetype');
+    src: url('/fonts/poppins/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2') format('woff2');
 }
 
 @font-face {
@@ -20,5 +20,5 @@
     font-style: normal;
     font-weight: 600;
     font-display: swap;
-    src: url('/fonts/poppins/pxiByp8kv8JHgFVrLEj6V1s.ttf') format('truetype');
+    src: url('/fonts/poppins/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2') format('woff2');
 }

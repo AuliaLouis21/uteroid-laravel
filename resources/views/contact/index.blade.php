@@ -82,6 +82,7 @@
 @push('scripts')
 @php $recaptchaSiteKey = config('recaptcha.site_key'); @endphp
 @if($recaptchaSiteKey)
+<script src="https://www.google.com/recaptcha/api.js?render={{ $recaptchaSiteKey }}" async></script>
 <script>
 document.querySelector('form[action="{{ route('contact.send') }}"]').addEventListener('submit', function(e) {
     e.preventDefault();

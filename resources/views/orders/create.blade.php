@@ -136,6 +136,7 @@ function orderForm() {
 </script>
 @php $recaptchaSiteKey = config('recaptcha.site_key'); @endphp
 @if($recaptchaSiteKey)
+<script src="https://www.google.com/recaptcha/api.js?render={{ $recaptchaSiteKey }}" async></script>
 <script>
 var orderStoreUrl = @json(route('order.store'));
 document.querySelector('form[action="' + orderStoreUrl + '"]').addEventListener('submit', function(e) {

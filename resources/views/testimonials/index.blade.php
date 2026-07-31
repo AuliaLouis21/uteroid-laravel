@@ -144,6 +144,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 @if($recaptchaSiteKey)
+<script src="https://www.google.com/recaptcha/api.js?render={{ $recaptchaSiteKey }}" async></script>
 <script>
 const testimonialForm = document.querySelector("form[action='{{ route('testimonials.store') }}']");
 
