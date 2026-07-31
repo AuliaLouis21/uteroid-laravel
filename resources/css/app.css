@@ -1140,6 +1140,8 @@
     contain: layout style;
 }
 
+/* ===== MOBILE PERFORMANCE OPTIMIZATIONS ===== */
+
 /* Disable hover effects on touch devices to reduce repaints */
 @media (hover: none) and (pointer: coarse) {
     .product-grid-item:hover,
@@ -1171,5 +1173,76 @@
 
     .nav-bar ul li a:hover::after {
         width: 0;
+    }
+}
+
+/* Mobile: content-visibility for below-the-fold grid items */
+@media (max-width: 767px) {
+    .product-grid-item,
+    .gallery-item,
+    .video-item {
+        content-visibility: auto;
+        contain-intrinsic-size: auto 280px;
+    }
+
+    .news-item {
+        content-visibility: auto;
+        contain-intrinsic-size: auto 80px;
+    }
+
+    .category-list li {
+        content-visibility: auto;
+        contain-intrinsic-size: auto 44px;
+    }
+
+    /* Reduce GPU compositing layers on mobile */
+    .promo-slide,
+    .promo-slide-meta,
+    #header .header-bg-img {
+        will-change: auto;
+    }
+
+    /* Disable transitions on mobile to reduce main thread work */
+    .sidebar-card,
+    .news-card,
+    .content-card,
+    .gallery-item,
+    .video-item,
+    .testimonial-card,
+    .ad-item img,
+    .ad-item:hover img {
+        transition: none !important;
+    }
+
+    /* Reduce paint complexity */
+    .sidebar-card,
+    .news-card,
+    .content-card {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+    }
+
+    /* Simplify gradients on mobile */
+    .card-header {
+        background: #000 !important;
+    }
+
+    /* Faster animations (reduce repaint duration) */
+    .animate-fade-in-up {
+        animation-duration: 0.3s;
+    }
+
+    .animate-fade-in {
+        animation-duration: 0.2s;
+    }
+}
+
+/* Reduce motion for accessibility and mobile battery saving */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
     }
 }

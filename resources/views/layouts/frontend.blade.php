@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#000000">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="description" content="@yield('meta_description', 'Utero Advertising — Advertising, Digital Printing & Creative Agency di Malang, Jawa Timur. Solusi periklanan, cetak, dan desain kreatif untuk bisnis Anda.')">
     <meta name="keywords" content="@yield('meta_keywords', 'advertising malang, perusahaan advertising, utero advertising, printing, digital printing, creative agency, desain grafis, malang')">
     <meta name="robots" content="Index, Follow">
@@ -41,10 +44,20 @@
     <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2" crossorigin>
     <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins/pxiByp8kv8JHgFVrLEj6Z1xlFQ.woff2" crossorigin>
 
-    {{-- Preload Font Awesome fonts (293KB total - critical for above-the-fold icons) --}}
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/fa-solid-900.woff2" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/fa-brands-400.woff2" crossorigin>
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/fa-regular-400.woff2" crossorigin>
+    {{-- Font Awesome fonts: let them load naturally on mobile, preload on desktop via JS --}}
+    <script>
+        (function(){
+            var isMobile='ontouchstart' in window||navigator.maxTouchPoints>0;
+            if(!isMobile){
+                var fonts=['fa-solid-900','fa-brands-400','fa-regular-400'];
+                fonts.forEach(function(f){
+                    var l=document.createElement('link');
+                    l.rel='preload';l.as='font';l.type='font/woff2';l.href='/fonts/'+f+'.woff2';l.crossOrigin='anonymous';
+                    document.head.appendChild(l);
+                });
+            }
+        })();
+    </script>
 
     {{-- Inline FA @font-face so icons render immediately with above-the-fold content --}}
     <style>
@@ -155,7 +168,8 @@
     <div id="header">
         <picture>
             <source srcset="/images/header-banner.webp" type="image/webp">
-            <img src="/images/header-banner.png" alt="Utero Advertising" width="1320" height="320" fetchpriority="high" decoding="async" class="header-bg-img">
+            <img src="/images/header-banner.png" alt="Utero Advertising" width="1320" height="320" fetchpriority="high" decoding="async" class="header-bg-img"
+                 sizes="(max-width: 767px) 100vw, (max-width: 1024px) 100vw, 1320px">
         </picture>
         <div class="site-wrapper">
             <div class="header-overlay" style="position:relative;z-index:2">

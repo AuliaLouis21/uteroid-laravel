@@ -23,8 +23,10 @@
             {{-- Kolom 2: Lokasi Kami --}}
             <div class="footer-col">
                 <div class="footer-label"><i class="fas fa-map-marker-alt mr-2"></i>Lokasi Kami</div>
-                <div style="border-radius:8px;overflow:hidden;margin-bottom:16px;border:1px solid rgba(255,255,255,.1)">
-                    <iframe loading="lazy" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126438.2886993069!2d112.6317828409092!3d-7.9786290600267975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd629c5e8a20281%3A0x3ff201ddaa440c96!2sPT%20UTERO%20KREATIF%20INDONESIA!5e0!3m2!1sen!2sid!4v1696298771980!5m2!1sen!2sid" width="100%" height="180" style="border:0;border-radius:8px" allowfullscreen title="Lokasi Utero Advertising"></iframe>
+                <div id="map-container" style="border-radius:8px;overflow:hidden;margin-bottom:16px;border:1px solid rgba(255,255,255,.1)" data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126438.2886993069!2d112.6317828409092!3d-7.9786290600267975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd629c5e8a20281%3A0x3ff201ddaa440c96!2sPT%20UTERO%20KREATIF%20INDONESIA!5e0!3m2!1sen!2sid!4v1696298771980!5m2!1sen!2sid">
+                    
+                        <iframe loading="lazy" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126438.2886993069!2d112.6317828409092!3d-7.9786290600267975!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd629c5e8a20281%3A0x3ff201ddaa440c96!2sPT%20UTERO%20KREATIF%20INDONESIA!5e0!3m2!1sen!2sid!4v1696298771980!5m2!1sen!2sid" width="100%" height="180" style="border:0;border-radius:8px" allowfullscreen title="Lokasi Utero Advertising"></iframe>
+                    
                 </div>
             </div>
 
@@ -73,3 +75,28 @@
         </div>
     </div>
 </div>
+
+<script>
+(function(){
+    var mc=document.getElementById('map-container');
+    if(!mc)return;
+    var obs=new IntersectionObserver(function(entries){
+        if(entries[0].isIntersecting){
+            var src=mc.getAttribute('data-src');
+            if(src){
+                var iframe=document.createElement('iframe');
+                iframe.src=src;
+                iframe.width='100%';
+                iframe.height='180';
+                iframe.style.cssText='border:0;border-radius:8px';
+                iframe.allowFullscreen=true;
+                iframe.title='Lokasi Utero Advertising';
+                mc.innerHTML='';
+                mc.appendChild(iframe);
+            }
+            obs.disconnect();
+        }
+    },{rootMargin:'200px'});
+    obs.observe(mc);
+})();
+</script>

@@ -85,7 +85,8 @@
                             @php $img = $product->images->first(); @endphp
                             <picture>
                                 <source srcset="{{ $img->webp_url }}" type="image/webp">
-                                <img src="{{ $img->url }}" alt="{{ $product->name }}" width="400" height="180" loading="lazy" decoding="async">
+                                <img src="{{ $img->url }}" alt="{{ $product->name }}" width="400" height="180" loading="lazy" decoding="async"
+                                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw">
                             </picture>
                         @else
                             <div class="bg-gray-100 h-44 flex items-center justify-center text-gray-400 text-sm" role="img" aria-label="No Image">
@@ -132,7 +133,8 @@
             @foreach($advertisements as $ad)
                 <a href="{{ $ad->link ?? '#' }}" title="{{ $ad->title }}" target="_blank" rel="noopener noreferrer" class="ad-item block">
                     @if($ad->image)
-                        <img src="{{ asset('storage/' . $ad->image) }}" alt="{{ $ad->title }}" loading="lazy" width="280" height="140">
+                        <img src="{{ asset('storage/' . $ad->image) }}" alt="{{ $ad->title }}" loading="lazy" width="280" height="140"
+                             sizes="(max-width: 767px) 100vw, 280px">
                     @else
                         <div class="ad-fallback">
                             <div class="ad-fallback-title">{{ $ad->title }}</div>
@@ -153,14 +155,17 @@
 <script>
 function slider() {
     const promoProducts = JSON.parse(document.getElementById('promo-products-data').textContent);
+    var isMobile = window.innerWidth < 768;
 
     return {
         products: promoProducts,
         current: 0,
         init() {
+            /* Mobile: slower interval (6s) to reduce CPU/GPU work */
+            var interval = isMobile ? 6000 : 4000;
             setInterval(() => {
                 this.current = (this.current + 1) % this.products.length;
-            }, 4000);
+            }, interval);
         },
         imgStyle(product) {
             var src = null;

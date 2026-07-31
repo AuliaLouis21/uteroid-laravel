@@ -18,7 +18,7 @@
                 <div class="gallery-item">
                     <div class="img">
                         @if($album->photos->count())
-                            <img src="{{ asset('storage/' . $album->photos->first()->filename) }}" alt="{{ $album->name }}" loading="lazy">
+                            <img src="{{ asset('storage/' . $album->photos->first()->filename) }}" alt="{{ $album->name }}" loading="lazy" width="280" height="200" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw">
                         @else
                             <div class="flex items-center justify-center text-gray-400 h-full">
                                 <i class="fas fa-images text-3xl"></i>
@@ -46,7 +46,7 @@
                 <div class="video-item">
                     <div class="img">
                         @if($video->youtube_id)
-                            <img src="https://img.youtube.com/vi/{{ $video->youtube_id }}/1.jpg" alt="{{ $video->title }}" loading="lazy">
+                            <img src="https://img.youtube.com/vi/{{ $video->youtube_id }}/1.jpg" alt="{{ $video->title }}" loading="lazy" width="280" height="200" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw">
                         @else
                             <div class="flex items-center justify-center text-gray-400 h-full">
                                 <i class="fas fa-play-circle text-3xl"></i>
