@@ -48,20 +48,20 @@ class OrderController extends Controller
                     }
                 }
 
-                $lengthCm = isset($item['length_cm']) ? (float) $item['length_cm'] : 0;
-                $widthCm = isset($item['width_cm']) ? (float) $item['width_cm'] : 0;
-                $area = $this->calculateArea($lengthCm, $widthCm, $sizeUnit);
+                // Area-based pricing
+                $area = isset($item['area']) ? (float) $item['area'] : 0;
+                $quantity = isset($item['quantity']) ? (int) $item['quantity'] : 1;
+                $unitTotal = $unitPrice * $area;
+                $totalPrice = $unitTotal * $quantity;
 
                 $order->items()->create([
                     'product_id' => $item['product_id'] ?? null,
                     'product_name' => $productName,
-                    'quantity' => $item['quantity'],
-                    'length_cm' => $lengthCm > 0 ? $lengthCm : null,
-                    'width_cm' => $widthCm > 0 ? $widthCm : null,
-                    'area' => $area,
+                    'quantity' => $quantity,
+                    'area' => $area > 0 ? $area : null,
                     'size_unit' => $sizeUnit,
                     'unit_price' => $unitPrice,
-                    'total_price' => $unitPrice * $item['quantity'],
+                    'total_price' => $totalPrice,
                 ]);
             }
 
@@ -75,16 +75,5 @@ class OrderController extends Controller
 
         return redirect()->route('order.create')
             ->with('success', 'Pesanan berhasil dikirim! Kami akan segera menghubungi Anda.');
-    }
-
-    protected function calculateArea(float $lengthCm, float $widthCm, ?string $sizeUnit): ?float
-    {
-        if ($lengthCm <= 0 || $widthCm <= 0 || !in_array($sizeUnit, ['m2', 'cm2'], true)) {
-            return null;
-        }
-
-        return $sizeUnit === 'm2'
-            ? ($lengthCm * $widthCm) / 10000
-            : $lengthCm * $widthCm;
     }
 }

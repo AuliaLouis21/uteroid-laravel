@@ -66,6 +66,13 @@
                         </div>
                     </div>
                 </template>
+                {{-- Pause/Play Button --}}
+                <button @click="togglePause()" type="button"
+                        class="absolute bottom-3 right-3 z-10 w-8 h-8 flex items-center justify-center rounded-full bg-black/50 hover:bg-black/70 text-white transition-colors"
+                        :title="paused ? 'Play slideshow' : 'Pause slideshow'">
+                    <i x-show="!paused" class="fas fa-pause text-xs"></i>
+                    <i x-show="paused" class="fas fa-play text-xs"></i>
+                </button>
             </div>
         @else
             <div class="promo-slide flex items-center justify-center text-gray-400">
@@ -160,12 +167,18 @@ function slider() {
     return {
         products: promoProducts,
         current: 0,
+        paused: false,
         init() {
             /* Mobile: slower interval (6s) to reduce CPU/GPU work */
             var interval = isMobile ? 6000 : 4000;
             setInterval(() => {
-                this.current = (this.current + 1) % this.products.length;
+                if (!this.paused) {
+                    this.current = (this.current + 1) % this.products.length;
+                }
             }, interval);
+        },
+        togglePause() {
+            this.paused = !this.paused;
         },
         imgStyle(product) {
             var src = null;

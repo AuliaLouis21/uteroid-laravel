@@ -29,23 +29,10 @@ class OrderRequest extends FormRequest
             'items' => ['required', 'array', 'min:1'],
             'items.*.product_id' => ['nullable', 'exists:products,id'],
             'items.*.product_name' => ['required', 'string', 'max:255'],
-            'items.*.quantity' => ['required', 'integer', 'min:1', function ($attribute, $value, $fail) {
-                if (!preg_match('/items\.(\d+)\.quantity/', $attribute, $m)) {
-                    return;
-                }
-
-                $productId = $this->input("items.{$m[1]}.product_id");
-                if (! $productId) {
-                    return;
-                }
-
-                $product = Product::find($productId);
-                if ($product && $value < $product->min_order) {
-                    $fail("Jumlah order minimal {$product->min_order} untuk {$product->name}.");
-                }
-            }],
-            'items.*.length_cm' => ['nullable', 'numeric', 'min:0'],
-            'items.*.width_cm' => ['nullable', 'numeric', 'min:0'],
+            'items.*.quantity' => ['required', 'integer', 'min:1'],
+            'items.*.area' => ['nullable', 'numeric', 'min:0'],
+            'items.*.unit_total' => ['nullable', 'numeric', 'min:0'],
+            'items.*.total_price' => ['nullable', 'numeric', 'min:0'],
         ];
     }
 }
