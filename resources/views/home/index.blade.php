@@ -61,7 +61,7 @@
                                 <a :href="'/produk/' + product.slug" :title="product.name" x-text="product.name + ' →'"></a>
                             </span>
                             <span class="promo-slide-spec">
-                                Ukuran: <span x-text="product.size || '-'"></span> | Harga: <b x-text="'Rp. ' + formatPrice(product.price) + ',-'"></b>
+                                Ukuran: <span x-text="product.size || '-'"></span> | Harga: <b x-text="'Rp. ' + formatPrice(product.unit_price) + ',-'"></b>
                             </span>
                         </div>
                     </div>
