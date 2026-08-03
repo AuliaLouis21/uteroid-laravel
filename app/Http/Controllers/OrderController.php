@@ -9,16 +9,22 @@ use App\Http\Requests\OrderRequest;
 use App\Mail\OrderReceivedMail;
 use App\Mail\AdminOrderNotificationMail;
 use App\Services\WhatsAppService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    public function create()
+    public function create(Request $request)
     {
         $products = Product::orderBy('name')->get();
+        $preselectedProduct = null;
 
-        return view('orders.create', compact('products'));
+        if ($request->has('product_id')) {
+            $preselectedProduct = Product::find($request->product_id);
+        }
+
+        return view('orders.create', compact('products', 'preselectedProduct'));
     }
 
     public function store(OrderRequest $request, WhatsAppService $whatsapp)

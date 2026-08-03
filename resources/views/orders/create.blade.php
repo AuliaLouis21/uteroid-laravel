@@ -2,6 +2,10 @@
 
 @section('title', 'Pesan Produk | Utero Advertising')
 
+@php
+    $isPreselected = isset($preselectedProduct) && $preselectedProduct;
+@endphp
+
 @section('sidebar-left')
 <div class="sidebar-left">
     <div class="sidebar-card">
@@ -72,61 +76,91 @@
                     <i class="fas fa-box mr-2 text-brand"></i>Produk yang Dipesan
                 </h3>
 
-                <div class="space-y-3">
-                    <template x-for="(item, index) in items" :key="index">
-                        <div class="flex flex-wrap items-end gap-3 bg-white p-4 rounded-lg border border-gray-200">
+                @if($isPreselected)
+                    {{-- Tampilan saat produk dipilih dari halaman produk --}}
+                    <input type="hidden" name="items[0][product_id]" value="{{ $preselectedProduct->id }}">
+                    <input type="hidden" name="items[0][product_name]" value="{{ $preselectedProduct->name }}">
+
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <div class="flex flex-wrap items-end gap-4">
+                            {{-- Produk (locked) --}}
                             <div class="flex-1 min-w-[200px]">
                                 <label class="text-xs font-semibold text-gray-500 mb-1 block">Produk</label>
-                                <select :name="'items[' + index + '][product_id]'" x-model="item.product_id" @change="onProductChange(item)" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:border-brand" required>
-                                    <option value="">Pilih Produk</option>
-                                    @foreach($products as $product)
-                                        <option value="{{ $product->id }}">{{ $product->name }} - Rp. {{ number_format($product->price) }}{{ $product->size_unit === 'm2' ? ' (m²)' : ($product->size_unit === 'cm2' ? ' (Cm²)' : '') }}</option>
-                                    @endforeach
-                                </select>
+                                <div class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm bg-gray-100 text-gray-700">
+                                    {{ $preselectedProduct->name }} - Rp. {{ number_format($preselectedProduct->unit_price) }}
+                                    @if($preselectedProduct->size_unit === 'm2')
+                                        <span class="text-gray-500">(m²)</span>
+                                    @elseif($preselectedProduct->size_unit === 'cm2')
+                                        <span class="text-gray-500">(Cm²)</span>
+                                    @endif
+                                </div>
                             </div>
-                            <input type="hidden" :name="'items[' + index + '][product_name]'" :value="item.product_name" required>
 
-                            {{-- Perhitungan Jumlah Order: luas (hanya jika produk memiliki ukuran) --}}
-                            <template x-if="hasSize(item)">
-                                <div>
-                                    <div class="w-28">
-                                        <label class="text-xs font-semibold text-gray-500 mb-1 block">Panjang (cm)</label>
-                                        <input type="number" :name="'items[' + index + '][length_cm]'" x-model="item.length_cm" min="0" step="0.01" placeholder="cth: 120" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:border-brand">
-                                    </div>
-                                    <div class="w-28 mt-3">
-                                        <label class="text-xs font-semibold text-gray-500 mb-1 block">Lebar (cm)</label>
-                                        <input type="number" :name="'items[' + index + '][width_cm]'" x-model="item.width_cm" min="0" step="0.01" placeholder="cth: 80" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:border-brand">
-                                    </div>
-                                </div>
-                                <div class="w-36">
-                                    <label class="text-xs font-semibold text-gray-500 mb-1 block" x-text="'Jumlah Order (' + unitLabel(item) + ')'">Jumlah Order (m²)</label>
-                                    <div class="px-3 py-2.5 text-sm font-semibold text-brand bg-brand/5 border border-brand/20 rounded-lg" x-text="formatArea(item)">0</div>
-                                </div>
-                            </template>
-
+                            {{-- Total Harga Satuan --}}
                             <div class="w-36">
                                 <label class="text-xs font-semibold text-gray-500 mb-1 block">Total Harga Satuan</label>
-                                <div class="px-3 py-2.5 text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-lg" x-text="formatCurrency(getProductPrice(item.product_id))">Rp. 0</div>
+                                <div class="px-3 py-2.5 text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-lg">
+                                    Rp. {{ number_format($preselectedProduct->unit_price) }}
+                                </div>
                             </div>
-                            <div class="w-24">
-                                <label class="text-xs font-semibold text-gray-500 mb-1 block">Jumlah Order (Quantity)</label>
-                                <input type="number" :name="'items[' + index + '][quantity]'" x-model="item.quantity" :min="getMinOrder(item.product_id)" @change="clampQuantity(item)" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:border-brand" required>
-                                <div class="text-[11px] text-gray-400 mt-1" x-text="'Min: ' + getMinOrder(item.product_id)"></div>
+
+                            {{-- Jumlah Order --}}
+                            <div class="w-28">
+                                <label class="text-xs font-semibold text-gray-500 mb-1 block">Jumlah Order</label>
+                                <input type="number" name="items[0][quantity]" x-model="quantity"
+                                       min="{{ $preselectedProduct->min_order ?? 1 }}" @change="clampQuantity()"
+                                       class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:border-brand" required>
+                                <div class="text-[11px] text-gray-400 mt-1">Min: {{ $preselectedProduct->min_order ?? 1 }}</div>
                             </div>
+
+                            {{-- Total Harga Keseluruhan --}}
                             <div class="w-40">
                                 <label class="text-xs font-semibold text-gray-500 mb-1 block">Total Harga Keseluruhan</label>
-                                <div class="px-3 py-2.5 text-sm font-semibold text-brand bg-brand/5 border border-brand/20 rounded-lg" x-text="formatCurrency(lineTotal(item))">Rp. 0</div>
+                                <div class="px-3 py-2.5 text-sm font-semibold text-brand bg-brand/5 border border-brand/20 rounded-lg" x-text="formatCurrency(lineTotal())">Rp. 0</div>
                             </div>
-                            <button type="button" @click="removeItem(index)" x-show="items.length > 1" class="px-3 py-2.5 text-red-500 hover:text-red-700 text-sm transition-colors">
-                                <i class="fas fa-trash"></i>
-                            </button>
                         </div>
-                    </template>
-                </div>
+                    </div>
 
-                <button type="button" @click="addItem()" class="mt-4 px-4 py-2.5 rounded-lg text-sm font-semibold text-brand bg-brand/10 hover:bg-brand/20 transition-colors">
-                    <i class="fas fa-plus mr-1"></i>Tambah Produk
-                </button>
+                @else
+                    {{-- Tampilan normal (tanpa preselected) --}}
+                    <div class="space-y-3">
+                        <template x-for="(item, index) in items" :key="index">
+                            <div class="flex flex-wrap items-end gap-3 bg-white p-4 rounded-lg border border-gray-200">
+                                <div class="flex-1 min-w-[200px]">
+                                    <label class="text-xs font-semibold text-gray-500 mb-1 block">Produk</label>
+                                    <select :name="'items[' + index + '][product_id]'" x-model="item.product_id" @change="onProductChange(item)" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:border-brand" required>
+                                        <option value="">Pilih Produk</option>
+                                        @foreach($products as $product)
+                                            <option value="{{ $product->id }}">{{ $product->name }} - Rp. {{ number_format($product->price) }}{{ $product->size_unit === 'm2' ? ' (m²)' : ($product->size_unit === 'cm2' ? ' (Cm²)' : '') }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <input type="hidden" :name="'items[' + index + '][product_name]'" :value="item.product_name" required>
+
+                                <div class="w-36">
+                                    <label class="text-xs font-semibold text-gray-500 mb-1 block">Total Harga Satuan</label>
+                                    <div class="px-3 py-2.5 text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-lg" x-text="formatCurrency(getProductPrice(item.product_id))">Rp. 0</div>
+                                </div>
+                                <div class="w-28">
+                                    <label class="text-xs font-semibold text-gray-500 mb-1 block">Jumlah Order</label>
+                                    <input type="number" :name="'items[' + index + '][quantity]'" x-model="item.quantity" :min="getMinOrder(item.product_id)" @change="clampQuantity(item)" class="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:border-brand" required>
+                                    <div class="text-[11px] text-gray-400 mt-1" x-text="'Min: ' + getMinOrder(item.product_id)"></div>
+                                </div>
+                                <div class="w-40">
+                                    <label class="text-xs font-semibold text-gray-500 mb-1 block">Total Harga Keseluruhan</label>
+                                    <div class="px-3 py-2.5 text-sm font-semibold text-brand bg-brand/5 border border-brand/20 rounded-lg" x-text="formatCurrency(lineTotalItem(item))">Rp. 0</div>
+                                </div>
+                                <button type="button" @click="removeItem(index)" x-show="items.length > 1" class="px-3 py-2.5 text-red-500 hover:text-red-700 text-sm transition-colors">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </template>
+                    </div>
+
+                    <button type="button" @click="addItem()" class="mt-4 px-4 py-2.5 rounded-lg text-sm font-semibold text-brand bg-brand/10 hover:bg-brand/20 transition-colors">
+                        <i class="fas fa-plus mr-1"></i>Tambah Produk
+                    </button>
+                @endif
             </div>
 
             {{-- Submit --}}
@@ -158,11 +192,6 @@ var productPrices = {
         {{ $p->id }}: {{ (float) $p->unit_price }}{{ $loop->last ? '' : ',' }}
     @endforeach
 };
-var productSizeUnits = {
-    @foreach($products as $p)
-        {{ $p->id }}: @json($p->size_unit){{ $loop->last ? '' : ',' }}
-    @endforeach
-};
 var productMinOrders = {
     @foreach($products as $p)
         {{ $p->id }}: {{ (int) $p->min_order }}{{ $loop->last ? '' : ',' }}
@@ -170,29 +199,35 @@ var productMinOrders = {
 };
 function orderForm() {
     return {
-        items: [{ product_id: '', product_name: '', quantity: 1, length_cm: '', width_cm: '' }],
+        @if($isPreselected)
+        quantity: {{ $preselectedProduct->min_order ?? 1 }},
+        preselectedPrice: {{ (float) $preselectedProduct->unit_price }},
+        preselectedMinOrder: {{ (int) ($preselectedProduct->min_order ?? 1) }},
+        clampQuantity() {
+            var q = parseInt(this.quantity, 10);
+            if (!q || q < this.preselectedMinOrder) {
+                this.quantity = this.preselectedMinOrder;
+            }
+        },
+        lineTotal() {
+            return this.preselectedPrice * (parseInt(this.quantity) || 0);
+        },
+        grandTotal() {
+            return this.lineTotal();
+        },
+        @else
+        items: [{ product_id: '', product_name: '', quantity: 1 }],
         getProductName(id) {
             return productMap[id] || '';
         },
         getProductPrice(id) {
             return productPrices[id] || 0;
         },
-        getSizeUnit(id) {
-            return productSizeUnits[id] || null;
-        },
         getMinOrder(id) {
             return productMinOrders[id] || 1;
         },
-        hasSize(item) {
-            return !!this.getSizeUnit(item.product_id);
-        },
-        unitLabel(item) {
-            return this.getSizeUnit(item.product_id) === 'm2' ? 'm²' : 'Cm²';
-        },
         onProductChange(item) {
             item.product_name = this.getProductName(item.product_id);
-            item.length_cm = '';
-            item.width_cm = '';
             item.quantity = this.getMinOrder(item.product_id);
         },
         clampQuantity(item) {
@@ -202,30 +237,19 @@ function orderForm() {
                 item.quantity = min;
             }
         },
-        itemArea(item) {
-            var unit = this.getSizeUnit(item.product_id);
-            if (!unit) return 0;
-            var l = parseFloat(item.length_cm) || 0;
-            var w = parseFloat(item.width_cm) || 0;
-            var cm2 = l * w;
-            return unit === 'm2' ? cm2 / 10000 : cm2;
-        },
-        formatArea(item) {
-            if (!this.hasSize(item)) return '0';
-            return Number(this.itemArea(item) || 0).toLocaleString('id-ID') + ' ' + this.unitLabel(item);
-        },
         addItem() {
-            this.items.push({ product_id: '', product_name: '', quantity: 1, length_cm: '', width_cm: '' });
+            this.items.push({ product_id: '', product_name: '', quantity: 1 });
         },
         removeItem(index) {
             this.items.splice(index, 1);
         },
-        lineTotal(item) {
+        lineTotalItem(item) {
             return this.getProductPrice(item.product_id) * (parseInt(item.quantity) || 0);
         },
         grandTotal() {
-            return this.items.reduce((sum, item) => sum + this.lineTotal(item), 0);
+            return this.items.reduce((sum, item) => sum + this.lineTotalItem(item), 0);
         },
+        @endif
         formatCurrency(value) {
             return 'Rp. ' + Number(value || 0).toLocaleString('id-ID');
         }

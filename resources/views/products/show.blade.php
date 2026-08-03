@@ -95,7 +95,7 @@
 
         {{-- CTA --}}
         <div class="mt-6 flex gap-3">
-            <a href="{{ route('order.create') }}" class="form-submit">
+            <a href="{{ route('order.create', ['product_id' => $product->id]) }}" class="form-submit">
                 <i class="fas fa-paper-plane"></i>Pesan Sekarang
             </a>
             <a href="{{ route('products.index') }}" class="px-6 py-3 rounded-lg text-sm font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors no-underline">
