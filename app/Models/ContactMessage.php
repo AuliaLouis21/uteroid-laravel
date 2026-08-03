@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class ContactMessage extends Model
 {
     use HasFactory;
 
@@ -13,9 +13,7 @@ class Order extends Model
         'name',
         'email',
         'phone',
-        'address',
-        'city',
-        'postal_code',
+        'subject',
         'message',
         'status',
     ];
@@ -23,14 +21,4 @@ class Order extends Model
     protected $casts = [
         'status' => 'string',
     ];
-
-    public function items()
-    {
-        return $this->hasMany(OrderItem::class);
-    }
-
-    public function getTotalAttribute(): float
-    {
-        return (float) $this->items->sum('total_price');
-    }
 }

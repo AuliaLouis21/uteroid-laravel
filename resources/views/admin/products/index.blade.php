@@ -17,6 +17,8 @@
                         <th>Image</th>
                         <th>Name</th>
                         <th>Category</th>
+                        <th>Ukuran</th>
+                        <th>Ketebalan</th>
                         <th>Price</th>
                         <th width="150">Actions</th>
                     </tr>
@@ -34,6 +36,8 @@
                             </td>
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->category->name ?? '-' }}</td>
+                            <td>{{ $product->size ?? '-' }}</td>
+                            <td>{{ $product->thickness ?? '-' }}</td>
                             <td>Rp {{ number_format($product->unit_price, 0, ',', '.') }}</td>
                             <td>
                                 <a href="{{ route('admin.products.show', $product) }}" class="btn btn-sm btn-info">Show</a>

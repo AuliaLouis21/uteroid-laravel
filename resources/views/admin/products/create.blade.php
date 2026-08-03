@@ -60,6 +60,38 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="size" class="form-label">Ukuran</label>
+                        <input type="text" name="size" id="size" class="form-control @error('size') is-invalid @enderror" value="{{ old('size') }}" placeholder="cth: 40x30 cm">
+                        @error('size')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="size_unit" class="form-label">Satuan Perhitungan Order</label>
+                        <select name="size_unit" id="size_unit" class="form-select @error('size_unit') is-invalid @enderror">
+                            <option value="">-- Tanpa Ukuran (Quantity) --</option>
+                            <option value="cm2" {{ old('size_unit') === 'cm2' ? 'selected' : '' }}>Cm² (centimeter persegi)</option>
+                            <option value="m2" {{ old('size_unit') === 'm2' ? 'selected' : '' }}>m² (meter persegi)</option>
+                        </select>
+                        @error('size_unit')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <small class="text-muted">Jika produk dihitung berdasarkan luas, pilih satuannya. Jika tidak, kosongkan.</small>
+                    </div>
+                </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="thickness" class="form-label">Ketebalan</label>
+                        <input type="text" name="thickness" id="thickness" class="form-control @error('thickness') is-invalid @enderror" value="{{ old('thickness') }}" placeholder="cth: 1 cm">
+                        @error('thickness')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
                 <div class="mb-3">
                     <label for="image" class="form-label">Image</label>
                     <input type="file" name="image" id="image" class="form-control @error('image') is-invalid @enderror" accept="image/jpeg,image/png,image/webp">

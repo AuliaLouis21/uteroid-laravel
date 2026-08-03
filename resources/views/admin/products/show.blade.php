@@ -18,6 +18,9 @@
                         <tr><th>Name</th><td>{{ $product->name }}</td></tr>
                         <tr><th>Slug</th><td>{{ $product->slug }}</td></tr>
                         <tr><th>Category</th><td>{{ $product->category->name ?? '-' }}</td></tr>
+                        <tr><th>Ukuran</th><td>{{ $product->size ?? '-' }}</td></tr>
+                        <tr><th>Satuan Perhitungan</th><td>{{ $product->size_unit === 'm2' ? 'm²' : ($product->size_unit === 'cm2' ? 'Cm²' : '-') }}</td></tr>
+                        <tr><th>Ketebalan</th><td>{{ $product->thickness ?? '-' }}</td></tr>
                         <tr><th>Price</th><td>Rp {{ number_format($product->unit_price, 0, ',', '.') }}</td></tr>
                         <tr><th>Created</th><td>{{ $product->created_at->format('d M Y H:i') }}</td></tr>
                         <tr><th>Updated</th><td>{{ $product->updated_at->format('d M Y H:i') }}</td></tr>

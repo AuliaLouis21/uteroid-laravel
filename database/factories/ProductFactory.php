@@ -24,6 +24,7 @@ class ProductFactory extends Factory
             'slug' => Str::slug($name),
             'image' => null,
             'size' => fake()->randomElement(['30x40cm', '40x60cm', '50x70cm', '60x90cm']),
+            'size_unit' => null,
             'thickness' => fake()->randomElement(['0.5mm', '1mm', '2mm']),
             'min_order' => fake()->numberBetween(100, 1000),
             'unit_price' => fake()->randomFloat(2, 5000, 500000),

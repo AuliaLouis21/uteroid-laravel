@@ -32,7 +32,7 @@ class ProductImage extends Model
 
     public function getUrlAttribute(): string
     {
-        return asset('storage/' . $this->filename);
+        return asset('storage/'.$this->filename);
     }
 
     /**
@@ -42,22 +42,23 @@ class ProductImage extends Model
     public function getWebpUrlAttribute(): string
     {
         $filename = $this->filename;
-        
+
         // Return cached result if available
         if (isset(static::$webpUrlCache[$filename])) {
             return static::$webpUrlCache[$filename];
         }
 
         $lower = strtolower($filename);
-        
-        if (str_ends_with($lower, ['.jpg', '.jpeg', '.png'])) {
+
+        if (str_ends_with($lower, '.jpg') || str_ends_with($lower, '.jpeg') || str_ends_with($lower, '.png')) {
             $nameWithoutExt = substr($filename, 0, strrpos($filename, '.'));
-            $webpPath = $nameWithoutExt . '.webp';
-            $fullPath = storage_path('app/public/' . $webpPath);
+            $webpPath = $nameWithoutExt.'.webp';
+            $fullPath = storage_path('app/public/'.$webpPath);
 
             if (file_exists($fullPath)) {
-                $url = asset('storage/' . $webpPath);
+                $url = asset('storage/'.$webpPath);
                 static::$webpUrlCache[$filename] = $url;
+
                 return $url;
             }
         }
@@ -65,6 +66,7 @@ class ProductImage extends Model
         // Cache the fallback too
         $url = $this->url;
         static::$webpUrlCache[$filename] = $url;
+
         return $url;
     }
 }

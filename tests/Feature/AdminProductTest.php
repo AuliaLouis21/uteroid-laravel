@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
 use App\Models\Product;
 use App\Models\ProductCategory;
-use Tests\TestCase;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class AdminProductTest extends TestCase
 {
@@ -70,7 +70,11 @@ class AdminProductTest extends TestCase
         $response = $this->actingAs($this->user)->post(route('admin.products.store'), $data);
 
         $response->assertRedirect(route('admin.products.index'));
-        $this->assertDatabaseHas('products', ['name' => 'Test Product']);
+        $this->assertDatabaseHas('products', [
+            'name' => 'Test Product',
+            'size' => '10x10',
+            'thickness' => '1mm',
+        ]);
     }
 
     public function test_admin_product_show_returns_200(): void
@@ -100,12 +104,19 @@ class AdminProductTest extends TestCase
             'product_category_id' => $product->product_category_id,
             'slug' => $product->slug,
             'unit_price' => 75000,
+            'size' => '50x40',
+            'thickness' => '3mm',
         ];
 
         $response = $this->actingAs($this->user)->put(route('admin.products.update', $product), $data);
 
         $response->assertRedirect(route('admin.products.index'));
-        $this->assertDatabaseHas('products', ['id' => $product->id, 'name' => 'Updated Product Name']);
+        $this->assertDatabaseHas('products', [
+            'id' => $product->id,
+            'name' => 'Updated Product Name',
+            'size' => '50x40',
+            'thickness' => '3mm',
+        ]);
     }
 
     public function test_admin_product_destroy_deletes_product(): void

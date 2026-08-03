@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\AdvertisementController as AdminAdvertisementCont
 use App\Http\Controllers\Admin\DownloadController as AdminDownloadController;
 use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ContactMessageController;
 use Illuminate\Support\Facades\Route;
 
 // =============================================
@@ -108,11 +109,13 @@ Route::prefix('admin')
         Route::resource('testimonials', AdminTestimonialController::class)->only(['index', 'show', 'update', 'destroy']);
         Route::resource('albums', AlbumController::class);
         Route::post('albums/{album}/photos', [AlbumController::class, 'addPhoto'])->name('albums.photos.store');
+        Route::patch('albums/{album}/photos/{photo}', [AlbumController::class, 'updatePhoto'])->name('albums.photos.update');
         Route::delete('albums/{album}/photos/{photo}', [AlbumController::class, 'deletePhoto'])->name('albums.photos.delete');
         Route::resource('videos', AlbumVideoController::class);
         Route::resource('audio', AlbumAudioController::class);
         Route::resource('galleries', AdminGalleryController::class);
         Route::resource('orders', AdminOrderController::class)->only(['index', 'show', 'update', 'destroy']);
+        Route::resource('contact-messages', ContactMessageController::class)->only(['index', 'show', 'update', 'destroy']);
         Route::resource('pages', AdminPageController::class);
         Route::resource('advertisements', AdminAdvertisementController::class);
         Route::resource('users', UserController::class);

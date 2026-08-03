@@ -111,6 +111,19 @@
                 </div>
             </a>
         </div>
+        <div class="col-md-4 col-lg">
+            <a href="{{ route('admin.contact-messages.index') }}" class="text-decoration-none">
+                <div class="card text-bg-primary">
+                    <div class="card-body d-flex align-items-center">
+                        <div class="me-3" style="font-size:2rem;">&#9993;</div>
+                        <div>
+                            <h6 class="card-title mb-0">Pesan Kontak</h6>
+                            <h2 class="mb-0">{{ $stats['contact_messages'] }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
     </div>
 
     {{-- Quick Actions --}}
@@ -197,6 +210,25 @@
                                 <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                     <span>{{ $album->name }}</span>
                                     <small class="text-muted">{{ $album->created_at->diffForHumans() }}</small>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card h-100">
+                <div class="card-header">Recent Pesan Kontak</div>
+                <div class="card-body">
+                    @if($recentContactMessages->isEmpty())
+                        <p class="text-muted mb-0">No messages yet.</p>
+                    @else
+                        <ul class="list-group list-group-flush">
+                            @foreach($recentContactMessages as $message)
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <a href="{{ route('admin.contact-messages.show', $message) }}">{{ $message->name }} - {{ $message->subject }}</a>
+                                    <span class="badge bg-{{ $message->status === 'new' ? 'warning' : ($message->status === 'read' ? 'info' : 'success') }}">{{ ucfirst($message->status) }}</span>
                                 </li>
                             @endforeach
                         </ul>

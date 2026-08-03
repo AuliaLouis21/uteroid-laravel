@@ -28,7 +28,7 @@
                 <thead>
                     <tr>
                         <th>Produk</th>
-                        <th>Qty</th>
+                        <th>Jumlah Order</th>
                         <th>Harga</th>
                         <th>Total</th>
                     </tr>
@@ -37,7 +37,16 @@
                     @foreach($order->items as $item)
                     <tr>
                         <td>{{ $item->product_name }}</td>
-                        <td>{{ $item->quantity }}</td>
+                        <td>
+                            @if($item->has_size)
+                                {{ rtrim(rtrim(number_format((float) $item->area, 4, ',', '.'), '0'), ',') }} {{ $item->size_unit_label }}
+                                @if($item->length_cm && $item->width_cm)
+                                    <br><small>({{ $item->length_cm }} x {{ $item->width_cm }} cm)</small>
+                                @endif
+                            @else
+                                {{ $item->quantity }}
+                            @endif
+                        </td>
                         <td>Rp {{ number_format($item->unit_price, 0, ',', '.') }}</td>
                         <td>Rp {{ number_format($item->total_price, 0, ',', '.') }}</td>
                     </tr>

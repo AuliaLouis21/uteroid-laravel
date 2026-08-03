@@ -61,6 +61,7 @@ class ProductTest extends TestCase
             'slug',
             'image',
             'size',
+            'size_unit',
             'thickness',
             'min_order',
             'unit_price',

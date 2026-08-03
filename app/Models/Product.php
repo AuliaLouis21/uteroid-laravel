@@ -14,6 +14,7 @@ class Product extends Model
         'slug',
         'image',
         'size',
+        'size_unit',
         'thickness',
         'min_order',
         'unit_price',
@@ -54,5 +55,15 @@ class Product extends Model
     public function getPriceAttribute()
     {
         return $this->unit_price;
+    }
+
+    public function getHasSizeUnitAttribute(): bool
+    {
+        return in_array($this->size_unit, ['m2', 'cm2'], true);
+    }
+
+    public function getSizeUnitLabelAttribute(): string
+    {
+        return $this->size_unit === 'm2' ? 'm²' : 'Cm²';
     }
 }

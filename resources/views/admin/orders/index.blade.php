@@ -24,6 +24,7 @@
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Items</th>
+                        <th>Total</th>
                         <th>Status</th>
                         <th>Date</th>
                         <th width="150">Actions</th>
@@ -37,6 +38,7 @@
                             <td>{{ $order->email }}</td>
                             <td>{{ $order->phone }}</td>
                             <td>{{ $order->items->count() }}</td>
+                            <td>Rp {{ number_format($order->total, 0, ',', '.') }}</td>
                             <td>
                                 @if($order->status === 'completed')
                                     <span class="badge bg-success">Completed</span>

@@ -115,6 +115,20 @@ class AlbumController extends Controller
             ->with('success', 'Foto berhasil ditambahkan.');
     }
 
+    public function updatePhoto(Request $request, Album $album, AlbumPhoto $photo)
+    {
+        $data = $request->validate([
+            'caption' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $photo->update($data);
+
+        Cache::forget('gallery.albums');
+
+        return redirect()->route('admin.albums.edit', $album)
+            ->with('success', 'Keterangan foto berhasil diperbarui.');
+    }
+
     public function deletePhoto(Album $album, AlbumPhoto $photo)
     {
         if ($photo->filename && Storage::disk('public')->exists($photo->filename)) {

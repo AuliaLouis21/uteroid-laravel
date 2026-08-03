@@ -13,9 +13,21 @@ class CacheHeaders
         $response = $next($request);
 
         if ($request->isMethod('GET') && $response instanceof Response) {
-            if ($request->is('admin/*') || $request->is('login') || $request->is('register')
-                || $request->is('dashboard') || $request->is('profile*')
-                || $request->user()) {
+            $noStoreRouteNames = [
+                'login',
+                'register',
+                'password.request',
+                'password.reset',
+                'password.confirm',
+                'verification.notice',
+                'contact.index',
+                'order.create',
+                'testimonials.index',
+            ];
+
+            if ($request->user()
+                || $request->is('admin/*')
+                || $request->route()?->named($noStoreRouteNames)) {
                 $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
             } else {
                 $response->headers->set('Cache-Control', 'public, max-age=3600, s-maxage=3600');

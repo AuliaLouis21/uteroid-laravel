@@ -101,4 +101,30 @@ class AdminAlbumTest extends TestCase
         $response->assertRedirect(route('admin.albums.index'));
         $this->assertDatabaseMissing('albums', ['id' => $album->id]);
     }
+
+    public function test_admin_album_updates_photo_caption(): void
+    {
+        $album = $this->createAlbum();
+        $photo = \App\Models\AlbumPhoto::factory()->create(['album_id' => $album->id]);
+
+        $response = $this->actingAs($this->user)->patch(route('admin.albums.photos.update', [$album, $photo]), [
+            'caption' => 'Papan nama neon di depan toko',
+        ]);
+
+        $response->assertRedirect(route('admin.albums.edit', $album));
+        $this->assertDatabaseHas('album_photos', ['id' => $photo->id, 'caption' => 'Papan nama neon di depan toko']);
+    }
+
+    public function test_admin_album_clears_photo_caption(): void
+    {
+        $album = $this->createAlbum();
+        $photo = \App\Models\AlbumPhoto::factory()->create(['album_id' => $album->id, 'caption' => 'Caption lama']);
+
+        $response = $this->actingAs($this->user)->patch(route('admin.albums.photos.update', [$album, $photo]), [
+            'caption' => '',
+        ]);
+
+        $response->assertRedirect(route('admin.albums.edit', $album));
+        $this->assertDatabaseHas('album_photos', ['id' => $photo->id, 'caption' => null]);
+    }
 }

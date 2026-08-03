@@ -41,7 +41,7 @@ class OrderFormTest extends TestCase
             return $mock;
         });
 
-        $product = Product::factory()->create(['unit_price' => 10000]);
+        $product = Product::factory()->create(['unit_price' => 10000, 'min_order' => 50]);
 
         $data = [
             'name' => 'John Buyer',
@@ -86,7 +86,7 @@ class OrderFormTest extends TestCase
             return $mock;
         });
 
-        $product = Product::factory()->create();
+        $product = Product::factory()->create(['min_order' => 5]);
 
         $data = [
             'name' => 'Email Test',
@@ -146,6 +146,145 @@ class OrderFormTest extends TestCase
 
         $response->assertRedirect();
         $response->assertSessionHasErrors(['items.0.quantity']);
+    }
+
+    public function test_order_store_rejects_quantity_below_min_order(): void
+    {
+        $product = Product::factory()->create(['min_order' => 100]);
+
+        $response = $this->post(route('order.store'), [
+            'name' => 'Test',
+            'email' => 'test@test.com',
+            'phone' => '08123456789',
+            'items' => [
+                [
+                    'product_id' => $product->id,
+                    'product_name' => $product->name,
+                    'quantity' => 99,
+                ],
+            ],
+        ]);
+
+        $response->assertRedirect();
+        $response->assertSessionHasErrors(['items.0.quantity']);
+        $this->assertDatabaseCount('orders', 0);
+    }
+
+    public function test_order_store_accepts_quantity_equal_to_min_order(): void
+    {
+        Mail::fake();
+        $this->app->bind(\App\Services\WhatsAppService::class, function () {
+            $mock = \Mockery::mock(\App\Services\WhatsAppService::class);
+            $mock->shouldReceive('sendOrderNotification')->once();
+            return $mock;
+        });
+
+        $product = Product::factory()->create(['min_order' => 100, 'unit_price' => 10000]);
+
+        $response = $this->post(route('order.store'), [
+            'name' => 'Test',
+            'email' => 'test@test.com',
+            'phone' => '08123456789',
+            'items' => [
+                [
+                    'product_id' => $product->id,
+                    'product_name' => $product->name,
+                    'quantity' => 100,
+                ],
+            ],
+        ]);
+
+        $response->assertRedirect(route('order.create'));
+        $response->assertSessionHas('success');
+        $this->assertDatabaseHas('order_items', [
+            'product_id' => $product->id,
+            'quantity' => 100,
+        ]);
+    }
+
+    public function test_order_store_persists_area_for_sized_item_in_cm2(): void
+    {
+        Mail::fake();
+        $this->app->bind(\App\Services\WhatsAppService::class, function () {
+            $mock = \Mockery::mock(\App\Services\WhatsAppService::class);
+            $mock->shouldReceive('sendOrderNotification')->once();
+            return $mock;
+        });
+
+        $product = Product::factory()->create([
+            'size' => '120cm x 80cm',
+            'size_unit' => 'cm2',
+            'unit_price' => 10000,
+            'min_order' => 1,
+        ]);
+
+        $data = [
+            'name' => 'Sized Buyer',
+            'email' => 'sized@buyer.com',
+            'phone' => '08123456789',
+            'items' => [
+                [
+                    'product_id' => $product->id,
+                    'product_name' => $product->name,
+                    'quantity' => 2,
+                    'length_cm' => 120,
+                    'width_cm' => 80,
+                ],
+            ],
+        ];
+
+        $this->post(route('order.store'), $data);
+
+        $this->assertDatabaseHas('order_items', [
+            'product_id' => $product->id,
+            'quantity' => 2,
+            'length_cm' => 120,
+            'width_cm' => 80,
+            'area' => 9600,
+            'size_unit' => 'cm2',
+        ]);
+    }
+
+    public function test_order_store_persists_area_in_m2(): void
+    {
+        Mail::fake();
+        $this->app->bind(\App\Services\WhatsAppService::class, function () {
+            $mock = \Mockery::mock(\App\Services\WhatsAppService::class);
+            $mock->shouldReceive('sendOrderNotification')->once();
+            return $mock;
+        });
+
+        $product = Product::factory()->create([
+            'size' => '2m x 1m',
+            'size_unit' => 'm2',
+            'unit_price' => 50000,
+            'min_order' => 1,
+        ]);
+
+        $data = [
+            'name' => 'M2 Buyer',
+            'email' => 'm2@buyer.com',
+            'phone' => '08123456789',
+            'items' => [
+                [
+                    'product_id' => $product->id,
+                    'product_name' => $product->name,
+                    'quantity' => 1,
+                    'length_cm' => 200,
+                    'width_cm' => 100,
+                ],
+            ],
+        ];
+
+        $this->post(route('order.store'), $data);
+
+        $this->assertDatabaseHas('order_items', [
+            'product_id' => $product->id,
+            'length_cm' => 200,
+            'width_cm' => 100,
+            'area' => 2,
+            'size_unit' => 'm2',
+        ]);
     }
 
     protected function tearDown(): void

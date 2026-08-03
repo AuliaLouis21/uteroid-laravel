@@ -23,7 +23,7 @@ class OrderTest extends TestCase
 
     public function test_order_has_correct_fillable_fields(): void
     {
-        $order = new Order();
+        $order = new Order;
 
         $this->assertEquals([
             'name',
@@ -44,5 +44,23 @@ class OrderTest extends TestCase
 
         $this->assertInstanceOf(Order::class, $orderItem->order);
         $this->assertEquals($order->id, $orderItem->order->id);
+    }
+
+    public function test_order_total_sums_item_totals(): void
+    {
+        $order = Order::factory()->create();
+
+        OrderItem::factory()->create([
+            'order_id' => $order->id,
+            'unit_price' => 10000,
+            'total_price' => 20000,
+        ]);
+        OrderItem::factory()->create([
+            'order_id' => $order->id,
+            'unit_price' => 5000,
+            'total_price' => 15000,
+        ]);
+
+        $this->assertEquals(35000, $order->total);
     }
 }

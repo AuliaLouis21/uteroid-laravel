@@ -91,9 +91,14 @@
                                     <div class="aspect-square bg-gray-200 rounded overflow-hidden">
                                         <img src="{{ asset('storage/' . $photo->filename) }}" alt="{{ $photo->caption }}" class="w-100 h-100" style="object-fit:cover;">
                                     </div>
-                                    @if($photo->caption)
-                                        <small class="text-muted d-block text-truncate mt-1">{{ $photo->caption }}</small>
-                                    @endif
+                                    <form action="{{ route('admin.albums.photos.update', [$album, $photo]) }}" method="POST" class="mt-1">
+                                        @csrf
+                                        @method('PATCH')
+                                        <div class="input-group input-group-sm">
+                                            <input type="text" name="caption" class="form-control" value="{{ $photo->caption }}" placeholder="Keterangan (opsional)">
+                                            <button type="submit" class="btn btn-outline-primary" title="Simpan keterangan"><i class="bi bi-check"></i></button>
+                                        </div>
+                                    </form>
                                     <form action="{{ route('admin.albums.photos.delete', [$album, $photo]) }}" method="POST" class="position-absolute top-0 end-0" onsubmit="return confirm('Delete this photo?')">
                                         @csrf
                                         @method('DELETE')

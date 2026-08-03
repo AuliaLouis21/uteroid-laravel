@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactRequest;
 use App\Mail\ContactMessageMail;
+use App\Models\ContactMessage;
 use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
@@ -15,6 +16,10 @@ class ContactController extends Controller
 
     public function send(ContactRequest $request)
     {
+        ContactMessage::create(array_merge($request->validated(), [
+            'status' => 'new',
+        ]));
+
         Mail::to(config('mail.from.address'))->queue(
             new ContactMessageMail(
                 $request->name,

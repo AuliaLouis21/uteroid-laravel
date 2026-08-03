@@ -61,6 +61,15 @@ class WhatsAppService
     public function buildOrderMessage(Order $order): string
     {
         $items = $order->items->map(function ($item) {
+            if ($item->has_size) {
+                $area = rtrim(rtrim(number_format((float) $item->area, 4, ',', '.'), '0'), ',');
+                $size = $item->length_cm && $item->width_cm
+                    ? " ({$item->length_cm}x{$item->width_cm} cm)"
+                    : '';
+
+                return "  - {$item->product_name}: {$area} {$item->size_unit_label}{$size} x{$item->quantity}";
+            }
+
             return "  - {$item->product_name} x{$item->quantity}";
         })->implode("\n");
 

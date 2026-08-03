@@ -29,7 +29,23 @@ class OrderController extends Controller
             'items' => 'required|array|min:1',
             'items.*.product_id' => 'nullable|exists:products,id',
             'items.*.product_name' => 'required|string|max:255',
-            'items.*.quantity' => 'required|integer|min:1',
+            'items.*.quantity' => ['required', 'integer', 'min:1', function ($attribute, $value, $fail) use ($request) {
+                if (!preg_match('/items\.(\d+)\.quantity/', $attribute, $m)) {
+                    return;
+                }
+
+                $productId = $request->input("items.{$m[1]}.product_id");
+                if (! $productId) {
+                    return;
+                }
+
+                $product = Product::find($productId);
+                if ($product && $value < $product->min_order) {
+                    $fail("Jumlah order minimal {$product->min_order} untuk {$product->name}.");
+                }
+            }],
+            'items.*.length_cm' => 'nullable|numeric|min:0',
+            'items.*.width_cm' => 'nullable|numeric|min:0',
         ]);
 
         $order = DB::transaction(function () use ($validated) {
@@ -47,19 +63,29 @@ class OrderController extends Controller
             foreach ($validated['items'] as $item) {
                 $unitPrice = 0;
                 $productName = $item['product_name'];
+                $sizeUnit = null;
 
                 if (!empty($item['product_id'])) {
                     $product = Product::find($item['product_id']);
                     if ($product) {
                         $unitPrice = $product->unit_price;
                         $productName = $product->name;
+                        $sizeUnit = $product->size_unit;
                     }
                 }
+
+                $lengthCm = isset($item['length_cm']) ? (float) $item['length_cm'] : 0;
+                $widthCm = isset($item['width_cm']) ? (float) $item['width_cm'] : 0;
+                $area = $this->calculateArea($lengthCm, $widthCm, $sizeUnit);
 
                 $order->items()->create([
                     'product_id' => $item['product_id'] ?? null,
                     'product_name' => $productName,
                     'quantity' => $item['quantity'],
+                    'length_cm' => $lengthCm > 0 ? $lengthCm : null,
+                    'width_cm' => $widthCm > 0 ? $widthCm : null,
+                    'area' => $area,
+                    'size_unit' => $sizeUnit,
                     'unit_price' => $unitPrice,
                     'total_price' => $unitPrice * $item['quantity'],
                 ]);
@@ -83,5 +109,16 @@ class OrderController extends Controller
                 'created_at' => $order->created_at->toIso8601String(),
             ],
         ], 201);
+    }
+
+    protected function calculateArea(float $lengthCm, float $widthCm, ?string $sizeUnit): ?float
+    {
+        if ($lengthCm <= 0 || $widthCm <= 0 || !in_array($sizeUnit, ['m2', 'cm2'], true)) {
+            return null;
+        }
+
+        return $sizeUnit === 'm2'
+            ? ($lengthCm * $widthCm) / 10000
+            : $lengthCm * $widthCm;
     }
 }
